@@ -114,7 +114,7 @@ class Lexer {
   String _readIdentifier() {
     final pos = _pos;
     while (_ch != null) {
-      var c = _ch;
+      final c = _ch;
       if (c == null) {
         throw MonkeyException('Unreachable');
       }
@@ -146,7 +146,7 @@ class Lexer {
       _readChar();
     }
 
-    return _readRange(pos, this._pos);
+    return _readRange(pos, _pos);
   }
 
   static bool _isLatter(String c) {

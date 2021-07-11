@@ -31,7 +31,7 @@ void main() {
   });
 
   test('Lexer#next_token', () {
-    var input = '''
+    final input = '''
       let five = 5;
       let ten = 10;
       
@@ -58,7 +58,7 @@ void main() {
       macro(x, y) { x + y; };
     ''';
 
-    var lexer = Lexer(input);
+    final lexer = Lexer(input);
     [
       Let(),
       Ident('five'),
