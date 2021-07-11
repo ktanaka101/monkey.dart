@@ -1,12 +1,12 @@
 import 'package:monkey/monkey/token.dart';
 
 class Lexer {
-  String input;
-  int pos = 0;
-  int readPos = 0;
-  String? ch;
+  final String _input;
+  int _pos = 0;
+  int _readPos = 0;
+  String? _ch;
 
-  Lexer(this.input) {
+  Lexer(this._input) {
     _readChar();
   }
 
@@ -14,7 +14,7 @@ class Lexer {
     _skipWhitespace();
 
     Token? token;
-    switch (ch) {
+    switch (_ch) {
       case null:
         token = Eof();
         break;
@@ -87,7 +87,7 @@ class Lexer {
         token = _readString();
         break;
       default:
-        var c = ch;
+        var c = _ch;
         if (c == null) {
           throw 'Unreachable';
         }
@@ -108,9 +108,9 @@ class Lexer {
   }
 
   String _readIdentifier() {
-    var pos = this.pos;
-    while (ch != null) {
-      var c = ch;
+    var pos = _pos;
+    while (_ch != null) {
+      var c = _ch;
       if (c == null) {
         throw 'Unreachable';
       }
@@ -121,17 +121,17 @@ class Lexer {
       _readChar();
     }
 
-    return _readRange(pos, this.pos);
+    return _readRange(pos, _pos);
   }
 
   String _readRange(int s, int e) {
-    return input.substring(s, e);
+    return _input.substring(s, e);
   }
 
   String _readNumber() {
-    var pos = this.pos;
-    while (ch != null) {
-      var c = ch;
+    var pos = _pos;
+    while (_ch != null) {
+      var c = _ch;
       if (c == null) {
         throw 'Unreachable';
       }
@@ -142,7 +142,7 @@ class Lexer {
       _readChar();
     }
 
-    return _readRange(pos, this.pos);
+    return _readRange(pos, this._pos);
   }
 
   static bool _isLatter(String c) {
@@ -160,35 +160,35 @@ class Lexer {
   }
 
   StringLiteral _readString() {
-    var pos = this.pos + 1;
-    while (ch != null) {
+    var pos = _pos + 1;
+    while (_ch != null) {
       _readChar();
 
-      if (ch == '"') {
+      if (_ch == '"') {
         break;
       }
     }
 
-    return StringLiteral(_readRange(pos, this.pos));
+    return StringLiteral(_readRange(pos, _pos));
   }
 
   void _skipWhitespace() {
-    while (ch == ' ' || ch == '\n') {
+    while (_ch == ' ' || _ch == '\n') {
       _readChar();
     }
   }
 
   void _readChar() {
-    ch = _peekChar();
-    pos = readPos;
-    readPos += 1;
+    _ch = _peekChar();
+    _pos = _readPos;
+    _readPos += 1;
   }
 
   String? _peekChar() {
-    if (readPos >= input.length) {
+    if (_readPos >= _input.length) {
       return null;
     } else {
-      return input[readPos];
+      return _input[_readPos];
     }
   }
 }
