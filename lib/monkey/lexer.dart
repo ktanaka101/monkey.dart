@@ -3,15 +3,15 @@ import 'package:monkey/monkey/token.dart';
 class Lexer {
   String input;
   int pos = 0;
-  int read_pos = 0;
+  int readPos = 0;
   String? ch;
 
   Lexer(this.input) {
-    _read_char();
+    _readChar();
   }
 
-  Token next_token() {
-    _skip_whitespace();
+  Token nextToken() {
+    _skipWhitespace();
 
     Token? token;
     switch (ch) {
@@ -19,9 +19,9 @@ class Lexer {
         token = Eof();
         break;
       case '=':
-        switch (_peek_char()) {
+        switch (_peekChar()) {
           case '=':
-            _read_char();
+            _readChar();
             token = Equal();
             break;
           default:
@@ -35,9 +35,9 @@ class Lexer {
         token = Minus();
         break;
       case '!':
-        switch (_peek_char()) {
+        switch (_peekChar()) {
           case '=':
-            _read_char();
+            _readChar();
             token = NotEqual();
             break;
           default:
@@ -84,7 +84,7 @@ class Lexer {
         token = Rbracket();
         break;
       case '"':
-        token = _read_string();
+        token = _readString();
         break;
       default:
         var c = ch;
@@ -92,108 +92,108 @@ class Lexer {
           throw 'Unreachable';
         }
 
-        if (Lexer._is_latter(c)) {
-          var literal = _read_identifier();
-          return lookup_ident(literal);
-        } else if (Lexer._is_digit(c)) {
-          return Int(_read_number());
+        if (Lexer._isLatter(c)) {
+          var literal = _readIdentifier();
+          return lookupIdent(literal);
+        } else if (Lexer._isDigit(c)) {
+          return Int(_readNumber());
         } else {
           token = Illegal(c);
         }
     }
 
-    _read_char();
+    _readChar();
 
     return token;
   }
 
-  String _read_identifier() {
+  String _readIdentifier() {
     var pos = this.pos;
     while (ch != null) {
       var c = ch;
       if (c == null) {
         throw 'Unreachable';
       }
-      if (!Lexer._is_latter(c)) {
+      if (!Lexer._isLatter(c)) {
         break;
       }
 
-      _read_char();
+      _readChar();
     }
 
-    return _read_range(pos, this.pos);
+    return _readRange(pos, this.pos);
   }
 
-  String _read_range(int s, int e) {
+  String _readRange(int s, int e) {
     return input.substring(s, e);
   }
 
-  String _read_number() {
+  String _readNumber() {
     var pos = this.pos;
     while (ch != null) {
       var c = ch;
       if (c == null) {
         throw 'Unreachable';
       }
-      if (!Lexer._is_digit(c)) {
+      if (!Lexer._isDigit(c)) {
         break;
       }
 
-      _read_char();
+      _readChar();
     }
 
-    return _read_range(pos, this.pos);
+    return _readRange(pos, this.pos);
   }
 
-  static bool _is_latter(String c) {
+  static bool _isLatter(String c) {
     if (c.length != 1) {
       throw 'expect $c to be a char.';
     }
     return RegExp(r'^[a-zA-Z_!?]$').hasMatch(c);
   }
 
-  static bool _is_digit(String c) {
+  static bool _isDigit(String c) {
     if (c.length != 1) {
       throw 'expect $c to be a char.';
     }
     return RegExp(r'^[0-9]$').hasMatch(c);
   }
 
-  StringLiteral _read_string() {
+  StringLiteral _readString() {
     var pos = this.pos + 1;
     while (ch != null) {
-      _read_char();
+      _readChar();
 
       if (ch == '"') {
         break;
       }
     }
 
-    return StringLiteral(_read_range(pos, this.pos));
+    return StringLiteral(_readRange(pos, this.pos));
   }
 
-  void _skip_whitespace() {
+  void _skipWhitespace() {
     while (ch == ' ' || ch == '\n') {
-      _read_char();
+      _readChar();
     }
   }
 
-  void _read_char() {
-    ch = _peek_char();
-    pos = read_pos;
-    read_pos += 1;
+  void _readChar() {
+    ch = _peekChar();
+    pos = readPos;
+    readPos += 1;
   }
 
-  String? _peek_char() {
-    if (read_pos >= input.length) {
+  String? _peekChar() {
+    if (readPos >= input.length) {
       return null;
     } else {
-      return input[read_pos];
+      return input[readPos];
     }
   }
 }
 
-Token lookup_ident(String ident) {
+Token lookupIdent(String ident) {
   switch (ident) {
     case 'fn':
       return MFunction();

@@ -5,17 +5,17 @@ import 'package:monkey/monkey/token.dart';
 
 void main() {
   test('lookup_ident', () {
-    expect(lookup_ident('fn'), isA<MFunction>());
-    expect(lookup_ident('let'), isA<Let>());
-    expect(lookup_ident('true'), isA<True>());
-    expect(lookup_ident('false'), isA<False>());
-    expect(lookup_ident('if'), isA<If>());
-    expect(lookup_ident('else'), isA<Else>());
-    expect(lookup_ident('return'), isA<Return>());
-    expect(lookup_ident('macro'), isA<Macro>());
-    expect(lookup_ident('custom'), equals(Ident('custom')));
-    expect(lookup_ident('custom'), isNot(equals(Ident('true'))));
-    expect(lookup_ident('tru'), equals(Ident('tru')));
+    expect(lookupIdent('fn'), isA<MFunction>());
+    expect(lookupIdent('let'), isA<Let>());
+    expect(lookupIdent('true'), isA<True>());
+    expect(lookupIdent('false'), isA<False>());
+    expect(lookupIdent('if'), isA<If>());
+    expect(lookupIdent('else'), isA<Else>());
+    expect(lookupIdent('return'), isA<Return>());
+    expect(lookupIdent('macro'), isA<Macro>());
+    expect(lookupIdent('custom'), equals(Ident('custom')));
+    expect(lookupIdent('custom'), isNot(equals(Ident('true'))));
+    expect(lookupIdent('tru'), equals(Ident('tru')));
   });
 
   test('Token#==', () {
@@ -172,7 +172,7 @@ void main() {
       Rbrace(),
       Semicolon()
     ].forEach((expected) {
-      expect(lexer.next_token(), equals(expected));
+      expect(lexer.nextToken(), equals(expected));
     });
   });
 }
