@@ -1,15 +1,19 @@
 import 'package:monkey/monkey/token.dart';
+import 'package:monkey/monkey/error.dart';
 
+/// Lexer parse to tokens from inputed string
 class Lexer {
+  /// Lexer constructor
+  Lexer(this._input) {
+    _readChar();
+  }
+
   final String _input;
   int _pos = 0;
   int _readPos = 0;
   String? _ch;
 
-  Lexer(this._input) {
-    _readChar();
-  }
-
+  /// Return next token.
   Token nextToken() {
     _skipWhitespace();
 
@@ -87,13 +91,13 @@ class Lexer {
         token = _readString();
         break;
       default:
-        var c = _ch;
+        final c = _ch;
         if (c == null) {
-          throw 'Unreachable';
+          throw MonkeyException('Unreachable');
         }
 
         if (Lexer._isLatter(c)) {
-          var literal = _readIdentifier();
+          final literal = _readIdentifier();
           return lookupIdent(literal);
         } else if (Lexer._isDigit(c)) {
           return Int(_readNumber());
@@ -108,11 +112,11 @@ class Lexer {
   }
 
   String _readIdentifier() {
-    var pos = _pos;
+    final pos = _pos;
     while (_ch != null) {
       var c = _ch;
       if (c == null) {
-        throw 'Unreachable';
+        throw MonkeyException('Unreachable');
       }
       if (!Lexer._isLatter(c)) {
         break;
@@ -129,11 +133,11 @@ class Lexer {
   }
 
   String _readNumber() {
-    var pos = _pos;
+    final pos = _pos;
     while (_ch != null) {
-      var c = _ch;
+      final c = _ch;
       if (c == null) {
-        throw 'Unreachable';
+        throw MonkeyException('Unreachable');
       }
       if (!Lexer._isDigit(c)) {
         break;
@@ -147,20 +151,20 @@ class Lexer {
 
   static bool _isLatter(String c) {
     if (c.length != 1) {
-      throw 'expect $c to be a char.';
+      throw MonkeyException('expect $c to be a char.');
     }
     return RegExp(r'^[a-zA-Z_!?]$').hasMatch(c);
   }
 
   static bool _isDigit(String c) {
     if (c.length != 1) {
-      throw 'expect $c to be a char.';
+      throw MonkeyException('expect $c to be a char.');
     }
     return RegExp(r'^[0-9]$').hasMatch(c);
   }
 
   StringLiteral _readString() {
-    var pos = _pos + 1;
+    final pos = _pos + 1;
     while (_ch != null) {
       _readChar();
 
@@ -193,8 +197,9 @@ class Lexer {
   }
 }
 
-Token lookupIdent(String ident) {
-  switch (ident) {
+/// This function lookup ident from [string].
+Token lookupIdent(String string) {
+  switch (string) {
     case 'fn':
       return MFunction();
     case 'let':
@@ -212,6 +217,6 @@ Token lookupIdent(String ident) {
     case 'macro':
       return Macro();
     default:
-      return Ident(ident);
+      return Ident(string);
   }
 }
