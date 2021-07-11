@@ -1,6 +1,7 @@
 import 'package:test/test.dart';
 
 import 'package:monkey/monkey/lexer.dart';
+import 'package:monkey/monkey/token.dart';
 
 void main() {
   test('lookup_ident', () {
