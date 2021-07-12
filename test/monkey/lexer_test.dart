@@ -31,7 +31,7 @@ void main() {
   });
 
   test('Lexer#next_token', () {
-    final input = '''
+    const input = '''
       let five = 5;
       let ten = 10;
       
