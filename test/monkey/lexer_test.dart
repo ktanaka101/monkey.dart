@@ -59,7 +59,7 @@ void main() {
     ''';
 
     final lexer = Lexer(input);
-    [
+    final expectedTokens = [
       Let(),
       Ident('five'),
       Assign(),
@@ -171,8 +171,9 @@ void main() {
       Semicolon(),
       Rbrace(),
       Semicolon()
-    ].forEach((expected) {
-      expect(lexer.nextToken(), equals(expected));
-    });
+    ];
+    for (final expectedToken in expectedTokens) {
+      expect(lexer.nextToken(), equals(expectedToken));
+    }
   });
 }
