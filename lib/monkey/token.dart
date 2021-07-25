@@ -15,10 +15,10 @@ abstract class Token {
 /// This is [Token] for string including
 @immutable
 abstract class StringToken extends Token {
-  StringToken(this.v);
+  StringToken(this.value);
 
   /// string value
-  final String v;
+  final String value;
 
   @override
   bool operator ==(Object other) =>
