@@ -23,10 +23,12 @@ abstract class StringToken extends Token {
   @override
   bool operator ==(Object other) =>
       identical(other, this) ||
-      other is StringToken && runtimeType == other.runtimeType && v == other.v;
+      other is StringToken &&
+          runtimeType == other.runtimeType &&
+          value == other.value;
 
   @override
-  int get hashCode => v.hashCode;
+  int get hashCode => value.hashCode;
 }
 
 @immutable
