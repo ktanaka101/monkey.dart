@@ -35,7 +35,6 @@ typedef TestIdentExpr = Tuple2<String, ast.Ident>;
 typedef TestIntExpr = Tuple2<String, ast.Int>;
 typedef TestBoolExpr = Tuple2<String, ast.Boolean>;
 typedef TestPrefixExpr = Tuple2<String, ast.PrefixExpr>;
-typedef TestInfixExpr = Tuple2<String, ast.InfixExpr>;
 
 ast.Let createExpectedLet(String name, ast.Expr expr) =>
     ast.Let(ast.Ident(name), expr);
@@ -136,23 +135,31 @@ void main() {
   test('infix expressions', () {
     const e = createExpectedInfixExpr;
     final inputs = [
-      TestInfixExpr('5 + 5', e(ast.Int(5), ast.Operator.plus, ast.Int(5))),
-      TestInfixExpr('5 + 5;', e(ast.Int(5), ast.Operator.plus, ast.Int(5))),
-      TestInfixExpr('5 - 5;', e(ast.Int(5), ast.Operator.minus, ast.Int(5))),
-      TestInfixExpr('5 * 5', e(ast.Int(5), ast.Operator.asterisk, ast.Int(5))),
-      TestInfixExpr('5 / 5', e(ast.Int(5), ast.Operator.slash, ast.Int(5))),
-      TestInfixExpr('5 > 5', e(ast.Int(5), ast.Operator.gt, ast.Int(5))),
-      TestInfixExpr('5 < 5', e(ast.Int(5), ast.Operator.lt, ast.Int(5))),
-      TestInfixExpr('5 == 5;', e(ast.Int(5), ast.Operator.equal, ast.Int(5))),
-      TestInfixExpr(
-          '5 != 5;', e(ast.Int(5), ast.Operator.notEqual, ast.Int(5))),
-      TestInfixExpr('true == true;',
-          e(ast.Boolean(true), ast.Operator.equal, ast.Boolean(true))),
-      TestInfixExpr('true != false;',
-          e(ast.Boolean(true), ast.Operator.notEqual, ast.Boolean(false))),
-      TestInfixExpr('false == false;',
-          e(ast.Boolean(false), ast.Operator.equal, ast.Boolean(false)))
-    ];
+      ['5 + 5', e(ast.Int(5), ast.Operator.plus, ast.Int(5))],
+      ['5 + 5;', e(ast.Int(5), ast.Operator.plus, ast.Int(5))],
+      ['5 - 5;', e(ast.Int(5), ast.Operator.minus, ast.Int(5))],
+      ['5 * 5', e(ast.Int(5), ast.Operator.asterisk, ast.Int(5))],
+      ['5 / 5', e(ast.Int(5), ast.Operator.slash, ast.Int(5))],
+      ['5 > 5', e(ast.Int(5), ast.Operator.gt, ast.Int(5))],
+      ['5 < 5', e(ast.Int(5), ast.Operator.lt, ast.Int(5))],
+      ['5 == 5;', e(ast.Int(5), ast.Operator.equal, ast.Int(5))],
+      ['5 != 5;', e(ast.Int(5), ast.Operator.notEqual, ast.Int(5))],
+      [
+        'true == true;',
+        e(ast.Boolean(true), ast.Operator.equal, ast.Boolean(true))
+      ],
+      [
+        'true != false;',
+        e(ast.Boolean(true), ast.Operator.notEqual, ast.Boolean(false))
+      ],
+      [
+        'false == false;',
+        e(ast.Boolean(false), ast.Operator.equal, ast.Boolean(false))
+      ]
+    ]
+        .map((input) => Tuple2<String, ast.InfixExpr>(
+            input[0] as String, input[1] as ast.InfixExpr))
+        .toList();
 
     runTest<ast.InfixExpr>(inputs, (program, expected) {
       expect(program.statements.length, 1);
