@@ -52,10 +52,8 @@ void main() {
       ['let x = 5;', e('x', ast.Int(5))],
       ['let y = true;', e('y', ast.Boolean(true))],
       ['let foobar = y;', e('foobar', ast.Ident('y'))],
-    ]
-        .map((input) =>
-            Tuple2<String, ast.Let>(input[0] as String, input[1] as ast.Let))
-        .toList();
+    ].map((input) =>
+        Tuple2<String, ast.Let>(input[0] as String, input[1] as ast.Let));
 
     runTest<ast.Let>(inputs, (program, expected) {
       expect(program.statements.length, 1);
@@ -70,10 +68,8 @@ void main() {
       ['return 5;', e(ast.Int(5))],
       ['return true;', e(ast.Boolean(true))],
       ['return y;', e(ast.Ident('y'))],
-    ]
-        .map((input) => Tuple2<String, ast.Return>(
-            input[0] as String, input[1] as ast.Return))
-        .toList();
+    ].map((input) =>
+        Tuple2<String, ast.Return>(input[0] as String, input[1] as ast.Return));
 
     runTest<ast.Return>(inputs, (program, expected) {
       expect(program.statements.length, 1);
@@ -85,10 +81,8 @@ void main() {
     const e = createExpectedIdent;
     final inputs = [
       ['foobar', e('foobar')]
-    ]
-        .map((input) => Tuple2<String, ast.Ident>(
-            input[0] as String, input[1] as ast.Ident))
-        .toList();
+    ].map((input) =>
+        Tuple2<String, ast.Ident>(input[0] as String, input[1] as ast.Ident));
 
     runTest<ast.Ident>(inputs, (program, expected) {
       expect(program.statements.length, 1);
@@ -101,10 +95,8 @@ void main() {
     final inputs = [
       ['5', e(5)],
       ['5;', e(5)]
-    ]
-        .map((input) =>
-            Tuple2<String, ast.Int>(input[0] as String, input[1] as ast.Int))
-        .toList();
+    ].map((input) =>
+        Tuple2<String, ast.Int>(input[0] as String, input[1] as ast.Int));
 
     runTest<ast.Int>(inputs, (program, expected) {
       expect(program.statements.length, 1);
@@ -118,10 +110,8 @@ void main() {
       ['true', e(true)],
       ['true;', e(true)],
       ['false;', e(false)],
-    ]
-        .map((input) => Tuple2<String, ast.Boolean>(
-            input[0] as String, input[1] as ast.Boolean))
-        .toList();
+    ].map((input) => Tuple2<String, ast.Boolean>(
+        input[0] as String, input[1] as ast.Boolean));
 
     runTest<ast.Boolean>(inputs, (program, expected) {
       expect(program.statements.length, 1);
@@ -137,10 +127,8 @@ void main() {
       ['-15', e(ast.Operator.minus, ast.Int(15))],
       ['!true;', e(ast.Operator.bang, ast.Boolean(true))],
       ['!false;', e(ast.Operator.bang, ast.Boolean(false))]
-    ]
-        .map((input) => Tuple2<String, ast.PrefixExpr>(
-            input[0] as String, input[1] as ast.PrefixExpr))
-        .toList();
+    ].map((input) => Tuple2<String, ast.PrefixExpr>(
+        input[0] as String, input[1] as ast.PrefixExpr));
 
     runTest<ast.PrefixExpr>(inputs, (program, expected) {
       expect(program.statements.length, 1);
@@ -172,10 +160,8 @@ void main() {
         'false == false;',
         e(ast.Boolean(false), ast.Operator.equal, ast.Boolean(false))
       ]
-    ]
-        .map((input) => Tuple2<String, ast.InfixExpr>(
-            input[0] as String, input[1] as ast.InfixExpr))
-        .toList();
+    ].map((input) => Tuple2<String, ast.InfixExpr>(
+        input[0] as String, input[1] as ast.InfixExpr));
 
     runTest<ast.InfixExpr>(inputs, (program, expected) {
       expect(program.statements.length, 1);
@@ -226,7 +212,7 @@ void main() {
         'add(a * b[2], b[1], 2 * [1, 2][1])',
         'add((a * (b[2])), (b[1]), (2 * ([1, 2][1])));',
       ],
-    ].map((input) => Tuple2<String, String>(input[0], input[1])).toList();
+    ].map((input) => Tuple2<String, String>(input[0], input[1]));
 
     runTest<String>(inputs, (program, expected) {
       expect(program.toString(), expected);
@@ -319,7 +305,7 @@ void testInt(ast.Int actual, ast.Int expected) {
   expect(actual.value, expected.value);
 }
 
-void runTest<T>(List<Tuple2<String, T>> inputs,
+void runTest<T>(Iterable<Tuple2<String, T>> inputs,
     void Function(ast.Program, T) runExpecting) {
   for (final input in inputs) {
     final program = testParse(input.item1);
