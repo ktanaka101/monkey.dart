@@ -186,4 +186,9 @@ void main() {
       expect(arr.toString(), '[10, 20]');
     }
   });
+
+  test('Boolean#toString', () {
+    expect(Boolean(true).toString(), 'true');
+    expect(Boolean(false).toString(), 'false');
+  });
 }
