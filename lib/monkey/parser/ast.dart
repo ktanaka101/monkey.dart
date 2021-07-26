@@ -158,7 +158,7 @@ class Index extends Expr {
   Expr index;
 
   @override
-  String toString() => '$left[$index]';
+  String toString() => '($left[$index])';
 }
 
 class MacroLit extends Expr {

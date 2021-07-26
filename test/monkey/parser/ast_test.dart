@@ -142,19 +142,19 @@ void main() {
     {
       final left = Array([Int(10), Int(20)]);
       final index = Index(left, Int(0));
-      expect(index.toString(), '[10, 20][0]');
+      expect(index.toString(), '([10, 20][0])');
     }
 
     {
       final left = Array([]);
       final index = Index(left, Int(0));
-      expect(index.toString(), '[][0]');
+      expect(index.toString(), '([][0])');
     }
 
     {
       final left = Ident('arr');
       final index = Index(left, Int(0));
-      expect(index.toString(), 'arr[0]');
+      expect(index.toString(), '(arr[0])');
     }
   });
 
