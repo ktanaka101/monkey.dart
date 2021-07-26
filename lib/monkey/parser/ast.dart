@@ -199,6 +199,9 @@ class Pair {
 class Hash extends Expr {
   Hash(this.pairs);
   List<Pair> pairs;
+
+  @override
+  String toString() => '{ ${pairs.join(", ")} }';
 }
 
 class Int extends Expr {

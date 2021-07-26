@@ -203,4 +203,12 @@ void main() {
       expect(pair.toString(), '"aaa": 20');
     }
   });
+
+  test('Hash', () {
+    final pairs = [
+      Pair(Int(10), Int(20)),
+      Pair(StringLit('aaa'), StringLit('bbb')),
+    ];
+    expect(Hash(pairs).toString(), '{ 10: 20, "aaa": "bbb" }');
+  });
 }
