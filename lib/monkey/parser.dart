@@ -444,7 +444,7 @@ class Parser {
     _nextToken();
     exprList.add(_parseExpr(Priority.lowest));
 
-    while (_peekTokenIs(endTokenType)) {
+    while (_peekTokenIs(token.Comma)) {
       _nextToken();
       _nextToken();
       exprList.add(_parseExpr(Priority.lowest));
