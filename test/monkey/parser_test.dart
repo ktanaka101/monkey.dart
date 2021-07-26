@@ -29,7 +29,6 @@ class TestLet extends TestValue {
   final TestValue value;
 }
 
-typedef TestBoolExpr = Tuple2<String, ast.Boolean>;
 typedef TestPrefixExpr = Tuple2<String, ast.PrefixExpr>;
 
 ast.Let createExpectedLet(String name, ast.Expr expr) =>
@@ -118,10 +117,13 @@ void main() {
   test('boolean expressions', () {
     const e = createExpectedBool;
     final inputs = [
-      TestBoolExpr('true', e(true)),
-      TestBoolExpr('true;', e(true)),
-      TestBoolExpr('false;', e(false)),
-    ];
+      ['true', e(true)],
+      ['true;', e(true)],
+      ['false;', e(false)],
+    ]
+        .map((input) => Tuple2<String, ast.Boolean>(
+            input[0] as String, input[1] as ast.Boolean))
+        .toList();
 
     runTest<ast.Boolean>(inputs, (program, expected) {
       expect(program.statements.length, 1);
