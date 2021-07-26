@@ -192,7 +192,7 @@ void main() {
     expect(Boolean(false).toString(), 'false');
   });
 
-  test('Pair', () {
+  test('Pair#toString', () {
     {
       final pair = Pair(Int(10), Int(20));
       expect(pair.toString(), '10: 20');
@@ -204,7 +204,7 @@ void main() {
     }
   });
 
-  test('Hash', () {
+  test('Hash#toString', () {
     final pairs = [
       Pair(Int(10), Int(20)),
       Pair(StringLit('aaa'), StringLit('bbb')),
