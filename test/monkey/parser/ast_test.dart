@@ -211,4 +211,9 @@ void main() {
     ];
     expect(Hash(pairs).toString(), '{ 10: 20, "aaa": "bbb" }');
   });
+
+  test('Int#toString', () {
+    expect(Int(10).toString(), '10');
+    expect(Int(345).toString(), '345');
+  });
 }
