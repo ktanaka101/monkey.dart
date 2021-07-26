@@ -216,4 +216,9 @@ void main() {
     expect(Int(10).toString(), '10');
     expect(Int(345).toString(), '345');
   });
+
+  test('StringLit#toString', () {
+    expect(StringLit('aaa').toString(), '"aaa"');
+    expect(StringLit('bbbb').toString(), '"bbbb"');
+  });
 }
