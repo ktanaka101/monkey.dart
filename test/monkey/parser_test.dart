@@ -29,7 +29,6 @@ class TestLet extends TestValue {
   final TestValue value;
 }
 
-typedef TestReturnStmt = Tuple2<String, ast.Return>;
 typedef TestIdentExpr = Tuple2<String, ast.Ident>;
 typedef TestIntExpr = Tuple2<String, ast.Int>;
 typedef TestBoolExpr = Tuple2<String, ast.Boolean>;
@@ -72,11 +71,14 @@ void main() {
   test('return statements', () {
     const e = createExpectedReturn;
     final inputs = [
-      TestReturnStmt('return 5', e(ast.Int(5))),
-      TestReturnStmt('return 5;', e(ast.Int(5))),
-      TestReturnStmt('return true;', e(ast.Boolean(true))),
-      TestReturnStmt('return y;', e(ast.Ident('y'))),
-    ];
+      ['return 5', e(ast.Int(5))],
+      ['return 5;', e(ast.Int(5))],
+      ['return true;', e(ast.Boolean(true))],
+      ['return y;', e(ast.Ident('y'))],
+    ]
+        .map((input) => Tuple2<String, ast.Return>(
+            input[0] as String, input[1] as ast.Return))
+        .toList();
 
     runTest<ast.Return>(inputs, (program, expected) {
       expect(program.statements.length, 1);
