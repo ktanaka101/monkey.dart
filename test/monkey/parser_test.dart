@@ -29,8 +29,6 @@ class TestLet extends TestValue {
   final TestValue value;
 }
 
-typedef TestIdentExpr = Tuple2<String, ast.Ident>;
-typedef TestIntExpr = Tuple2<String, ast.Int>;
 typedef TestBoolExpr = Tuple2<String, ast.Boolean>;
 typedef TestPrefixExpr = Tuple2<String, ast.PrefixExpr>;
 
@@ -88,7 +86,12 @@ void main() {
 
   test('identifier expressions', () {
     const e = createExpectedIdent;
-    final inputs = [TestIdentExpr('foobar', e('foobar'))];
+    final inputs = [
+      ['foobar', e('foobar')]
+    ]
+        .map((input) => Tuple2<String, ast.Ident>(
+            input[0] as String, input[1] as ast.Ident))
+        .toList();
 
     runTest<ast.Ident>(inputs, (program, expected) {
       expect(program.statements.length, 1);
@@ -98,7 +101,13 @@ void main() {
 
   test('integer expressions', () {
     const e = createExpectedInt;
-    final inputs = [TestIntExpr('5', e(5)), TestIntExpr('5;', e(5))];
+    final inputs = [
+      ['5', e(5)],
+      ['5;', e(5)]
+    ]
+        .map((input) =>
+            Tuple2<String, ast.Int>(input[0] as String, input[1] as ast.Int))
+        .toList();
 
     runTest<ast.Int>(inputs, (program, expected) {
       expect(program.statements.length, 1);
