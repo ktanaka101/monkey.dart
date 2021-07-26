@@ -373,7 +373,7 @@ class Parser {
   ast.Block _parseBlockStatement() {
     _nextToken();
 
-    final statements = List<ast.Stmt>.empty();
+    final statements = <ast.Stmt>[];
     while (!(_curTokenIs(token.Rbrace) || _curTokenIs(token.Eof))) {
       statements.add(_parseStatement());
       _nextToken();
@@ -394,7 +394,7 @@ class Parser {
   }
 
   List<ast.Ident> _parseFunctionParams() {
-    final identifiers = List<ast.Ident>.empty();
+    final identifiers = <ast.Ident>[];
 
     if (_peekTokenIs(token.Rparen)) {
       _nextToken();
@@ -436,7 +436,7 @@ class Parser {
       return [];
     }
 
-    final exprList = List<ast.Expr>.empty();
+    final exprList = <ast.Expr>[];
 
     _nextToken();
     exprList.add(_parseExpr(Priority.lowest));
@@ -464,7 +464,7 @@ class Parser {
   ast.Array _parseArrayLiteral() => ast.Array(_parseExprList(token.Rbracket));
 
   ast.Hash _parseHashLiteral() {
-    final pairs = List<ast.Pair>.empty();
+    final pairs = <ast.Pair>[];
 
     while (!_peekTokenIs(token.Rbrace)) {
       _nextToken();
