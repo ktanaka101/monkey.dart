@@ -165,6 +165,9 @@ class MacroLit extends Expr {
   MacroLit(this.params, this.body);
   List<Ident> params;
   Block body;
+
+  @override
+  String toString() => 'macro(${params.join(", ")}) $body';
 }
 
 class Array extends Expr {

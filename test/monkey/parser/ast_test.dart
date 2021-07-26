@@ -157,4 +157,14 @@ void main() {
       expect(index.toString(), 'arr[0]');
     }
   });
+
+  test('MacroLit#toString', () {
+    final params = [Ident('arg1'), Ident('arg2')];
+    final block = Block([
+      ExprStmt(Int(10)),
+      ExprStmt(Int(20)),
+    ]);
+    final macro = MacroLit(params, block);
+    expect(macro.toString(), 'macro(arg1, arg2) { 10;20; }');
+  });
 }
