@@ -191,6 +191,9 @@ class Pair {
   Pair(this.key, this.value);
   Expr key;
   Expr value;
+
+  @override
+  String toString() => '$key: $value';
 }
 
 class Hash extends Expr {

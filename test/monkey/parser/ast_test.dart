@@ -191,4 +191,16 @@ void main() {
     expect(Boolean(true).toString(), 'true');
     expect(Boolean(false).toString(), 'false');
   });
+
+  test('Pair', () {
+    {
+      final pair = Pair(Int(10), Int(20));
+      expect(pair.toString(), '10: 20');
+    }
+
+    {
+      final pair = Pair(StringLit('aaa'), Int(20));
+      expect(pair.toString(), '"aaa": 20');
+    }
+  });
 }
