@@ -29,7 +29,6 @@ class TestLet extends TestValue {
   final TestValue value;
 }
 
-typedef TestLetStmt = Tuple2<String, ast.Let>;
 typedef TestReturnStmt = Tuple2<String, ast.Return>;
 typedef TestIdentExpr = Tuple2<String, ast.Ident>;
 typedef TestIntExpr = Tuple2<String, ast.Int>;
@@ -55,11 +54,14 @@ void main() {
   test('let statements', () {
     const e = createExpectedLet;
     final inputs = [
-      TestLetStmt('let x = 5', e('x', ast.Int(5))),
-      TestLetStmt('let x = 5;', e('x', ast.Int(5))),
-      TestLetStmt('let y = true;', e('y', ast.Boolean(true))),
-      TestLetStmt('let foobar = y;', e('foobar', ast.Ident('y'))),
-    ];
+      ['let x = 5', e('x', ast.Int(5))],
+      ['let x = 5;', e('x', ast.Int(5))],
+      ['let y = true;', e('y', ast.Boolean(true))],
+      ['let foobar = y;', e('foobar', ast.Ident('y'))],
+    ]
+        .map((input) =>
+            Tuple2<String, ast.Let>(input[0] as String, input[1] as ast.Let))
+        .toList();
 
     runTest<ast.Let>(inputs, (program, expected) {
       expect(program.statements.length, 1);
