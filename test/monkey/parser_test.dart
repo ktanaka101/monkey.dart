@@ -29,8 +29,6 @@ class TestLet extends TestValue {
   final TestValue value;
 }
 
-typedef TestPrefixExpr = Tuple2<String, ast.PrefixExpr>;
-
 ast.Let createExpectedLet(String name, ast.Expr expr) =>
     ast.Let(ast.Ident(name), expr);
 
@@ -134,12 +132,15 @@ void main() {
   test('prefix expressions', () {
     const e = createExpectedPrefixExpr;
     final inputs = [
-      TestPrefixExpr('!5', e(ast.Operator.bang, ast.Int(5))),
-      TestPrefixExpr('!5;', e(ast.Operator.bang, ast.Int(5))),
-      TestPrefixExpr('-15', e(ast.Operator.minus, ast.Int(15))),
-      TestPrefixExpr('!true;', e(ast.Operator.bang, ast.Boolean(true))),
-      TestPrefixExpr('!false;', e(ast.Operator.bang, ast.Boolean(false)))
-    ];
+      ['!5', e(ast.Operator.bang, ast.Int(5))],
+      ['!5;', e(ast.Operator.bang, ast.Int(5))],
+      ['-15', e(ast.Operator.minus, ast.Int(15))],
+      ['!true;', e(ast.Operator.bang, ast.Boolean(true))],
+      ['!false;', e(ast.Operator.bang, ast.Boolean(false))]
+    ]
+        .map((input) => Tuple2<String, ast.PrefixExpr>(
+            input[0] as String, input[1] as ast.PrefixExpr))
+        .toList();
 
     runTest<ast.PrefixExpr>(inputs, (program, expected) {
       expect(program.statements.length, 1);
