@@ -231,8 +231,11 @@ class Parser {
 
   ast.InfixExpr _parseInfixExpr(ast.Expr left) {
     final ope = Operators.fromToken(curToken);
+    final pre = Priorities.fromToken(curToken);
+
     _nextToken();
-    final right = _parseExpr(Priority.prefix);
+
+    final right = _parseExpr(pre);
 
     return ast.InfixExpr(left, ope, right);
   }
