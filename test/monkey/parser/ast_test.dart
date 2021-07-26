@@ -174,4 +174,16 @@ void main() {
       expect(macro.toString(), 'macro() {  }');
     }
   });
+
+  test('Array#toString', () {
+    {
+      final arr = Array([]);
+      expect(arr.toString(), '[]');
+    }
+
+    {
+      final arr = Array([Int(10), Int(20)]);
+      expect(arr.toString(), '[10, 20]');
+    }
+  });
 }
