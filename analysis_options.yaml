@@ -5,6 +5,13 @@
 include: package:pedantic/analysis_options.yaml
 # For lint rules and documentation, see http://dart-lang.github.io/linter/lints.
 
+analyzer:
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: false
+  # exclude:
+  #   - path/to/excluded/files/**
+
 # https://dart-lang.github.io/linter/lints/options/options.html
 linter:
   rules:
@@ -183,6 +190,3 @@ linter:
     - use_to_and_as_if_applicable
     - valid_regexps
     - void_checks
-# analyzer:
-#   exclude:
-#     - path/to/excluded/files/**
