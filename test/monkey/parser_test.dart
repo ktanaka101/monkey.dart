@@ -280,6 +280,13 @@ void testBlock(ast.Block actual, ast.Block expected) {
   }
 }
 
+void testBlockByStmt(ast.Stmt actual, ast.Block expected) {
+  expect(actual, isA<ast.Block>());
+  if (actual is ast.Block) {
+    testBlock(actual, expected);
+  }
+}
+
 void testStmt(ast.Stmt actual, ast.Stmt expected) {
   if (expected is ast.Let) {
     testLetByStmt(actual, expected);
