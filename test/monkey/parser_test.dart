@@ -43,6 +43,9 @@ ast.PrefixExpr createExpectedPrefixExpr(ast.Operator ope, ast.Expr expr) =>
 ast.InfixExpr createExpectedInfixExpr(
         ast.Expr left, ast.Operator ope, ast.Expr right) =>
     ast.InfixExpr(left, ope, right);
+ast.If createExpectedIf(
+        ast.Expr cond, ast.Block consequence, ast.Block? alternative) =>
+    ast.If(cond, consequence, alternative);
 
 void main() {
   test('let statements', () {
@@ -218,6 +221,63 @@ void main() {
       expect(program.toString(), expected);
     });
   });
+
+  test('if else expressions', () {
+    const e = createExpectedIf;
+    final inputs = [
+      [
+        'if (x < y) { x };',
+        e(
+          ast.InfixExpr(ast.Ident('x'), ast.Operator.lt, ast.Ident('y')),
+          ast.Block([ast.ExprStmt(ast.Ident('x'))]),
+          null,
+        )
+      ],
+      [
+        'if (x < y) { x } else { y }',
+        e(
+          ast.InfixExpr(ast.Ident('x'), ast.Operator.lt, ast.Ident('y')),
+          ast.Block([ast.ExprStmt(ast.Ident('x'))]),
+          ast.Block([ast.ExprStmt(ast.Ident('y'))]),
+        )
+      ],
+      [
+        'if (x < y) { x; } else { y; }',
+        e(
+          ast.InfixExpr(ast.Ident('x'), ast.Operator.lt, ast.Ident('y')),
+          ast.Block([ast.ExprStmt(ast.Ident('x'))]),
+          ast.Block([ast.ExprStmt(ast.Ident('y'))]),
+        )
+      ]
+    ].map((input) =>
+        Tuple2<String, ast.If>(input[0] as String, input[1] as ast.If));
+
+    runTest<ast.If>(inputs, (program, expected) {
+      expect(program.statements.length, 1);
+      testIfByStmt(program.statements[0], expected);
+    });
+  });
+}
+
+void testIfByStmt(ast.Stmt actual, ast.If expected) {
+  final expr = expectExprStmt(actual);
+  if (expr is ast.If) {
+    testExpr(expr.cond, expected.cond);
+    testBlock(expr.consequence, expected.consequence);
+    if (expected.alternative == null) {
+      expect(expr.alternative, null);
+    } else {
+      expect(expr.alternative, isNotNull);
+      testBlock(expr.alternative!, expected.alternative!);
+    }
+  }
+}
+
+void testBlock(ast.Block actual, ast.Block expected) {
+  expect(actual.statements.length, expected.statements.length);
+  for (var i = 0; i < expected.statements.length; i++) {
+    testStmt(actual.statements[i], expected.statements[i]);
+  }
 }
 
 void testLetByStmt(ast.Stmt actual, ast.Let expected) {
