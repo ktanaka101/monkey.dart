@@ -393,7 +393,7 @@ class Parser {
 
     final body = _parseBlockStatement();
 
-    return ast.MFunction(params, body, '');
+    return ast.MFunction(params, body, null);
   }
 
   List<ast.Ident> _parseFunctionParams() {
