@@ -49,15 +49,34 @@ class ExprStmt extends Stmt {
 }
 
 enum Operator {
+  /// =
   assign,
+
+  /// +
   plus,
+
+  /// -
   minus,
+
+  /// !
   bang,
+
+  /// *
   asterisk,
+
+  /// /
   slash,
+
+  /// ==
   equal,
+
+  /// !=
   notEqual,
+
+  /// <
   lt,
+
+  /// >
   gt
 }
 
