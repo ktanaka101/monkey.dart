@@ -285,6 +285,31 @@ void main() {
       testFunctionByStmt(program.statements[0], expected);
     });
   });
+
+  test('function params expressions', () {
+    const e = createExpectedFunctionExpr;
+    final inputs = [
+      [
+        'fn() {};',
+        e([], ast.Block([]), null),
+      ],
+      [
+        'fn(x) {};',
+        e([ast.Ident('x')], ast.Block([]), null),
+      ],
+      [
+        'fn(x, y, z) {};',
+        e([ast.Ident('x'), ast.Ident('y'), ast.Ident('z')], ast.Block([]),
+            null),
+      ]
+    ].map((input) => Tuple2<String, ast.MFunction>(
+        input[0] as String, input[1] as ast.MFunction));
+
+    runTest<ast.MFunction>(inputs, (program, expected) {
+      expect(program.statements.length, 1);
+      testFunctionByStmt(program.statements[0], expected);
+    });
+  });
 }
 
 void testFunctionByStmt(ast.Stmt actual, ast.MFunction expected) {
