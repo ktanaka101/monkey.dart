@@ -46,6 +46,9 @@ ast.InfixExpr createExpectedInfixExpr(
 ast.If createExpectedIf(
         ast.Expr cond, ast.Block consequence, ast.Block? alternative) =>
     ast.If(cond, consequence, alternative);
+ast.MFunction createExpectedFunctionExpr(
+        List<ast.Ident> params, ast.Block body, String? name) =>
+    ast.MFunction(params, body, name);
 
 void main() {
   test('let statements', () {
@@ -257,6 +260,42 @@ void main() {
       testIfByStmt(program.statements[0], expected);
     });
   });
+
+  test('function expressions', () {
+    const e = createExpectedFunctionExpr;
+    final inputs = [
+      [
+        'fn(x, y) { x + y }',
+        e(
+            [ast.Ident('x'), ast.Ident('y')],
+            ast.Block([
+              ast.ExprStmt(ast.InfixExpr(
+                ast.Ident('x'),
+                ast.Operator.plus,
+                ast.Ident('y'),
+              ))
+            ]),
+            null),
+      ]
+    ].map((input) => Tuple2<String, ast.MFunction>(
+        input[0] as String, input[1] as ast.MFunction));
+
+    runTest<ast.MFunction>(inputs, (program, expected) {
+      expect(program.statements.length, 1);
+      testFunctionByStmt(program.statements[0], expected);
+    });
+  });
+}
+
+void testFunctionByStmt(ast.Stmt actual, ast.MFunction expected) {
+  final expr = expectExprStmt(actual);
+  if (expr is ast.MFunction) {
+    expect(expr.name, expected.name);
+    for (var i = 0; i < expected.params.length; i++) {
+      testIdent(expr.params[i], expected.params[i]);
+    }
+    testBlock(expr.body, expected.body);
+  }
 }
 
 void testIfByStmt(ast.Stmt actual, ast.If expected) {
