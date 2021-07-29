@@ -280,6 +280,25 @@ void testBlock(ast.Block actual, ast.Block expected) {
   }
 }
 
+void testStmt(ast.Stmt actual, ast.Stmt expected) {
+  if (expected is ast.Let) {
+    testLetByStmt(actual, expected);
+  } else if (expected is ast.Return) {
+    testReturnByStmt(actual, expected);
+  } else if (expected is ast.Block) {
+    testBlockByStmt(actual, expected);
+  } else if (expected is ast.ExprStmt) {
+    testExprStmtByStmt(actual, expected);
+  } else {
+    throw Exception('Unimplements');
+  }
+}
+
+void testExprStmtByStmt(ast.Stmt actual, ast.ExprStmt expected) {
+  final expr = expectExprStmt(actual);
+  testExpr(expr, expected.expr);
+}
+
 void testLetByStmt(ast.Stmt actual, ast.Let expected) {
   expect(actual, isA<ast.Let>());
   if (actual is ast.Let) {
