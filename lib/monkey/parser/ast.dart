@@ -165,16 +165,10 @@ class MFunction extends Expr {
   MFunction(this.params, this.body, this.name);
   List<Ident> params;
   Block body;
-  String? name;
+  String name;
 
   @override
-  String toString() {
-    if (name == null) {
-      return 'fn(${params.join(", ")}) $body';
-    } else {
-      return 'fn $name(${params.join(", ")}) $body';
-    }
-  }
+  String toString() => 'fn $name(${params.join(", ")}) $body';
 }
 
 class Index extends Expr {
