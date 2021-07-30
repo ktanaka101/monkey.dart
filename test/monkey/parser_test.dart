@@ -567,6 +567,11 @@ void testBool(ast.Boolean actual, ast.Boolean expected) {
   expect(actual.value, expected.value);
 }
 
+void testCall(ast.Call actual, ast.Call expected) {
+  testExpr(actual.func, expected.func);
+  testExprList(actual.args, expected.args);
+}
+
 void runTest<T>(Iterable<Tuple2<String, T>> inputs,
     void Function(ast.Program, T) runExpecting) {
   for (final input in inputs) {
