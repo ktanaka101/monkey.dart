@@ -563,6 +563,10 @@ void testInt(ast.Int actual, ast.Int expected) {
   expect(actual.value, expected.value);
 }
 
+void testBool(ast.Boolean actual, ast.Boolean expected) {
+  expect(actual.value, expected.value);
+}
+
 void runTest<T>(Iterable<Tuple2<String, T>> inputs,
     void Function(ast.Program, T) runExpecting) {
   for (final input in inputs) {
