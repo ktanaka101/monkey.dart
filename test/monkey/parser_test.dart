@@ -572,6 +572,13 @@ void testCall(ast.Call actual, ast.Call expected) {
   testExprList(actual.args, expected.args);
 }
 
+void testHash(ast.Hash actual, ast.Hash expected) {
+  for (var i = 0; i < expected.pairs.length; i++) {
+    expect(actual.pairs[i].key, expected.pairs[i].key);
+    expect(actual.pairs[i].value, expected.pairs[i].value);
+  }
+}
+
 void runTest<T>(Iterable<Tuple2<String, T>> inputs,
     void Function(ast.Program, T) runExpecting) {
   for (final input in inputs) {
