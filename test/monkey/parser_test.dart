@@ -329,6 +329,25 @@ void main() {
       testCallByStmt(program.statements[0], expected);
     });
   });
+
+  test('string expressions', () {
+    final inputs = [
+      ['"hello world"', ast.StringLit('hello world')]
+    ].map((input) => Tuple2<String, ast.StringLit>(
+        input[0] as String, input[1] as ast.StringLit));
+
+    runTest<ast.StringLit>(inputs, (program, expected) {
+      expect(program.statements.length, 1);
+      testStringLitByStmt(program.statements[0], expected);
+    });
+  });
+}
+
+void testStringLitByStmt(ast.Stmt actual, ast.StringLit expected) {
+  final expr = expectExprStmt(actual);
+  if (expr is ast.StringLit) {
+    expect(expr.value, expected.value);
+  }
 }
 
 void testCallByStmt(ast.Stmt actual, ast.Call expected) {
