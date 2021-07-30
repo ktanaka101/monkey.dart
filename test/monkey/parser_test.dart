@@ -361,7 +361,34 @@ void main() {
     });
   });
 
+  test('index expressions', () {
+    final inputs = [
+      [
+        'myArray[1 + 1]',
+        ast.Index(
+          ast.Ident('myArray'),
+          ast.InfixExpr(ast.Int(1), ast.Operator.asterisk, ast.Int(1)),
+        )
+      ]
+    ].map((input) =>
+        Tuple2<String, ast.Index>(input[0] as String, input[1] as ast.Index));
+
+    runTest<ast.Index>(inputs, (program, expected) {
+      expect(program.statements.length, 1);
+      testIndexByStmt(program.statements[0], expected);
+    });
+  });
 }
+
+void testIndexByStmt(ast.Stmt actual, ast.Index expected) {
+  final expr = expectExprStmt(actual);
+  expect(expr, isA<ast.Index>());
+  if (expr is ast.Index) {
+    testExpr(expr.left, expected.left);
+    testExpr(expr.index, expected.index);
+  }
+}
+
 void testArrayByStmt(ast.Stmt actual, ast.Array expected) {
   final expr = expectExprStmt(actual);
   if (expr is ast.Array) {
