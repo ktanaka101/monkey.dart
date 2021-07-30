@@ -367,7 +367,7 @@ void main() {
         'myArray[1 + 1]',
         ast.Index(
           ast.Ident('myArray'),
-          ast.InfixExpr(ast.Int(1), ast.Operator.asterisk, ast.Int(1)),
+          ast.InfixExpr(ast.Int(1), ast.Operator.plus, ast.Int(1)),
         )
       ]
     ].map((input) =>
