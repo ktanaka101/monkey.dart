@@ -341,6 +341,32 @@ void main() {
       testStringLitByStmt(program.statements[0], expected);
     });
   });
+
+  test('array expressions', () {
+    final inputs = [
+      [
+        '[1, 2 * 2, 3 + 3]',
+        ast.Array([
+          ast.Int(1),
+          ast.InfixExpr(ast.Int(2), ast.Operator.asterisk, ast.Int(2)),
+          ast.InfixExpr(ast.Int(3), ast.Operator.plus, ast.Int(3)),
+        ])
+      ]
+    ].map((input) =>
+        Tuple2<String, ast.Array>(input[0] as String, input[1] as ast.Array));
+
+    runTest<ast.Array>(inputs, (program, expected) {
+      expect(program.statements.length, 1);
+      testArrayByStmt(program.statements[0], expected);
+    });
+  });
+
+}
+void testArrayByStmt(ast.Stmt actual, ast.Array expected) {
+  final expr = expectExprStmt(actual);
+  if (expr is ast.Array) {
+    testExprList(expr.elements, expected.elements);
+  }
 }
 
 void testStringLitByStmt(ast.Stmt actual, ast.StringLit expected) {
