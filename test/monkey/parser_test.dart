@@ -391,6 +391,7 @@ void testIndexByStmt(ast.Stmt actual, ast.Index expected) {
 
 void testArrayByStmt(ast.Stmt actual, ast.Array expected) {
   final expr = expectExprStmt(actual);
+  expect(expr, isA<ast.Array>());
   if (expr is ast.Array) {
     testExprList(expr.elements, expected.elements);
   }
@@ -398,6 +399,7 @@ void testArrayByStmt(ast.Stmt actual, ast.Array expected) {
 
 void testStringLitByStmt(ast.Stmt actual, ast.StringLit expected) {
   final expr = expectExprStmt(actual);
+  expect(expr, isA<ast.StringLit>());
   if (expr is ast.StringLit) {
     expect(expr.value, expected.value);
   }
@@ -405,6 +407,7 @@ void testStringLitByStmt(ast.Stmt actual, ast.StringLit expected) {
 
 void testCallByStmt(ast.Stmt actual, ast.Call expected) {
   final expr = expectExprStmt(actual);
+  expect(expr, isA<ast.Call>());
   if (expr is ast.Call) {
     testExpr(expr.func, expected.func);
     testExprList(expr.args, expected.args);
@@ -419,6 +422,7 @@ void testExprList(List<ast.Expr> actual, List<ast.Expr> expected) {
 
 void testFunctionByStmt(ast.Stmt actual, ast.MFunction expected) {
   final expr = expectExprStmt(actual);
+  expect(expr, isA<ast.MFunction>());
   if (expr is ast.MFunction) {
     expect(expr.name, expected.name);
     testExprList(expr.params, expected.params);
@@ -428,6 +432,7 @@ void testFunctionByStmt(ast.Stmt actual, ast.MFunction expected) {
 
 void testIfByStmt(ast.Stmt actual, ast.If expected) {
   final expr = expectExprStmt(actual);
+  expect(expr, isA<ast.If>());
   if (expr is ast.If) {
     testExpr(expr.cond, expected.cond);
     testBlock(expr.consequence, expected.consequence);
