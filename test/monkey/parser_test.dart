@@ -310,6 +310,39 @@ void main() {
       testFunctionByStmt(program.statements[0], expected);
     });
   });
+
+  test('call expressions', () {
+    final inputs = [
+      [
+        'add(1, 2 * 3, 4 + 5);',
+        ast.Call(ast.Ident('add'), [
+          ast.Int(1),
+          ast.InfixExpr(ast.Int(2), ast.Operator.asterisk, ast.Int(3)),
+          ast.InfixExpr(ast.Int(4), ast.Operator.plus, ast.Int(5)),
+        ]),
+      ]
+    ].map((input) =>
+        Tuple2<String, ast.Call>(input[0] as String, input[1] as ast.Call));
+
+    runTest<ast.Call>(inputs, (program, expected) {
+      expect(program.statements.length, 1);
+      testCallByStmt(program.statements[0], expected);
+    });
+  });
+}
+
+void testCallByStmt(ast.Stmt actual, ast.Call expected) {
+  final expr = expectExprStmt(actual);
+  if (expr is ast.Call) {
+    testExpr(expr.func, expected.func);
+    testExprList(expr.args, expected.args);
+  }
+}
+
+void testExprList(List<ast.Expr> actual, List<ast.Expr> expected) {
+  for (var i = 0; i < expected.length; i++) {
+    testExpr(actual[i], expected[i]);
+  }
 }
 
 void testFunctionByStmt(ast.Stmt actual, ast.MFunction expected) {
