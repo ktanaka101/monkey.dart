@@ -579,6 +579,17 @@ void testHash(ast.Hash actual, ast.Hash expected) {
   }
 }
 
+void testIf(ast.If actual, ast.If expected) {
+  testExpr(actual.cond, expected.cond);
+  testBlock(actual.consequence, expected.consequence);
+  if (expected.alternative == null) {
+    expect(actual.alternative, null);
+  } else {
+    expect(actual.alternative, isNotNull);
+    testBlock(actual.alternative!, expected.alternative!);
+  }
+}
+
 void runTest<T>(Iterable<Tuple2<String, T>> inputs,
     void Function(ast.Program, T) runExpecting) {
   for (final input in inputs) {
