@@ -590,6 +590,11 @@ void testIf(ast.If actual, ast.If expected) {
   }
 }
 
+void testIndex(ast.Index actual, ast.Index expected) {
+  testExpr(actual.left, expected.left);
+  testExpr(actual.index, expected.index);
+}
+
 void runTest<T>(Iterable<Tuple2<String, T>> inputs,
     void Function(ast.Program, T) runExpecting) {
   for (final input in inputs) {
