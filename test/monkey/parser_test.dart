@@ -349,9 +349,7 @@ void testFunctionByStmt(ast.Stmt actual, ast.MFunction expected) {
   final expr = expectExprStmt(actual);
   if (expr is ast.MFunction) {
     expect(expr.name, expected.name);
-    for (var i = 0; i < expected.params.length; i++) {
-      testIdent(expr.params[i], expected.params[i]);
-    }
+    testExprList(expr.params, expected.params);
     testBlock(expr.body, expected.body);
   }
 }
