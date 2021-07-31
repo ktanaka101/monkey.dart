@@ -601,6 +601,13 @@ void testInfixExpr(ast.InfixExpr actual, ast.InfixExpr expected) {
   testExpr(actual.right, expected.right);
 }
 
+void testFunction(ast.MFunction actual, ast.MFunction expected) {
+  expect(actual.name, expected.name);
+  for (var i = 0; i < expected.params.length; i++) {
+    testIdent(actual.params[i], expected.params[i]);
+  }
+}
+
 void runTest<T>(Iterable<Tuple2<String, T>> inputs,
     void Function(ast.Program, T) runExpecting) {
   for (final input in inputs) {
