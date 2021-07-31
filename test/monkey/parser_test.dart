@@ -604,6 +604,7 @@ void testInfixExpr(ast.InfixExpr actual, ast.InfixExpr expected) {
 void testFunction(ast.MFunction actual, ast.MFunction expected) {
   expect(actual.name, expected.name);
   testIdentList(actual.params, expected.params);
+  testBlock(actual.body, expected.body);
 }
 
 void testMacroLit(ast.MacroLit actual, ast.MacroLit expected) {
