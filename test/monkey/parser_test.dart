@@ -68,7 +68,7 @@ void main() {
 
     runTest<ast.Ident>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testIdentByStmt(program.statements[0], expected);
+      testAstByStmt(program.statements[0], expected, testIdent);
     });
   });
 
@@ -81,7 +81,7 @@ void main() {
 
     runTest<ast.Int>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testIntByStmt(program.statements[0], expected);
+      testAstByStmt(program.statements[0], expected, testInt);
     });
   });
 
@@ -95,7 +95,7 @@ void main() {
 
     runTest<ast.Boolean>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testBoolByStmt(program.statements[0], expected);
+      testAstByStmt(program.statements[0], expected, testBool);
     });
   });
 
@@ -111,7 +111,7 @@ void main() {
 
     runTest<ast.PrefixExpr>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testPrefixExprByStmt(program.statements[0], expected);
+      testAstByStmt(program.statements[0], expected, testPrefixExpr);
     });
   });
 
@@ -145,7 +145,7 @@ void main() {
 
     runTest<ast.InfixExpr>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testInfixExprByStmt(program.statements[0], expected);
+      testAstByStmt(program.statements[0], expected, testInfixExpr);
     });
   });
 
@@ -230,7 +230,7 @@ void main() {
 
     runTest<ast.If>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testIfByStmt(program.statements[0], expected);
+      testAstByStmt(program.statements[0], expected, testIf);
     });
   });
 
@@ -254,7 +254,7 @@ void main() {
 
     runTest<ast.MFunction>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testFunctionByStmt(program.statements[0], expected);
+      testAstByStmt(program.statements[0], expected, testFunction);
     });
   });
 
@@ -278,7 +278,7 @@ void main() {
 
     runTest<ast.MFunction>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testFunctionByStmt(program.statements[0], expected);
+      testAstByStmt(program.statements[0], expected, testFunction);
     });
   });
 
@@ -297,7 +297,7 @@ void main() {
 
     runTest<ast.Call>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testCallByStmt(program.statements[0], expected);
+      testAstByStmt(program.statements[0], expected, testCall);
     });
   });
 
@@ -309,7 +309,7 @@ void main() {
 
     runTest<ast.StringLit>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testStringLitByStmt(program.statements[0], expected);
+      testAstByStmt(program.statements[0], expected, testStringLit);
     });
   });
 
@@ -328,7 +328,7 @@ void main() {
 
     runTest<ast.Array>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testArrayByStmt(program.statements[0], expected);
+      testAstByStmt(program.statements[0], expected, testArray);
     });
   });
 
@@ -346,7 +346,7 @@ void main() {
 
     runTest<ast.Index>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testIndexByStmt(program.statements[0], expected);
+      testAstByStmt(program.statements[0], expected, testIndex);
     });
   });
 
@@ -392,7 +392,7 @@ void main() {
 
     runTest<ast.Hash>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testHashByStmt(program.statements[0], expected);
+      testAstByStmt(program.statements[0], expected, testHash);
     });
   });
 
@@ -430,35 +430,11 @@ void testAstByStmt<T extends ast.Expr>(
   }
 }
 
-void testHashByStmt(ast.Stmt actual, ast.Hash expected) {
-  testAstByStmt(actual, expected, testHash);
-}
-
-void testIndexByStmt(ast.Stmt actual, ast.Index expected) {
-  testAstByStmt<ast.Index>(actual, expected, testIndex);
-}
-
-void testArrayByStmt(ast.Stmt actual, ast.Array expected) {
-  testAstByStmt(actual, expected, testArray);
-}
-
-void testStringLitByStmt(ast.Stmt actual, ast.StringLit expected) {
-  testAstByStmt(actual, expected, testStringLit);
-}
-
-void testCallByStmt(ast.Stmt actual, ast.Call expected) {
-  testAstByStmt(actual, expected, testCall);
-}
-
 void testList<T>(List<T> actual, List<T> expected, void Function(T, T) test) {
   expect(actual.length, expected.length);
   for (var i = 0; i < expected.length; i++) {
     test(actual[i], expected[i]);
   }
-}
-
-void testFunctionByStmt(ast.Stmt actual, ast.MFunction expected) {
-  testAstByStmt(actual, expected, testFunction);
 }
 
 void testIfByStmt(ast.Stmt actual, ast.If expected) {
@@ -510,10 +486,6 @@ void testReturnByStmt(ast.Stmt actual, ast.Return expected) {
   }
 }
 
-void testIdentByStmt(ast.Stmt actual, ast.Ident expected) {
-  testAstByStmt(actual, expected, testIdent);
-}
-
 ast.Expr expectExprStmt(ast.Stmt actual) {
   expect(actual, isA<ast.ExprStmt>());
   if (actual is ast.ExprStmt) {
@@ -521,22 +493,6 @@ ast.Expr expectExprStmt(ast.Stmt actual) {
   }
 
   throw Exception('Unreachable');
-}
-
-void testIntByStmt(ast.Stmt actual, ast.Int expected) {
-  testAstByStmt(actual, expected, testInt);
-}
-
-void testBoolByStmt(ast.Stmt actual, ast.Boolean expected) {
-  testAstByStmt(actual, expected, testBool);
-}
-
-void testPrefixExprByStmt(ast.Stmt actual, ast.PrefixExpr expected) {
-  testAstByStmt(actual, expected, testPrefixExpr);
-}
-
-void testInfixExprByStmt(ast.Stmt actual, ast.InfixExpr expected) {
-  testAstByStmt(actual, expected, testInfixExpr);
 }
 
 void testIdent(ast.Ident actual, ast.Ident expected) {
