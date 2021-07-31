@@ -56,7 +56,7 @@ void main() {
 
     runTest<ast.Return>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testReturnByStmt(program.statements[0], expected);
+      testStmtByStmt(program.statements[0], expected, testReturn);
     });
   });
 
@@ -472,13 +472,6 @@ void testExprStmt(ast.ExprStmt actual, ast.ExprStmt expected) {
 void testLet(ast.Let actual, ast.Let expected) {
   testIdent(actual.name, expected.name);
   testExpr(actual.value, expected.value);
-}
-
-void testReturnByStmt(ast.Stmt actual, ast.Return expected) {
-  expect(actual, isA<ast.Return>());
-  if (actual is ast.Return) {
-    testReturn(actual, expected);
-  }
 }
 
 void testReturn(ast.Return actual, ast.Return expected) {
