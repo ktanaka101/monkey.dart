@@ -5,30 +5,6 @@ import 'package:monkey/monkey/lexer.dart';
 import 'package:monkey/monkey/parser.dart';
 import 'package:monkey/monkey/parser/ast.dart' as ast;
 
-class TestValue {}
-
-class TestInt extends TestValue {
-  TestInt(this.value);
-  final int value;
-}
-
-class TestIdent extends TestValue {
-  TestIdent(this.value);
-  final String value;
-}
-
-class TestBool extends TestValue {
-  // ignore: avoid_positional_boolean_parameters
-  TestBool(this.value);
-  final bool value;
-}
-
-class TestLet extends TestValue {
-  TestLet(this.name, this.value);
-  final String name;
-  final TestValue value;
-}
-
 void main() {
   test('let statements', () {
     final inputs = [
