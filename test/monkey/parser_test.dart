@@ -454,12 +454,14 @@ void testBlockByStmt(ast.Stmt actual, ast.Block expected) {
 }
 
 void testStmt(ast.Stmt actual, ast.Stmt expected) {
+  expect(actual.runtimeType, expected.runtimeType);
+
   if (expected is ast.Let) {
-    testLetByStmt(actual, expected);
+    testLet(actual as ast.Let, expected);
   } else if (expected is ast.Return) {
-    testReturnByStmt(actual, expected);
+    testReturn(actual as ast.Return, expected);
   } else if (expected is ast.Block) {
-    testBlockByStmt(actual, expected);
+    testBlock(actual as ast.Block, expected);
   } else if (expected is ast.ExprStmt) {
     testExprStmtByStmt(actual, expected);
   } else {
