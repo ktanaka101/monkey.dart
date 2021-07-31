@@ -384,8 +384,7 @@ void testIndexByStmt(ast.Stmt actual, ast.Index expected) {
   final expr = expectExprStmt(actual);
   expect(expr, isA<ast.Index>());
   if (expr is ast.Index) {
-    testExpr(expr.left, expected.left);
-    testExpr(expr.index, expected.index);
+    testIndex(expr, expected);
   }
 }
 
@@ -393,7 +392,7 @@ void testArrayByStmt(ast.Stmt actual, ast.Array expected) {
   final expr = expectExprStmt(actual);
   expect(expr, isA<ast.Array>());
   if (expr is ast.Array) {
-    testExprList(expr.elements, expected.elements);
+    testArray(expr, expected);
   }
 }
 
@@ -401,7 +400,7 @@ void testStringLitByStmt(ast.Stmt actual, ast.StringLit expected) {
   final expr = expectExprStmt(actual);
   expect(expr, isA<ast.StringLit>());
   if (expr is ast.StringLit) {
-    expect(expr.value, expected.value);
+    testStringLit(expr, expected);
   }
 }
 
@@ -409,8 +408,7 @@ void testCallByStmt(ast.Stmt actual, ast.Call expected) {
   final expr = expectExprStmt(actual);
   expect(expr, isA<ast.Call>());
   if (expr is ast.Call) {
-    testExpr(expr.func, expected.func);
-    testExprList(expr.args, expected.args);
+    testCall(expr, expected);
   }
 }
 
@@ -424,9 +422,7 @@ void testFunctionByStmt(ast.Stmt actual, ast.MFunction expected) {
   final expr = expectExprStmt(actual);
   expect(expr, isA<ast.MFunction>());
   if (expr is ast.MFunction) {
-    expect(expr.name, expected.name);
-    testExprList(expr.params, expected.params);
-    testBlock(expr.body, expected.body);
+    testFunction(expr, expected);
   }
 }
 
@@ -434,14 +430,7 @@ void testIfByStmt(ast.Stmt actual, ast.If expected) {
   final expr = expectExprStmt(actual);
   expect(expr, isA<ast.If>());
   if (expr is ast.If) {
-    testExpr(expr.cond, expected.cond);
-    testBlock(expr.consequence, expected.consequence);
-    if (expected.alternative == null) {
-      expect(expr.alternative, null);
-    } else {
-      expect(expr.alternative, isNotNull);
-      testBlock(expr.alternative!, expected.alternative!);
-    }
+    testIf(expr, expected);
   }
 }
 
@@ -497,7 +486,7 @@ void testIdentByStmt(ast.Stmt actual, ast.Ident expected) {
   final expr = expectExprStmt(actual);
   expect(expr, isA<ast.Ident>());
   if (expr is ast.Ident) {
-    expect(expr.value, expected.value);
+    testIdent(expr, expected);
   }
 }
 
@@ -514,7 +503,7 @@ void testIntByStmt(ast.Stmt actual, ast.Int expected) {
   final expr = expectExprStmt(actual);
   expect(expr, isA<ast.Int>());
   if (expr is ast.Int) {
-    expect(expr.value, expected.value);
+    testInt(expr, expected);
   }
 }
 
@@ -522,7 +511,7 @@ void testBoolByStmt(ast.Stmt actual, ast.Boolean expected) {
   final expr = expectExprStmt(actual);
   expect(expr, isA<ast.Boolean>());
   if (expr is ast.Boolean) {
-    expect(expr.value, expected.value);
+    testBool(expr, expected);
   }
 }
 
@@ -530,8 +519,7 @@ void testPrefixExprByStmt(ast.Stmt actual, ast.PrefixExpr expected) {
   final expr = expectExprStmt(actual);
   expect(expr, isA<ast.PrefixExpr>());
   if (expr is ast.PrefixExpr) {
-    expect(expr.ope, expected.ope);
-    testExpr(expr.right, expected.right);
+    testPrefixExpr(expr, expected);
   }
 }
 
@@ -539,9 +527,7 @@ void testInfixExprByStmt(ast.Stmt actual, ast.InfixExpr expected) {
   final expr = expectExprStmt(actual);
   expect(expr, isA<ast.InfixExpr>());
   if (expr is ast.InfixExpr) {
-    testExpr(expr.left, expected.left);
-    expect(expr.ope, expected.ope);
-    testExpr(expr.right, expected.right);
+    testInfixExpr(expr, expected);
   }
 }
 
