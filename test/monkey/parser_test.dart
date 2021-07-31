@@ -487,8 +487,12 @@ void testLet(ast.Let actual, ast.Let expected) {
 void testReturnByStmt(ast.Stmt actual, ast.Return expected) {
   expect(actual, isA<ast.Return>());
   if (actual is ast.Return) {
-    testExpr(actual.value, expected.value);
+    testReturn(actual, expected);
   }
+}
+
+void testReturn(ast.Return actual, ast.Return expected) {
+  testExpr(actual.value, expected.value);
 }
 
 ast.Expr expectExprStmt(ast.Stmt actual) {
