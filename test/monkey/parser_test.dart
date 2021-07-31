@@ -380,36 +380,29 @@ void main() {
   });
 }
 
-void testIndexByStmt(ast.Stmt actual, ast.Index expected) {
+void testAstByStmt<T extends ast.Expr>(
+    ast.Stmt actual, T expected, void Function(T, T) test) {
   final expr = expectExprStmt(actual);
-  expect(expr, isA<ast.Index>());
-  if (expr is ast.Index) {
-    testIndex(expr, expected);
+  expect(expr, isA<T>());
+  if (expr is T) {
+    test(expr, expected);
   }
+}
+
+void testIndexByStmt(ast.Stmt actual, ast.Index expected) {
+  testAstByStmt<ast.Index>(actual, expected, testIndex);
 }
 
 void testArrayByStmt(ast.Stmt actual, ast.Array expected) {
-  final expr = expectExprStmt(actual);
-  expect(expr, isA<ast.Array>());
-  if (expr is ast.Array) {
-    testArray(expr, expected);
-  }
+  testAstByStmt(actual, expected, testArray);
 }
 
 void testStringLitByStmt(ast.Stmt actual, ast.StringLit expected) {
-  final expr = expectExprStmt(actual);
-  expect(expr, isA<ast.StringLit>());
-  if (expr is ast.StringLit) {
-    testStringLit(expr, expected);
-  }
+  testAstByStmt(actual, expected, testStringLit);
 }
 
 void testCallByStmt(ast.Stmt actual, ast.Call expected) {
-  final expr = expectExprStmt(actual);
-  expect(expr, isA<ast.Call>());
-  if (expr is ast.Call) {
-    testCall(expr, expected);
-  }
+  testAstByStmt(actual, expected, testCall);
 }
 
 void testExprList(List<ast.Expr> actual, List<ast.Expr> expected) {
@@ -419,19 +412,11 @@ void testExprList(List<ast.Expr> actual, List<ast.Expr> expected) {
 }
 
 void testFunctionByStmt(ast.Stmt actual, ast.MFunction expected) {
-  final expr = expectExprStmt(actual);
-  expect(expr, isA<ast.MFunction>());
-  if (expr is ast.MFunction) {
-    testFunction(expr, expected);
-  }
+  testAstByStmt(actual, expected, testFunction);
 }
 
 void testIfByStmt(ast.Stmt actual, ast.If expected) {
-  final expr = expectExprStmt(actual);
-  expect(expr, isA<ast.If>());
-  if (expr is ast.If) {
-    testIf(expr, expected);
-  }
+  testAstByStmt(actual, expected, testIf);
 }
 
 void testBlock(ast.Block actual, ast.Block expected) {
@@ -483,11 +468,7 @@ void testReturnByStmt(ast.Stmt actual, ast.Return expected) {
 }
 
 void testIdentByStmt(ast.Stmt actual, ast.Ident expected) {
-  final expr = expectExprStmt(actual);
-  expect(expr, isA<ast.Ident>());
-  if (expr is ast.Ident) {
-    testIdent(expr, expected);
-  }
+  testAstByStmt(actual, expected, testIdent);
 }
 
 ast.Expr expectExprStmt(ast.Stmt actual) {
@@ -500,35 +481,19 @@ ast.Expr expectExprStmt(ast.Stmt actual) {
 }
 
 void testIntByStmt(ast.Stmt actual, ast.Int expected) {
-  final expr = expectExprStmt(actual);
-  expect(expr, isA<ast.Int>());
-  if (expr is ast.Int) {
-    testInt(expr, expected);
-  }
+  testAstByStmt(actual, expected, testInt);
 }
 
 void testBoolByStmt(ast.Stmt actual, ast.Boolean expected) {
-  final expr = expectExprStmt(actual);
-  expect(expr, isA<ast.Boolean>());
-  if (expr is ast.Boolean) {
-    testBool(expr, expected);
-  }
+  testAstByStmt(actual, expected, testBool);
 }
 
 void testPrefixExprByStmt(ast.Stmt actual, ast.PrefixExpr expected) {
-  final expr = expectExprStmt(actual);
-  expect(expr, isA<ast.PrefixExpr>());
-  if (expr is ast.PrefixExpr) {
-    testPrefixExpr(expr, expected);
-  }
+  testAstByStmt(actual, expected, testPrefixExpr);
 }
 
 void testInfixExprByStmt(ast.Stmt actual, ast.InfixExpr expected) {
-  final expr = expectExprStmt(actual);
-  expect(expr, isA<ast.InfixExpr>());
-  if (expr is ast.InfixExpr) {
-    testInfixExpr(expr, expected);
-  }
+  testAstByStmt(actual, expected, testInfixExpr);
 }
 
 void testIdent(ast.Ident actual, ast.Ident expected) {
