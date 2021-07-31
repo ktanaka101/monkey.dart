@@ -603,9 +603,7 @@ void testInfixExpr(ast.InfixExpr actual, ast.InfixExpr expected) {
 
 void testFunction(ast.MFunction actual, ast.MFunction expected) {
   expect(actual.name, expected.name);
-  for (var i = 0; i < expected.params.length; i++) {
-    testIdent(actual.params[i], expected.params[i]);
-  }
+  testIdentList(actual.params, expected.params);
 }
 
 void testMacroLit(ast.MacroLit actual, ast.MacroLit expected) {
