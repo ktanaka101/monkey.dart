@@ -423,10 +423,13 @@ void main() {
 
 void testExprByStmt<T extends ast.Expr>(
     ast.Stmt actual, T expected, void Function(T, T) test) {
-  final expr = expectExprStmt(actual);
-  expect(expr, isA<T>());
-  if (expr is T) {
-    test(expr, expected);
+  expect(actual, isA<ast.ExprStmt>());
+  if (actual is ast.ExprStmt) {
+    final actualExpr = actual.expr;
+    expect(actualExpr, isA<T>());
+    if (actualExpr is T) {
+      test(actualExpr, expected);
+    }
   }
 }
 
@@ -476,15 +479,6 @@ void testLet(ast.Let actual, ast.Let expected) {
 
 void testReturn(ast.Return actual, ast.Return expected) {
   testExpr(actual.value, expected.value);
-}
-
-ast.Expr expectExprStmt(ast.Stmt actual) {
-  expect(actual, isA<ast.ExprStmt>());
-  if (actual is ast.ExprStmt) {
-    return actual.expr;
-  }
-
-  throw Exception('Unreachable');
 }
 
 void testIdent(ast.Ident actual, ast.Ident expected) {
