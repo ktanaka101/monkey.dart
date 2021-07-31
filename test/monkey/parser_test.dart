@@ -578,19 +578,13 @@ void testInfixExpr(ast.InfixExpr actual, ast.InfixExpr expected) {
 
 void testFunction(ast.MFunction actual, ast.MFunction expected) {
   expect(actual.name, expected.name);
-  testIdentList(actual.params, expected.params);
+  testList(actual.params, expected.params, testIdent);
   testBlock(actual.body, expected.body);
 }
 
 void testMacroLit(ast.MacroLit actual, ast.MacroLit expected) {
-  testIdentList(actual.params, expected.params);
+  testList(actual.params, expected.params, testIdent);
   testBlock(actual.body, expected.body);
-}
-
-void testIdentList(List<ast.Ident> actual, List<ast.Ident> expected) {
-  for (var i = 0; i < expected.length; i++) {
-    testIdent(actual[i], expected[i]);
-  }
 }
 
 void testPrefixExpr(ast.PrefixExpr actual, ast.PrefixExpr expected) {
