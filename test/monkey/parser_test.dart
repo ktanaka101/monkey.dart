@@ -367,7 +367,7 @@ void main() {
           ast.Pair(ast.StringLit('one'),
               ast.InfixExpr(ast.Int(0), ast.Operator.plus, ast.Int(1))),
           ast.Pair(ast.StringLit('two'),
-              ast.InfixExpr(ast.Int(10), ast.Operator.minus, ast.Int(8))),
+              ast.InfixExpr(ast.Int(10), ast.Operator.minus, ast.Int(2))),
           ast.Pair(ast.StringLit('three'),
               ast.InfixExpr(ast.Int(15), ast.Operator.slash, ast.Int(5))),
         ])
@@ -571,8 +571,8 @@ void testHash(ast.Hash actual, ast.Hash expected) {
 }
 
 void testPair(ast.Pair actual, ast.Pair expected) {
-  expect(actual.key, expected.key);
-  expect(actual.value, expected.value);
+  testExpr(actual.key, expected.key);
+  testExpr(actual.value, expected.value);
 }
 
 void testIf(ast.If actual, ast.If expected) {
