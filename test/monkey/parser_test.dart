@@ -552,10 +552,32 @@ void testIdent(ast.Ident actual, ast.Ident expected) {
 void testExpr(ast.Expr actual, ast.Expr expected) {
   expect(actual.runtimeType, expected.runtimeType);
 
-  if (actual is ast.Int) {
-    testInt(actual, expected as ast.Int);
+  if (expected is ast.Int) {
+    testInt(actual as ast.Int, expected);
+  } else if (expected is ast.Boolean) {
+    testBool(actual as ast.Boolean, expected);
+  } else if (expected is ast.Call) {
+    testCall(actual as ast.Call, expected);
+  } else if (expected is ast.Hash) {
+    testHash(actual as ast.Hash, expected);
+  } else if (expected is ast.Ident) {
+    testIdent(actual as ast.Ident, expected);
+  } else if (expected is ast.If) {
+    testIf(actual as ast.If, expected);
+  } else if (expected is ast.Index) {
+    testIndex(actual as ast.Index, expected);
+  } else if (expected is ast.InfixExpr) {
+    testInfixExpr(actual as ast.InfixExpr, expected);
+  } else if (expected is ast.MFunction) {
+    testFunction(actual as ast.MFunction, expected);
+  } else if (expected is ast.MacroLit) {
+    testMacroLit(actual as ast.MacroLit, expected);
+  } else if (expected is ast.PrefixExpr) {
+    testPrefixExpr(actual as ast.PrefixExpr, expected);
+  } else if (expected is ast.StringLit) {
+    testStringLit(actual as ast.StringLit, expected);
   } else {
-    expect(actual.runtimeType, expected.runtimeType);
+    throw Exception('unimplements');
   }
 }
 
