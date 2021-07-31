@@ -68,7 +68,7 @@ void main() {
 
     runTest<ast.Ident>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testAstByStmt(program.statements[0], expected, testIdent);
+      testExprByStmt(program.statements[0], expected, testIdent);
     });
   });
 
@@ -81,7 +81,7 @@ void main() {
 
     runTest<ast.Int>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testAstByStmt(program.statements[0], expected, testInt);
+      testExprByStmt(program.statements[0], expected, testInt);
     });
   });
 
@@ -95,7 +95,7 @@ void main() {
 
     runTest<ast.Boolean>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testAstByStmt(program.statements[0], expected, testBool);
+      testExprByStmt(program.statements[0], expected, testBool);
     });
   });
 
@@ -111,7 +111,7 @@ void main() {
 
     runTest<ast.PrefixExpr>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testAstByStmt(program.statements[0], expected, testPrefixExpr);
+      testExprByStmt(program.statements[0], expected, testPrefixExpr);
     });
   });
 
@@ -145,7 +145,7 @@ void main() {
 
     runTest<ast.InfixExpr>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testAstByStmt(program.statements[0], expected, testInfixExpr);
+      testExprByStmt(program.statements[0], expected, testInfixExpr);
     });
   });
 
@@ -230,7 +230,7 @@ void main() {
 
     runTest<ast.If>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testAstByStmt(program.statements[0], expected, testIf);
+      testExprByStmt(program.statements[0], expected, testIf);
     });
   });
 
@@ -254,7 +254,7 @@ void main() {
 
     runTest<ast.MFunction>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testAstByStmt(program.statements[0], expected, testFunction);
+      testExprByStmt(program.statements[0], expected, testFunction);
     });
   });
 
@@ -278,7 +278,7 @@ void main() {
 
     runTest<ast.MFunction>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testAstByStmt(program.statements[0], expected, testFunction);
+      testExprByStmt(program.statements[0], expected, testFunction);
     });
   });
 
@@ -297,7 +297,7 @@ void main() {
 
     runTest<ast.Call>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testAstByStmt(program.statements[0], expected, testCall);
+      testExprByStmt(program.statements[0], expected, testCall);
     });
   });
 
@@ -309,7 +309,7 @@ void main() {
 
     runTest<ast.StringLit>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testAstByStmt(program.statements[0], expected, testStringLit);
+      testExprByStmt(program.statements[0], expected, testStringLit);
     });
   });
 
@@ -328,7 +328,7 @@ void main() {
 
     runTest<ast.Array>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testAstByStmt(program.statements[0], expected, testArray);
+      testExprByStmt(program.statements[0], expected, testArray);
     });
   });
 
@@ -346,7 +346,7 @@ void main() {
 
     runTest<ast.Index>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testAstByStmt(program.statements[0], expected, testIndex);
+      testExprByStmt(program.statements[0], expected, testIndex);
     });
   });
 
@@ -392,7 +392,7 @@ void main() {
 
     runTest<ast.Hash>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testAstByStmt(program.statements[0], expected, testHash);
+      testExprByStmt(program.statements[0], expected, testHash);
     });
   });
 
@@ -416,12 +416,12 @@ void main() {
 
     runTest<ast.MacroLit>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testAstByStmt(program.statements[0], expected, testMacroLit);
+      testExprByStmt(program.statements[0], expected, testMacroLit);
     });
   });
 }
 
-void testAstByStmt<T extends ast.Expr>(
+void testExprByStmt<T extends ast.Expr>(
     ast.Stmt actual, T expected, void Function(T, T) test) {
   final expr = expectExprStmt(actual);
   expect(expr, isA<T>());
