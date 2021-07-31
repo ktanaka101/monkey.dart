@@ -608,6 +608,17 @@ void testFunction(ast.MFunction actual, ast.MFunction expected) {
   }
 }
 
+void testMacroLit(ast.MacroLit actual, ast.MacroLit expected) {
+  testIdentList(actual.params, expected.params);
+  testBlock(actual.body, expected.body);
+}
+
+void testIdentList(List<ast.Ident> actual, List<ast.Ident> expected) {
+  for (var i = 0; i < expected.length; i++) {
+    testIdent(actual[i], expected[i]);
+  }
+}
+
 void runTest<T>(Iterable<Tuple2<String, T>> inputs,
     void Function(ast.Program, T) runExpecting) {
   for (final input in inputs) {
