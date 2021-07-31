@@ -41,7 +41,7 @@ void main() {
 
     runTest<ast.Let>(inputs, (program, expected) {
       expect(program.statements.length, 1);
-      testLetByStmt(program.statements[0], expected);
+      testStmtByStmt(program.statements[0], expected, testLet);
     });
   });
 
@@ -449,10 +449,6 @@ void testBlock(ast.Block actual, ast.Block expected) {
   testList(actual.statements, expected.statements, testStmt);
 }
 
-void testBlockByStmt(ast.Stmt actual, ast.Block expected) {
-  testStmtByStmt(actual, expected, testBlock);
-}
-
 void testStmt(ast.Stmt actual, ast.Stmt expected) {
   expect(actual.runtimeType, expected.runtimeType);
 
@@ -469,20 +465,8 @@ void testStmt(ast.Stmt actual, ast.Stmt expected) {
   }
 }
 
-void testExprStmtByStmt(ast.Stmt actual, ast.ExprStmt expected) {
-  final expr = expectExprStmt(actual);
-  testExpr(expr, expected.expr);
-}
-
 void testExprStmt(ast.ExprStmt actual, ast.ExprStmt expected) {
   testExpr(actual.expr, expected.expr);
-}
-
-void testLetByStmt(ast.Stmt actual, ast.Let expected) {
-  expect(actual, isA<ast.Let>());
-  if (actual is ast.Let) {
-    testLet(actual, expected);
-  }
 }
 
 void testLet(ast.Let actual, ast.Let expected) {
