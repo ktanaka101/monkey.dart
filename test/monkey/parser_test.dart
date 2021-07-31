@@ -419,6 +419,24 @@ void main() {
       testExprByStmt(program.statements[0], expected, testMacroLit);
     });
   });
+
+  test('function literal with name', () {
+    final inputs = [
+      [
+        'let my_function = fn() {};',
+        ast.Let(
+          ast.Ident('my_function'),
+          ast.MFunction([], ast.Block([]), 'my_function'),
+        )
+      ],
+    ].map((input) =>
+        Tuple2<String, ast.Let>(input[0] as String, input[1] as ast.Let));
+
+    runTest<ast.Let>(inputs, (program, expected) {
+      expect(program.statements.length, 1);
+      testStmtByStmt(program.statements[0], expected, testLet);
+    });
+  });
 }
 
 void testExprByStmt<T extends ast.Expr>(
