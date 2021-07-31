@@ -430,6 +430,14 @@ void testExprByStmt<T extends ast.Expr>(
   }
 }
 
+void testStmtByStmt<T extends ast.Stmt>(
+    ast.Stmt actual, T expected, void Function(T, T) test) {
+  expect(actual, isA<T>());
+  if (actual is T) {
+    test(actual, expected);
+  }
+}
+
 void testList<T>(List<T> actual, List<T> expected, void Function(T, T) test) {
   expect(actual.length, expected.length);
   for (var i = 0; i < expected.length; i++) {
@@ -442,10 +450,7 @@ void testBlock(ast.Block actual, ast.Block expected) {
 }
 
 void testBlockByStmt(ast.Stmt actual, ast.Block expected) {
-  expect(actual, isA<ast.Block>());
-  if (actual is ast.Block) {
-    testBlock(actual, expected);
-  }
+  testStmtByStmt(actual, expected, testBlock);
 }
 
 void testStmt(ast.Stmt actual, ast.Stmt expected) {
