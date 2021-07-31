@@ -576,6 +576,8 @@ void testExpr(ast.Expr actual, ast.Expr expected) {
     testPrefixExpr(actual as ast.PrefixExpr, expected);
   } else if (expected is ast.StringLit) {
     testStringLit(actual as ast.StringLit, expected);
+  } else if (expected is ast.Array) {
+    testArray(actual as ast.Array, expected);
   } else {
     throw Exception('unimplements');
   }
@@ -647,6 +649,10 @@ void testPrefixExpr(ast.PrefixExpr actual, ast.PrefixExpr expected) {
 
 void testStringLit(ast.StringLit actual, ast.StringLit expected) {
   expect(actual.value, expected.value);
+}
+
+void testArray(ast.Array actual, ast.Array expected) {
+  testExprList(actual.elements, expected.elements);
 }
 
 void runTest<T>(Iterable<Tuple2<String, T>> inputs,
