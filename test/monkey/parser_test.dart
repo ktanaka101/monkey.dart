@@ -29,35 +29,13 @@ class TestLet extends TestValue {
   final TestValue value;
 }
 
-ast.Let createExpectedLet(String name, ast.Expr expr) =>
-    ast.Let(ast.Ident(name), expr);
-
-ast.Return createExpectedReturn(ast.Expr expr) => ast.Return(expr);
-ast.Ident createExpectedIdent(String ident) => ast.Ident(ident);
-ast.Int createExpectedInt(int value) => ast.Int(value);
-// ignore: avoid_positional_boolean_parameters
-ast.Boolean createExpectedBool(bool value) => ast.Boolean(value);
-ast.PrefixExpr createExpectedPrefixExpr(ast.Operator ope, ast.Expr expr) =>
-    ast.PrefixExpr(ope, expr);
-
-ast.InfixExpr createExpectedInfixExpr(
-        ast.Expr left, ast.Operator ope, ast.Expr right) =>
-    ast.InfixExpr(left, ope, right);
-ast.If createExpectedIf(
-        ast.Expr cond, ast.Block consequence, ast.Block? alternative) =>
-    ast.If(cond, consequence, alternative);
-ast.MFunction createExpectedFunctionExpr(
-        List<ast.Ident> params, ast.Block body, String? name) =>
-    ast.MFunction(params, body, name);
-
 void main() {
   test('let statements', () {
-    const e = createExpectedLet;
     final inputs = [
-      ['let x = 5', e('x', ast.Int(5))],
-      ['let x = 5;', e('x', ast.Int(5))],
-      ['let y = true;', e('y', ast.Boolean(true))],
-      ['let foobar = y;', e('foobar', ast.Ident('y'))],
+      ['let x = 5', ast.Let(ast.Ident('x'), ast.Int(5))],
+      ['let x = 5;', ast.Let(ast.Ident('x'), ast.Int(5))],
+      ['let y = true;', ast.Let(ast.Ident('y'), ast.Boolean(true))],
+      ['let foobar = y;', ast.Let(ast.Ident('foobar'), ast.Ident('y'))],
     ].map((input) =>
         Tuple2<String, ast.Let>(input[0] as String, input[1] as ast.Let));
 
@@ -68,12 +46,11 @@ void main() {
   });
 
   test('return statements', () {
-    const e = createExpectedReturn;
     final inputs = [
-      ['return 5', e(ast.Int(5))],
-      ['return 5;', e(ast.Int(5))],
-      ['return true;', e(ast.Boolean(true))],
-      ['return y;', e(ast.Ident('y'))],
+      ['return 5', ast.Return(ast.Int(5))],
+      ['return 5;', ast.Return(ast.Int(5))],
+      ['return true;', ast.Return(ast.Boolean(true))],
+      ['return y;', ast.Return(ast.Ident('y'))],
     ].map((input) =>
         Tuple2<String, ast.Return>(input[0] as String, input[1] as ast.Return));
 
@@ -84,9 +61,8 @@ void main() {
   });
 
   test('identifier expressions', () {
-    const e = createExpectedIdent;
     final inputs = [
-      ['foobar', e('foobar')]
+      ['foobar', ast.Ident('foobar')]
     ].map((input) =>
         Tuple2<String, ast.Ident>(input[0] as String, input[1] as ast.Ident));
 
@@ -97,10 +73,9 @@ void main() {
   });
 
   test('integer expressions', () {
-    const e = createExpectedInt;
     final inputs = [
-      ['5', e(5)],
-      ['5;', e(5)]
+      ['5', ast.Int(5)],
+      ['5;', ast.Int(5)]
     ].map((input) =>
         Tuple2<String, ast.Int>(input[0] as String, input[1] as ast.Int));
 
@@ -111,11 +86,10 @@ void main() {
   });
 
   test('boolean expressions', () {
-    const e = createExpectedBool;
     final inputs = [
-      ['true', e(true)],
-      ['true;', e(true)],
-      ['false;', e(false)],
+      ['true', ast.Boolean(true)],
+      ['true;', ast.Boolean(true)],
+      ['false;', ast.Boolean(false)],
     ].map((input) => Tuple2<String, ast.Boolean>(
         input[0] as String, input[1] as ast.Boolean));
 
@@ -126,13 +100,12 @@ void main() {
   });
 
   test('prefix expressions', () {
-    const e = createExpectedPrefixExpr;
     final inputs = [
-      ['!5', e(ast.Operator.bang, ast.Int(5))],
-      ['!5;', e(ast.Operator.bang, ast.Int(5))],
-      ['-15', e(ast.Operator.minus, ast.Int(15))],
-      ['!true;', e(ast.Operator.bang, ast.Boolean(true))],
-      ['!false;', e(ast.Operator.bang, ast.Boolean(false))]
+      ['!5', ast.PrefixExpr(ast.Operator.bang, ast.Int(5))],
+      ['!5;', ast.PrefixExpr(ast.Operator.bang, ast.Int(5))],
+      ['-15', ast.PrefixExpr(ast.Operator.minus, ast.Int(15))],
+      ['!true;', ast.PrefixExpr(ast.Operator.bang, ast.Boolean(true))],
+      ['!false;', ast.PrefixExpr(ast.Operator.bang, ast.Boolean(false))]
     ].map((input) => Tuple2<String, ast.PrefixExpr>(
         input[0] as String, input[1] as ast.PrefixExpr));
 
@@ -143,28 +116,29 @@ void main() {
   });
 
   test('infix expressions', () {
-    const e = createExpectedInfixExpr;
     final inputs = [
-      ['5 + 5', e(ast.Int(5), ast.Operator.plus, ast.Int(5))],
-      ['5 + 5;', e(ast.Int(5), ast.Operator.plus, ast.Int(5))],
-      ['5 - 5;', e(ast.Int(5), ast.Operator.minus, ast.Int(5))],
-      ['5 * 5', e(ast.Int(5), ast.Operator.asterisk, ast.Int(5))],
-      ['5 / 5', e(ast.Int(5), ast.Operator.slash, ast.Int(5))],
-      ['5 > 5', e(ast.Int(5), ast.Operator.gt, ast.Int(5))],
-      ['5 < 5', e(ast.Int(5), ast.Operator.lt, ast.Int(5))],
-      ['5 == 5;', e(ast.Int(5), ast.Operator.equal, ast.Int(5))],
-      ['5 != 5;', e(ast.Int(5), ast.Operator.notEqual, ast.Int(5))],
+      ['5 + 5', ast.InfixExpr(ast.Int(5), ast.Operator.plus, ast.Int(5))],
+      ['5 + 5;', ast.InfixExpr(ast.Int(5), ast.Operator.plus, ast.Int(5))],
+      ['5 - 5;', ast.InfixExpr(ast.Int(5), ast.Operator.minus, ast.Int(5))],
+      ['5 * 5', ast.InfixExpr(ast.Int(5), ast.Operator.asterisk, ast.Int(5))],
+      ['5 / 5', ast.InfixExpr(ast.Int(5), ast.Operator.slash, ast.Int(5))],
+      ['5 > 5', ast.InfixExpr(ast.Int(5), ast.Operator.gt, ast.Int(5))],
+      ['5 < 5', ast.InfixExpr(ast.Int(5), ast.Operator.lt, ast.Int(5))],
+      ['5 == 5;', ast.InfixExpr(ast.Int(5), ast.Operator.equal, ast.Int(5))],
+      ['5 != 5;', ast.InfixExpr(ast.Int(5), ast.Operator.notEqual, ast.Int(5))],
       [
         'true == true;',
-        e(ast.Boolean(true), ast.Operator.equal, ast.Boolean(true))
+        ast.InfixExpr(ast.Boolean(true), ast.Operator.equal, ast.Boolean(true))
       ],
       [
         'true != false;',
-        e(ast.Boolean(true), ast.Operator.notEqual, ast.Boolean(false))
+        ast.InfixExpr(
+            ast.Boolean(true), ast.Operator.notEqual, ast.Boolean(false))
       ],
       [
         'false == false;',
-        e(ast.Boolean(false), ast.Operator.equal, ast.Boolean(false))
+        ast.InfixExpr(
+            ast.Boolean(false), ast.Operator.equal, ast.Boolean(false))
       ]
     ].map((input) => Tuple2<String, ast.InfixExpr>(
         input[0] as String, input[1] as ast.InfixExpr));
@@ -226,11 +200,10 @@ void main() {
   });
 
   test('if else expressions', () {
-    const e = createExpectedIf;
     final inputs = [
       [
         'if (x < y) { x };',
-        e(
+        ast.If(
           ast.InfixExpr(ast.Ident('x'), ast.Operator.lt, ast.Ident('y')),
           ast.Block([ast.ExprStmt(ast.Ident('x'))]),
           null,
@@ -238,7 +211,7 @@ void main() {
       ],
       [
         'if (x < y) { x } else { y }',
-        e(
+        ast.If(
           ast.InfixExpr(ast.Ident('x'), ast.Operator.lt, ast.Ident('y')),
           ast.Block([ast.ExprStmt(ast.Ident('x'))]),
           ast.Block([ast.ExprStmt(ast.Ident('y'))]),
@@ -246,7 +219,7 @@ void main() {
       ],
       [
         'if (x < y) { x; } else { y; }',
-        e(
+        ast.If(
           ast.InfixExpr(ast.Ident('x'), ast.Operator.lt, ast.Ident('y')),
           ast.Block([ast.ExprStmt(ast.Ident('x'))]),
           ast.Block([ast.ExprStmt(ast.Ident('y'))]),
@@ -262,11 +235,10 @@ void main() {
   });
 
   test('function expressions', () {
-    const e = createExpectedFunctionExpr;
     final inputs = [
       [
         'fn(x, y) { x + y }',
-        e(
+        ast.MFunction(
             [ast.Ident('x'), ast.Ident('y')],
             ast.Block([
               ast.ExprStmt(ast.InfixExpr(
@@ -287,20 +259,19 @@ void main() {
   });
 
   test('function params expressions', () {
-    const e = createExpectedFunctionExpr;
     final inputs = [
       [
         'fn() {};',
-        e([], ast.Block([]), null),
+        ast.MFunction([], ast.Block([]), null),
       ],
       [
         'fn(x) {};',
-        e([ast.Ident('x')], ast.Block([]), null),
+        ast.MFunction([ast.Ident('x')], ast.Block([]), null),
       ],
       [
         'fn(x, y, z) {};',
-        e([ast.Ident('x'), ast.Ident('y'), ast.Ident('z')], ast.Block([]),
-            null),
+        ast.MFunction([ast.Ident('x'), ast.Ident('y'), ast.Ident('z')],
+            ast.Block([]), null),
       ]
     ].map((input) => Tuple2<String, ast.MFunction>(
         input[0] as String, input[1] as ast.MFunction));
