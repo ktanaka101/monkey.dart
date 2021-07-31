@@ -2,7 +2,7 @@ abstract class Object {}
 
 mixin Hashable {}
 
-class Array extends Object with Hashable {
+class Array extends Object {
   Array(this.elements);
   List<Object> elements;
 }
