@@ -405,9 +405,11 @@ void testCallByStmt(ast.Stmt actual, ast.Call expected) {
   testAstByStmt(actual, expected, testCall);
 }
 
-void testExprList(List<ast.Expr> actual, List<ast.Expr> expected) {
+void testList<T extends ast.Node>(
+    List<T> actual, List<T> expected, void Function(T, T) test) {
+  expect(actual.length, expected.length);
   for (var i = 0; i < expected.length; i++) {
-    testExpr(actual[i], expected[i]);
+    test(actual[i], expected[i]);
   }
 }
 
@@ -544,7 +546,7 @@ void testBool(ast.Boolean actual, ast.Boolean expected) {
 
 void testCall(ast.Call actual, ast.Call expected) {
   testExpr(actual.func, expected.func);
-  testExprList(actual.args, expected.args);
+  testList(actual.args, expected.args, testExpr);
 }
 
 void testHash(ast.Hash actual, ast.Hash expected) {
@@ -603,7 +605,7 @@ void testStringLit(ast.StringLit actual, ast.StringLit expected) {
 }
 
 void testArray(ast.Array actual, ast.Array expected) {
-  testExprList(actual.elements, expected.elements);
+  testList(actual.elements, expected.elements, testExpr);
 }
 
 void runTest<T>(Iterable<Tuple2<String, T>> inputs,
