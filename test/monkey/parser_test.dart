@@ -349,6 +349,52 @@ void main() {
       testIndexByStmt(program.statements[0], expected);
     });
   });
+
+  test('hash expressions', () {
+    final inputs = [
+      ['{}', ast.Hash([])],
+      [
+        '{ "one": 1, "two": 2, "three": 3 }',
+        ast.Hash([
+          ast.Pair(ast.StringLit('one'), ast.Int(1)),
+          ast.Pair(ast.StringLit('two'), ast.Int(2)),
+          ast.Pair(ast.StringLit('three'), ast.Int(3)),
+        ])
+      ],
+      [
+        '{ "one": 0 + 1, "two": 10 - 2, "three": 15 / 5 }',
+        ast.Hash([
+          ast.Pair(ast.StringLit('one'),
+              ast.InfixExpr(ast.Int(0), ast.Operator.plus, ast.Int(1))),
+          ast.Pair(ast.StringLit('two'),
+              ast.InfixExpr(ast.Int(10), ast.Operator.minus, ast.Int(8))),
+          ast.Pair(ast.StringLit('three'),
+              ast.InfixExpr(ast.Int(15), ast.Operator.slash, ast.Int(5))),
+        ])
+      ],
+      [
+        '{ 1: 111, 2: "b", 3: true }',
+        ast.Hash([
+          ast.Pair(ast.Int(1), ast.Int(111)),
+          ast.Pair(ast.Int(2), ast.StringLit('b')),
+          ast.Pair(ast.Int(3), ast.Boolean(true)),
+        ])
+      ],
+      [
+        '{ true: 1, false: "abc" }',
+        ast.Hash([
+          ast.Pair(ast.Boolean(true), ast.Int(1)),
+          ast.Pair(ast.Boolean(false), ast.StringLit('abc')),
+        ])
+      ],
+    ].map((input) =>
+        Tuple2<String, ast.Hash>(input[0] as String, input[1] as ast.Hash));
+
+    runTest<ast.Hash>(inputs, (program, expected) {
+      expect(program.statements.length, 1);
+      testHashByStmt(program.statements[0], expected);
+    });
+  });
 }
 
 void testAstByStmt<T extends ast.Expr>(
@@ -358,6 +404,10 @@ void testAstByStmt<T extends ast.Expr>(
   if (expr is T) {
     test(expr, expected);
   }
+}
+
+void testHashByStmt(ast.Stmt actual, ast.Hash expected) {
+  testAstByStmt(actual, expected, testHash);
 }
 
 void testIndexByStmt(ast.Stmt actual, ast.Index expected) {
