@@ -623,6 +623,10 @@ void testPrefixExpr(ast.PrefixExpr actual, ast.PrefixExpr expected) {
   testExpr(actual.right, expected.right);
 }
 
+void testStringLit(ast.StringLit actual, ast.StringLit expected) {
+  expect(actual.value, expected.value);
+}
+
 void runTest<T>(Iterable<Tuple2<String, T>> inputs,
     void Function(ast.Program, T) runExpecting) {
   for (final input in inputs) {
