@@ -395,6 +395,30 @@ void main() {
       testHashByStmt(program.statements[0], expected);
     });
   });
+
+  test('macro literal expressions', () {
+    final inputs = [
+      [
+        'macro(x, y) { x + y };',
+        ast.MacroLit(
+          [ast.Ident('x'), ast.Ident('y')],
+          ast.Block([
+            ast.ExprStmt(ast.InfixExpr(
+              ast.Ident('x'),
+              ast.Operator.plus,
+              ast.Ident('y'),
+            )),
+          ]),
+        )
+      ],
+    ].map((input) => Tuple2<String, ast.MacroLit>(
+        input[0] as String, input[1] as ast.MacroLit));
+
+    runTest<ast.MacroLit>(inputs, (program, expected) {
+      expect(program.statements.length, 1);
+      testAstByStmt(program.statements[0], expected, testMacroLit);
+    });
+  });
 }
 
 void testAstByStmt<T extends ast.Expr>(
