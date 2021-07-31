@@ -437,10 +437,6 @@ void testList<T>(List<T> actual, List<T> expected, void Function(T, T) test) {
   }
 }
 
-void testIfByStmt(ast.Stmt actual, ast.If expected) {
-  testAstByStmt(actual, expected, testIf);
-}
-
 void testBlock(ast.Block actual, ast.Block expected) {
   testList(actual.statements, expected.statements, testStmt);
 }
