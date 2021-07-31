@@ -463,7 +463,7 @@ void testStmt(ast.Stmt actual, ast.Stmt expected) {
   } else if (expected is ast.Block) {
     testBlock(actual as ast.Block, expected);
   } else if (expected is ast.ExprStmt) {
-    testExprStmtByStmt(actual, expected);
+    testExprStmt(actual as ast.ExprStmt, expected);
   } else {
     throw Exception('Unimplements');
   }
@@ -472,6 +472,10 @@ void testStmt(ast.Stmt actual, ast.Stmt expected) {
 void testExprStmtByStmt(ast.Stmt actual, ast.ExprStmt expected) {
   final expr = expectExprStmt(actual);
   testExpr(expr, expected.expr);
+}
+
+void testExprStmt(ast.ExprStmt actual, ast.ExprStmt expected) {
+  testExpr(actual.expr, expected.expr);
 }
 
 void testLetByStmt(ast.Stmt actual, ast.Let expected) {
