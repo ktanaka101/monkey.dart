@@ -618,6 +618,11 @@ void testIdentList(List<ast.Ident> actual, List<ast.Ident> expected) {
   }
 }
 
+void testPrefixExpr(ast.PrefixExpr actual, ast.PrefixExpr expected) {
+  expect(actual.ope, expected.ope);
+  testExpr(actual.right, expected.right);
+}
+
 void runTest<T>(Iterable<Tuple2<String, T>> inputs,
     void Function(ast.Program, T) runExpecting) {
   for (final input in inputs) {
