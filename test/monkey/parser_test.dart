@@ -405,8 +405,7 @@ void testCallByStmt(ast.Stmt actual, ast.Call expected) {
   testAstByStmt(actual, expected, testCall);
 }
 
-void testList<T extends ast.Node>(
-    List<T> actual, List<T> expected, void Function(T, T) test) {
+void testList<T>(List<T> actual, List<T> expected, void Function(T, T) test) {
   expect(actual.length, expected.length);
   for (var i = 0; i < expected.length; i++) {
     test(actual[i], expected[i]);
@@ -547,9 +546,7 @@ void testCall(ast.Call actual, ast.Call expected) {
 }
 
 void testHash(ast.Hash actual, ast.Hash expected) {
-  for (var i = 0; i < expected.pairs.length; i++) {
-    testPair(actual.pairs[i], expected.pairs[i]);
-  }
+  testList(actual.pairs, expected.pairs, testPair);
 }
 
 void testPair(ast.Pair actual, ast.Pair expected) {
