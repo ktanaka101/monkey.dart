@@ -548,9 +548,13 @@ void testCall(ast.Call actual, ast.Call expected) {
 
 void testHash(ast.Hash actual, ast.Hash expected) {
   for (var i = 0; i < expected.pairs.length; i++) {
-    expect(actual.pairs[i].key, expected.pairs[i].key);
-    expect(actual.pairs[i].value, expected.pairs[i].value);
+    testPair(actual.pairs[i], expected.pairs[i]);
   }
+}
+
+void testPair(ast.Pair actual, ast.Pair expected) {
+  expect(actual.key, expected.key);
+  expect(actual.value, expected.value);
 }
 
 void testIf(ast.If actual, ast.If expected) {
