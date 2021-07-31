@@ -422,10 +422,7 @@ void testIfByStmt(ast.Stmt actual, ast.If expected) {
 }
 
 void testBlock(ast.Block actual, ast.Block expected) {
-  expect(actual.statements.length, expected.statements.length);
-  for (var i = 0; i < expected.statements.length; i++) {
-    testStmt(actual.statements[i], expected.statements[i]);
-  }
+  testList(actual.statements, expected.statements, testStmt);
 }
 
 void testBlockByStmt(ast.Stmt actual, ast.Block expected) {
