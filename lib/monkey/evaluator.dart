@@ -62,13 +62,11 @@ object.Object _evalExpr(ast.Expr expr, Environment env) {
   }
 }
 
-object.Object _evalProgram(ast.Program program, Environment env) {
-  return _evalStatementsInScope(program.statements, env);
-}
+object.Object _evalProgram(ast.Program program, Environment env) =>
+    _evalStatementsInScope(program.statements, env);
 
-object.Object _evalBlock(ast.Block block, Environment env) {
-  return _evalStatementsInScope(block.statements, env);
-}
+object.Object _evalBlock(ast.Block block, Environment env) =>
+    _evalStatementsInScope(block.statements, env);
 
 object.Object _evalStatementsInScope(
     List<ast.Stmt> statements, Environment env) {
