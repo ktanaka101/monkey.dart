@@ -53,7 +53,9 @@ class Return extends Object {
   Object value;
 }
 
-class Null extends Object {}
+class Null extends Object {
+  const Null();
+}
 
 class Macro extends Object {
   Macro(this.params, this.body, this.env);
