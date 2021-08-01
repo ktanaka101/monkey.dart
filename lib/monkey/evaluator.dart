@@ -36,7 +36,7 @@ object.Object _evalExpr(ast.Expr expr, Environment env) {
   if (expr is ast.Array) {
     throw Exception('unimplements');
   } else if (expr is ast.Boolean) {
-    throw Exception('unimplements');
+    return expr.value.toBooleanObject();
   } else if (expr is ast.Int) {
     throw Exception('unimplements');
   } else if (expr is ast.StringLit) {
