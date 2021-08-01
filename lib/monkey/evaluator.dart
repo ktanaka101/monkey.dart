@@ -23,7 +23,7 @@ object.Object _evalStmt(ast.Stmt stmt, Environment env) {
     env.insert(stmt.name.value, val);
     return builtin.constNull;
   } else if (stmt is ast.Block) {
-    throw Exception('unimplements');
+    return _evalBlock(stmt, env);
   } else if (stmt is ast.Return) {
     final val = _evalExpr(stmt.value, env);
     return object.Return(val);
