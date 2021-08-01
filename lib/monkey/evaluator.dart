@@ -25,7 +25,8 @@ object.Object _evalStmt(ast.Stmt stmt, Environment env) {
   } else if (stmt is ast.Block) {
     throw Exception('unimplements');
   } else if (stmt is ast.Return) {
-    throw Exception('unimplements');
+    final val = _evalExpr(stmt.value, env);
+    return object.Return(val);
   } else {
     throw Exception('Unreachable');
   }
