@@ -1,3 +1,4 @@
+import 'package:monkey/monkey/evaluator/builtin.dart' as builtin;
 import 'package:monkey/monkey/evaluator/env.dart';
 import 'package:monkey/monkey/evaluator/object.dart' as object;
 import 'package:monkey/monkey/parser/ast.dart' as ast;
@@ -18,7 +19,9 @@ object.Object _evalStmt(ast.Stmt stmt, Environment env) {
   if (stmt is ast.ExprStmt) {
     return eval(stmt.expr, env);
   } else if (stmt is ast.Let) {
-    throw Exception('unimplements');
+    final val = _evalExpr(stmt.value, env);
+    env.insert(stmt.name.value, val);
+    return builtin.constNull;
   } else if (stmt is ast.Block) {
     throw Exception('unimplements');
   } else if (stmt is ast.Return) {
