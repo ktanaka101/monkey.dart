@@ -27,3 +27,10 @@ class Integer extends Object with Hashable {
   Integer(this.value);
   int value;
 }
+
+class Macro extends Object {
+  Macro(this.params, this.body, this.env);
+  List<ast.Ident> params;
+  ast.Block body;
+  Environment env;
+}
