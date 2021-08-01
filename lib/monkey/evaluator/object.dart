@@ -47,3 +47,8 @@ class Hash extends Object {
   Hash(this.pairs);
   HashPairs pairs;
 }
+
+class Return extends Object {
+  Return(this.value);
+  Object value;
+}
