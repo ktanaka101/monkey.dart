@@ -52,3 +52,5 @@ class Return extends Object {
   Return(this.value);
   Object value;
 }
+
+class Null extends Object {}
