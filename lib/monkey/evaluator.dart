@@ -61,3 +61,17 @@ object.Object _evalExpr(ast.Expr expr, Environment env) {
     throw Exception('Unreachable');
   }
 }
+
+object.Object _evalProgram(ast.Program program, Environment env) {
+  object.Object obj = builtin.constNull;
+  for (final stmt in program.statements) {
+    final value = _evalStmt(stmt, env);
+    if (value is object.Return) {
+      return value.value;
+    } else {
+      obj = value;
+    }
+  }
+
+  return obj;
+}
