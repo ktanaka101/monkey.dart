@@ -52,7 +52,7 @@ object.Object _evalExpr(ast.Expr expr, Environment env) {
   } else if (expr is ast.If) {
     throw Exception('unimplements');
   } else if (expr is ast.MFunction) {
-    throw Exception('unimplements');
+    return object.MFunction(expr.params, expr.body, env);
   } else if (expr is ast.Index) {
     throw Exception('unimplements');
   } else if (expr is ast.Call) {
