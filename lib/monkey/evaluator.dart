@@ -5,7 +5,7 @@ import 'package:monkey/monkey/parser/ast.dart' as ast;
 
 object.Object eval(ast.Node node, Environment env) {
   if (node is ast.Program) {
-    throw Exception('unimplements');
+    return _evalProgram(node, env);
   } else if (node is ast.Stmt) {
     return _evalStmt(node, env);
   } else if (node is ast.Expr) {
