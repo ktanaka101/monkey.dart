@@ -2,7 +2,9 @@ import 'package:monkey/monkey/evaluator/env.dart';
 import 'package:monkey/monkey/evaluator/builtin.dart' as builtin;
 import 'package:monkey/monkey/parser/ast.dart' as ast;
 
-abstract class Object {}
+abstract class Object {
+  const Object();
+}
 
 mixin Hashable {}
 
@@ -13,8 +15,8 @@ class Integer extends Object with Hashable {
 
 class Boolean extends Object with Hashable {
   // ignore: avoid_positional_boolean_parameters
-  Boolean(this.value);
-  bool value;
+  const Boolean(this.value);
+  final bool value;
 }
 
 class StringLit extends Object with Hashable {
