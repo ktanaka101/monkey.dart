@@ -101,3 +101,8 @@ object.Object _evalPrefixExpr(ast.Operator ope, object.Object right) {
       throw Exception('unknown operator: $ope$right');
   }
 }
+
+extension on bool {
+  object.Boolean toBooleanObject() =>
+      this ? builtin.constTrue : builtin.constFalse;
+}
