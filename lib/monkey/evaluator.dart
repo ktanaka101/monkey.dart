@@ -82,3 +82,21 @@ object.Object _evalStatementsInScope(
 
   return obj;
 }
+
+object.Object _evalPrefixExpr(ast.Operator ope, object.Object right) {
+  switch (ope) {
+    case ast.Operator.bang:
+      throw Exception('unimplements');
+    case ast.Operator.minus:
+      throw Exception('unimplements');
+    case ast.Operator.assign:
+    case ast.Operator.asterisk:
+    case ast.Operator.equal:
+    case ast.Operator.gt:
+    case ast.Operator.lt:
+    case ast.Operator.notEqual:
+    case ast.Operator.plus:
+    case ast.Operator.slash:
+      throw Exception('unknown operator: $ope$right');
+  }
+}
