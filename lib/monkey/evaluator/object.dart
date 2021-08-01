@@ -16,7 +16,7 @@ class Boolean extends Object with Hashable {
   bool value;
 }
 
-class MFunction {
+class MFunction extends Object {
   MFunction(this.params, this.body, this.env);
   List<ast.Ident> params;
   ast.Block body;
