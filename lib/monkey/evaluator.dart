@@ -16,7 +16,7 @@ object.Object eval(ast.Node node, Environment env) {
 
 object.Object _evalStmt(ast.Stmt stmt, Environment env) {
   if (stmt is ast.ExprStmt) {
-    throw Exception('unimplements');
+    return eval(stmt.expr, env);
   } else if (stmt is ast.Let) {
     throw Exception('unimplements');
   } else if (stmt is ast.Block) {
