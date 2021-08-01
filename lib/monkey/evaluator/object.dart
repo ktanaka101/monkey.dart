@@ -1,4 +1,5 @@
 import 'package:monkey/monkey/evaluator/env.dart';
+import 'package:monkey/monkey/evaluator/builtin.dart' as builtin;
 import 'package:monkey/monkey/parser/ast.dart' as ast;
 
 abstract class Object {}
@@ -33,4 +34,9 @@ class Macro extends Object {
   List<ast.Ident> params;
   ast.Block body;
   Environment env;
+}
+
+class Builtin extends Object {
+  Builtin(this.func);
+  builtin.MFunction func;
 }
