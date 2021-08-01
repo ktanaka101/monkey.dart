@@ -22,3 +22,8 @@ class MFunction extends Object {
   ast.Block body;
   Environment env;
 }
+
+class Integer extends Object with Hashable {
+  Integer(this.value);
+  int value;
+}
