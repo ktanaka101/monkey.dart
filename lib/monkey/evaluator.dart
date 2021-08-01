@@ -6,8 +6,22 @@ object.Object eval(ast.Node node, Environment env) {
   if (node is ast.Program) {
     throw Exception('unimplements');
   } else if (node is ast.Stmt) {
-    throw Exception('unimplements');
+    return _evalStmt(node, env);
   } else if (node is ast.Expr) {
+    throw Exception('unimplements');
+  } else {
+    throw Exception('Unreachable');
+  }
+}
+
+object.Object _evalStmt(ast.Stmt stmt, Environment env) {
+  if (stmt is ast.ExprStmt) {
+    throw Exception('unimplements');
+  } else if (stmt is ast.Let) {
+    throw Exception('unimplements');
+  } else if (stmt is ast.Block) {
+    throw Exception('unimplements');
+  } else if (stmt is ast.Return) {
     throw Exception('unimplements');
   } else {
     throw Exception('Unreachable');
