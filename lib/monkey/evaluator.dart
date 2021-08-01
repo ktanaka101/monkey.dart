@@ -75,3 +75,17 @@ object.Object _evalProgram(ast.Program program, Environment env) {
 
   return obj;
 }
+
+object.Object _evalBlock(ast.Block block, Environment env) {
+  object.Object obj = builtin.constNull;
+  for (final stmt in block.statements) {
+    final value = _evalStmt(stmt, env);
+    if (value is object.Return) {
+      return value.value;
+    } else {
+      obj = value;
+    }
+  }
+
+  return obj;
+}
