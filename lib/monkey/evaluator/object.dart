@@ -40,3 +40,10 @@ class Builtin extends Object {
   Builtin(this.func);
   builtin.MFunction func;
 }
+
+typedef HashPairs = Map<Hashable, Object>;
+
+class Hash extends Object {
+  Hash(this.pairs);
+  HashPairs pairs;
+}
