@@ -54,3 +54,8 @@ class Return extends Object {
 }
 
 class Null extends Object {}
+
+class Quote extends Object {
+  Quote(this.node);
+  ast.Node node;
+}
