@@ -48,7 +48,8 @@ object.Object _evalExpr(ast.Expr expr, Environment env) {
   } else if (expr is ast.InfixExpr) {
     throw Exception('unimplements');
   } else if (expr is ast.PrefixExpr) {
-    throw Exception('unimplements');
+    final right = _evalExpr(expr.right, env);
+    return _evalPrefixExpr(expr.ope, right);
   } else if (expr is ast.If) {
     throw Exception('unimplements');
   } else if (expr is ast.MFunction) {
