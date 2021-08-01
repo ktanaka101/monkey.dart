@@ -59,3 +59,8 @@ class Quote extends Object {
   Quote(this.node);
   ast.Node node;
 }
+
+class StringLit extends Object with Hashable {
+  StringLit(this.value);
+  String value;
+}
