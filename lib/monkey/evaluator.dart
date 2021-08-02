@@ -89,7 +89,7 @@ object.Object _evalPrefixExpr(ast.Operator ope, object.Object right) {
     case ast.Operator.bang:
       return _evalBangOpeExpr(right);
     case ast.Operator.minus:
-      throw Exception('unimplements');
+      return _evalMinusPrefixOpeExpr(right);
     case ast.Operator.assign:
     case ast.Operator.asterisk:
     case ast.Operator.equal:
@@ -114,5 +114,13 @@ object.Boolean _evalBangOpeExpr(object.Object right) {
     return builtin.constTrue;
   } else {
     return builtin.constFalse;
+  }
+}
+
+object.Object _evalMinusPrefixOpeExpr(object.Object right) {
+  if (right is object.Integer) {
+    return object.Integer(-right.value);
+  } else {
+    throw Exception('unknown operator: -${right.runtimeType}');
   }
 }
