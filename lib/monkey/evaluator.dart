@@ -87,7 +87,7 @@ object.Object _evalStatementsInScope(
 object.Object _evalPrefixExpr(ast.Operator ope, object.Object right) {
   switch (ope) {
     case ast.Operator.bang:
-      throw Exception('unimplements');
+      return _evalBangOpeExpr(right);
     case ast.Operator.minus:
       throw Exception('unimplements');
     case ast.Operator.assign:
@@ -105,4 +105,14 @@ object.Object _evalPrefixExpr(ast.Operator ope, object.Object right) {
 extension on bool {
   object.Boolean toBooleanObject() =>
       this ? builtin.constTrue : builtin.constFalse;
+}
+
+object.Boolean _evalBangOpeExpr(object.Object right) {
+  if (right is object.Boolean) {
+    return right.value ? builtin.constFalse : builtin.constTrue;
+  } else if (right is object.Null) {
+    return builtin.constTrue;
+  } else {
+    return builtin.constFalse;
+  }
 }
