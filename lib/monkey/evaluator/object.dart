@@ -85,6 +85,33 @@ typedef HashPairs = Map<Hashable, Object>;
 class Hash extends Object {
   Hash(this.pairs);
   HashPairs pairs;
+
+  @override
+  bool monkeyEqual(Object other) {
+    if (other is Hash) {
+      if (pairs.length != other.pairs.length) {
+        return false;
+      }
+
+      for (final pair in pairs.entries) {
+        final key = pair.key;
+        final otherValue = other.pairs[key];
+        if (otherValue == null) {
+          return false;
+        }
+
+        if (pair.value is MonkeyEq && otherValue is MonkeyEq) {
+          if (!pair.value.monkeyEqual(otherValue)) {
+            return false;
+          }
+        }
+      }
+
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
 
 class MFunction extends Object {
