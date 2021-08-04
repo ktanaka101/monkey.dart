@@ -3,7 +3,7 @@ import 'package:tuple/tuple.dart';
 
 import 'package:monkey/monkey/lexer.dart';
 import 'package:monkey/monkey/parser.dart';
-import 'package:monkey/monkey/parser/ast.dart' as ast;
+import 'package:monkey/monkey/ast.dart' as ast;
 
 void main() {
   test('let statements', () {

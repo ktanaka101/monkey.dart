@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import 'package:monkey/monkey/parser/ast.dart';
+import 'package:monkey/monkey/ast.dart';
 
 void main() {
   test('Program#toString', () {

@@ -1,6 +1,6 @@
 import 'package:monkey/monkey/evaluator/env.dart';
 import 'package:monkey/monkey/evaluator/builtin.dart' as builtin;
-import 'package:monkey/monkey/parser/ast.dart' as ast;
+import 'package:monkey/monkey/ast.dart' as ast;
 
 abstract class Object {
   const Object();
