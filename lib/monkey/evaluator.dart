@@ -124,3 +124,23 @@ object.Object _evalMinusPrefixOpeExpr(object.Object right) {
     throw Exception('unknown operator: -${right.runtimeType}');
   }
 }
+
+object.Object _evalInfixExpr(
+    ast.Operator ope, object.Object right, object.Object left) {
+  if (right is object.Integer && left is object.Integer) {
+    throw Exception('unimplements');
+  } else if (right is object.StringLit && left is object.StringLit) {
+    throw Exception('unimplements');
+  } else if (ope == ast.Operator.equal) {
+    throw Exception('unimplements');
+  } else if (ope == ast.Operator.notEqual) {
+    throw Exception('unimplements');
+  } else {
+    if (left.runtimeType == right.runtimeType) {
+      throw Exception(
+          'unknown operator: ${left.runtimeType} $ope ${right.runtimeType}');
+    } else {
+      throw Exception('type: ${left.runtimeType} $ope ${right.runtimeType}');
+    }
+  }
+}
