@@ -169,3 +169,16 @@ object.Object _evalIntegerInfixExpr(
     throw Exception('unknown oeperator: $ope');
   }
 }
+
+object.Object _evalStringInfixExpr(
+    ast.Operator ope, object.StringLit left, object.StringLit right) {
+  if (ope == ast.Operator.plus) {
+    return object.StringLit(left.value + right.value);
+  } else if (ope == ast.Operator.equal) {
+    return left.monkeyEqual(right).toBooleanObject();
+  } else if (ope == ast.Operator.notEqual) {
+    return (!left.monkeyEqual(right)).toBooleanObject();
+  } else {
+    throw Exception('unknown operator: String $ope String');
+  }
+}
