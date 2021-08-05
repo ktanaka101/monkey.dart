@@ -32,7 +32,7 @@ const _builtinPush = object.Builtin(push);
 const _builtinPuts = object.Builtin(puts);
 
 extension BuiltinFunction on object.Builtin {
-  object.Builtin? resolve(String symbol) {
+  static object.Builtin? resolve(String symbol) {
     switch (symbol) {
       case 'len':
         return _builtinLen;
