@@ -132,7 +132,7 @@ object.Object _evalInfixExpr(
   if (left is object.Integer && right is object.Integer) {
     return _evalIntegerInfixExpr(ope, left, right);
   } else if (left is object.StringLit && right is object.StringLit) {
-    throw Exception('unimplements');
+    return _evalStringInfixExpr(ope, left, right);
   } else if (ope == ast.Operator.equal) {
     return left.monkeyEqual(right).toBooleanObject();
   } else if (ope == ast.Operator.notEqual) {
