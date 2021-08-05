@@ -207,3 +207,17 @@ bool _isTruthy(object.Object obj) {
     return true;
   }
 }
+
+object.Object _eval_identifier(ast.Ident ident, Environment env) {
+  final expr = env.resolve(ident.value);
+  if (expr != null) {
+    return expr;
+  }
+
+  final builtinFunc = builtin.BuiltinFunction.resolve(ident.value);
+  if (builtinFunc != null) {
+    return builtinFunc;
+  }
+
+  throw Exception('ientifier not found: ${ident.value}');
+}
