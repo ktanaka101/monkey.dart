@@ -182,3 +182,28 @@ object.Object _evalStringInfixExpr(
     throw Exception('unknown operator: String $ope String');
   }
 }
+
+object.Object _evalIfExpr(ast.If ifExpr, Environment env) {
+  final cond = _evalExpr(ifExpr.cond, env);
+
+  if (isTruthy(cond)) {
+    return _evalStmt(ifExpr.consequence, env);
+  } else {
+    final alt = ifExpr.alternative;
+    if (alt != null) {
+      return _evalStmt(alt, env);
+    } else {
+      return builtin.constNull;
+    }
+  }
+}
+
+bool isTruthy(object.Object obj) {
+  if (obj is object.Null) {
+    return false;
+  } else if (obj is object.Boolean) {
+    return obj.value;
+  } else {
+    return true;
+  }
+}
