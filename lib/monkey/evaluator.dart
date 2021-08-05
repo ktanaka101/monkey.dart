@@ -53,7 +53,7 @@ object.Object _evalExpr(ast.Expr expr, Environment env) {
     final right = _evalExpr(expr.right, env);
     return _evalPrefixExpr(expr.ope, right);
   } else if (expr is ast.If) {
-    throw Exception('unimplements');
+    return _evalIfExpr(expr, env);
   } else if (expr is ast.MFunction) {
     return object.MFunction(expr.params, expr.body, env);
   } else if (expr is ast.Index) {
