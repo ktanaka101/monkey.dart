@@ -142,6 +142,9 @@ class Return extends Object {
 
 class Null extends Object {
   const Null();
+
+  @override
+  bool monkeyEqual(Object other) => this == other;
 }
 
 class Macro extends Object {
