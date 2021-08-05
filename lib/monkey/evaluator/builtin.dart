@@ -24,21 +24,28 @@ object.Object? puts(List<object.Object> args) {
   throw 'unimplements';
 }
 
+const _builtinLen = object.Builtin(len);
+const _builtinFirst = object.Builtin(first);
+const _builtinLast = object.Builtin(last);
+const _builtinRest = object.Builtin(rest);
+const _builtinPush = object.Builtin(push);
+const _builtinPuts = object.Builtin(puts);
+
 extension BuiltinFunction on object.Builtin {
   object.Builtin? resolve(String symbol) {
     switch (symbol) {
       case 'len':
-        return object.Builtin(len);
+        return _builtinLen;
       case 'first':
-        return object.Builtin(first);
+        return _builtinFirst;
       case 'last':
-        return object.Builtin(last);
+        return _builtinLast;
       case 'rest':
-        return object.Builtin(rest);
+        return _builtinRest;
       case 'push':
-        return object.Builtin(push);
+        return _builtinPush;
       case 'puts':
-        return object.Builtin(puts);
+        return _builtinPuts;
     }
   }
 }
