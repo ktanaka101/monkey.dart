@@ -186,7 +186,7 @@ object.Object _evalStringInfixExpr(
 object.Object _evalIfExpr(ast.If ifExpr, Environment env) {
   final cond = _evalExpr(ifExpr.cond, env);
 
-  if (isTruthy(cond)) {
+  if (_isTruthy(cond)) {
     return _evalStmt(ifExpr.consequence, env);
   } else {
     final alt = ifExpr.alternative;
@@ -198,7 +198,7 @@ object.Object _evalIfExpr(ast.If ifExpr, Environment env) {
   }
 }
 
-bool isTruthy(object.Object obj) {
+bool _isTruthy(object.Object obj) {
   if (obj is object.Null) {
     return false;
   } else if (obj is object.Boolean) {
