@@ -130,7 +130,7 @@ object.Object _evalMinusPrefixOpeExpr(object.Object right) {
 object.Object _evalInfixExpr(
     ast.Operator ope, object.Object left, object.Object right) {
   if (left is object.Integer && right is object.Integer) {
-    throw Exception('unimplements');
+    return _evalIntegerInfixExpr(ope, left, right);
   } else if (left is object.StringLit && right is object.StringLit) {
     throw Exception('unimplements');
   } else if (ope == ast.Operator.equal) {
