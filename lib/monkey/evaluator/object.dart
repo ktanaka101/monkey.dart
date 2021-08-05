@@ -135,6 +135,9 @@ class Builtin extends Object {
 class Return extends Object {
   Return(this.value);
   Object value;
+
+  @override
+  bool monkeyEqual(Object other) => this == other;
 }
 
 class Null extends Object {
