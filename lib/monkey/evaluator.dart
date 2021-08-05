@@ -134,9 +134,9 @@ object.Object _evalInfixExpr(
   } else if (left is object.StringLit && right is object.StringLit) {
     throw Exception('unimplements');
   } else if (ope == ast.Operator.equal) {
-    throw Exception('unimplements');
+    return left.monkeyEqual(right).toBooleanObject();
   } else if (ope == ast.Operator.notEqual) {
-    throw Exception('unimplements');
+    return (!left.monkeyEqual(right)).toBooleanObject();
   } else {
     if (left.runtimeType == right.runtimeType) {
       throw Exception(
