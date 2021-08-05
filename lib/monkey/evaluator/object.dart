@@ -152,6 +152,9 @@ class Macro extends Object {
   List<ast.Ident> params;
   ast.Block body;
   Environment env;
+
+  @override
+  bool monkeyEqual(Object other) => this == other;
 }
 
 class Quote extends Object {
