@@ -119,6 +119,9 @@ class MFunction extends Object {
   List<ast.Ident> params;
   ast.Block body;
   Environment env;
+
+  @override
+  bool monkeyEqual(Object other) => this == other;
 }
 
 class Builtin extends Object {
