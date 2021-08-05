@@ -146,3 +146,26 @@ object.Object _evalInfixExpr(
     }
   }
 }
+
+object.Object _evalIntegerInfixExpr(
+    ast.Operator ope, object.Integer left, object.Integer right) {
+  if (ope == ast.Operator.plus) {
+    return object.Integer(left.value + right.value);
+  } else if (ope == ast.Operator.minus) {
+    return object.Integer(left.value - right.value);
+  } else if (ope == ast.Operator.asterisk) {
+    return object.Integer(left.value * right.value);
+  } else if (ope == ast.Operator.slash) {
+    return object.Integer((left.value / right.value).ceil());
+  } else if (ope == ast.Operator.lt) {
+    return (left.value < right.value).toBooleanObject();
+  } else if (ope == ast.Operator.gt) {
+    return (left.value > right.value).toBooleanObject();
+  } else if (ope == ast.Operator.equal) {
+    return (left.monkeyEqual(right)).toBooleanObject();
+  } else if (ope == ast.Operator.notEqual) {
+    return (!left.monkeyEqual(right)).toBooleanObject();
+  } else {
+    throw Exception('unknown oeperator: $ope');
+  }
+}
