@@ -126,7 +126,7 @@ class MFunction extends Object {
 
 class Builtin extends Object {
   Builtin(this.func);
-  builtin.MFunction func;
+  Object? Function(List<Object>) func;
 
   @override
   bool monkeyEqual(Object other) => this == other;
