@@ -160,4 +160,7 @@ class Macro extends Object {
 class Quote extends Object {
   Quote(this.node);
   ast.Node node;
+
+  @override
+  bool monkeyEqual(Object other) => this == other;
 }
