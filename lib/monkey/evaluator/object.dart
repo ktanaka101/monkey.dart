@@ -88,29 +88,29 @@ class Hash extends Object {
 
   @override
   bool monkeyEqual(Object other) {
-    if (other is Hash) {
-      if (pairs.length != other.pairs.length) {
+    if (other is! Hash) {
+      return false;
+    }
+
+    if (pairs.length != other.pairs.length) {
+      return false;
+    }
+
+    for (final pair in pairs.entries) {
+      final key = pair.key;
+      final otherValue = other.pairs[key];
+      if (otherValue == null) {
         return false;
       }
 
-      for (final pair in pairs.entries) {
-        final key = pair.key;
-        final otherValue = other.pairs[key];
-        if (otherValue == null) {
+      if (pair.value is MonkeyEq && otherValue is MonkeyEq) {
+        if (!pair.value.monkeyEqual(otherValue)) {
           return false;
         }
-
-        if (pair.value is MonkeyEq && otherValue is MonkeyEq) {
-          if (!pair.value.monkeyEqual(otherValue)) {
-            return false;
-          }
-        }
       }
-
-      return true;
-    } else {
-      return false;
     }
+
+    return true;
   }
 }
 
