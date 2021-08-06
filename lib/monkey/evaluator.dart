@@ -221,3 +221,7 @@ object.Object _evalIdentifier(ast.Ident ident, Environment env) {
 
   throw Exception('ientifier not found: ${ident.value}');
 }
+
+List<object.Object> _evalExpressions(
+        List<ast.Expr> exprList, Environment env) =>
+    exprList.map((expr) => _evalExpr(expr, env)).toList();
