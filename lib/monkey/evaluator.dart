@@ -44,7 +44,7 @@ object.Object _evalExpr(ast.Expr expr, Environment env) {
   } else if (expr is ast.Hash) {
     throw Exception('unimplements');
   } else if (expr is ast.Ident) {
-    throw Exception('unimplements');
+    return _evalIdentifier(expr, env);
   } else if (expr is ast.InfixExpr) {
     final left = _evalExpr(expr.left, env);
     final right = _evalExpr(expr.right, env);
@@ -208,7 +208,7 @@ bool _isTruthy(object.Object obj) {
   }
 }
 
-object.Object _eval_identifier(ast.Ident ident, Environment env) {
+object.Object _evalIdentifier(ast.Ident ident, Environment env) {
   final expr = env.resolve(ident.value);
   if (expr != null) {
     return expr;
