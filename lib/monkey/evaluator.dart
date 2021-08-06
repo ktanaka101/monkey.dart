@@ -34,7 +34,8 @@ object.Object _evalStmt(ast.Stmt stmt, Environment env) {
 
 object.Object _evalExpr(ast.Expr expr, Environment env) {
   if (expr is ast.Array) {
-    throw Exception('unimplements');
+    final elements = _evalExpressions(expr.elements, env);
+    return object.Array(elements);
   } else if (expr is ast.Boolean) {
     return expr.value.toBooleanObject();
   } else if (expr is ast.Int) {
