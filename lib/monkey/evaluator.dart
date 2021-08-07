@@ -227,6 +227,20 @@ List<object.Object> _evalExpressions(
         List<ast.Expr> exprList, Environment env) =>
     exprList.map((expr) => _evalExpr(expr, env)).toList();
 
+Environment _extendFunctionEnv(
+    object.MFunction func, List<object.Object> args) {
+  if (func.params.length != args.length) {
+    throw Exception('not match args.');
+  }
+
+  final env = Environment.newEnclose(func.env);
+  for (var i = 0; i < func.params.length; i++) {
+    env.insert(func.params[i].value, args[i]);
+  }
+
+  return env;
+}
+
 object.Object _unwrapReturnValue(object.Object obj) {
   if (obj is object.Return) {
     return obj.value;
