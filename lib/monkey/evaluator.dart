@@ -277,3 +277,11 @@ object.Object _evalIndexExpr(object.Object left, object.Object index) {
     throw Exception('index operator not supported');
   }
 }
+
+object.Object _evalArrayIndexExpr(object.Array array, object.Integer index) {
+  if (index.value < 0 || index.value >= array.elements.length) {
+    return builtin.constNull;
+  }
+
+  return array.elements[index.value];
+}
