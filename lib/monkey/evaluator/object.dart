@@ -130,6 +130,8 @@ class Builtin extends Object {
 
   @override
   bool monkeyEqual(Object other) => this == other;
+
+  Object? call(List<Object> args) => func(args);
 }
 
 class Return extends Object {
