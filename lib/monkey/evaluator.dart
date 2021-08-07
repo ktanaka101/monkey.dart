@@ -43,7 +43,7 @@ object.Object _evalExpr(ast.Expr expr, Environment env) {
   } else if (expr is ast.StringLit) {
     return object.StringLit(expr.value);
   } else if (expr is ast.Hash) {
-    throw Exception('unimplements');
+    return _evalHashLiteral(expr, env);
   } else if (expr is ast.Ident) {
     return _evalIdentifier(expr, env);
   } else if (expr is ast.InfixExpr) {
