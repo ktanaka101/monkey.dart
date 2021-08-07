@@ -265,3 +265,13 @@ object.Object _unwrapReturnValue(object.Object obj) {
     return obj;
   }
 }
+
+object.Object _evalIndexExpr(object.Object left, object.Object index) {
+  if (left is object.Array && index is object.Integer) {
+    throw Exception('unimplements');
+  } else if (left is object.Hash && index is object.Hashable) {
+    throw Exception('unimplements');
+  } else {
+    throw Exception('index operator not supported');
+  }
+}
