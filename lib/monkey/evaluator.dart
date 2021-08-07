@@ -285,3 +285,19 @@ object.Object _evalArrayIndexExpr(object.Array array, object.Integer index) {
 
   return array.elements[index.value];
 }
+
+object.Object _evalHashLiteral(ast.Hash hash, Environment env) {
+  final object.HashPairs pairs = {};
+
+  for (final pair in hash.pairs) {
+    final key = _evalExpr(pair.key, env);
+    final value = _evalExpr(pair.value, env);
+    if (key is object.Hashable) {
+      pairs[key as object.Hashable] = value;
+    } else {
+      throw Exception('unusable as hash key: $key');
+    }
+  }
+
+  return object.Hash(pairs);
+}
