@@ -58,7 +58,9 @@ object.Object _evalExpr(ast.Expr expr, Environment env) {
   } else if (expr is ast.MFunction) {
     return object.MFunction(expr.params, expr.body, env);
   } else if (expr is ast.Index) {
-    throw Exception('unimplements');
+    final left = _evalExpr(expr.left, env);
+    final index = _evalExpr(expr.index, env);
+    return _evalIndexExpr(left, index);
   } else if (expr is ast.Call) {
     throw Exception('unimplements');
   } else {
