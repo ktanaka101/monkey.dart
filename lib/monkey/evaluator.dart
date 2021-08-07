@@ -227,6 +227,23 @@ List<object.Object> _evalExpressions(
         List<ast.Expr> exprList, Environment env) =>
     exprList.map((expr) => _evalExpr(expr, env)).toList();
 
+object.Object applyFunction(object.Object func, List<object.Object> args) {
+  if (func is object.MFunction) {
+    final extendedEnv = _extendFunctionEnv(func, args);
+    final evaluated = _evalStmt(func.body, extendedEnv);
+    return _unwrapReturnValue(evaluated);
+  } else if (func is object.Builtin) {
+    final res = func.call(args);
+    if (res == null) {
+      return builtin.constNull;
+    }
+
+    return res;
+  } else {
+    throw Exception('not a function: ${func.runtimeType}');
+  }
+}
+
 Environment _extendFunctionEnv(
     object.MFunction func, List<object.Object> args) {
   if (func.params.length != args.length) {
