@@ -226,3 +226,11 @@ object.Object _evalIdentifier(ast.Ident ident, Environment env) {
 List<object.Object> _evalExpressions(
         List<ast.Expr> exprList, Environment env) =>
     exprList.map((expr) => _evalExpr(expr, env)).toList();
+
+object.Object _unwrapReturnValue(object.Object obj) {
+  if (obj is object.Return) {
+    return obj.value;
+  } else {
+    return obj;
+  }
+}
