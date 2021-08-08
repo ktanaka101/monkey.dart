@@ -62,7 +62,16 @@ object.Object _evalExpr(ast.Expr expr, Environment env) {
     final index = _evalExpr(expr.index, env);
     return _evalIndexExpr(left, index);
   } else if (expr is ast.Call) {
-    throw Exception('unimplements');
+    {
+      final func = expr.func;
+      if (func is ast.Ident && func.value == 'quote') {
+        return _quote(expr.args[0], env);
+      }
+    }
+
+    final func = _evalExpr(expr.func, env);
+    final args = _evalExpressions(expr.args, env);
+    return applyFunction(func, args);
   } else {
     throw Exception('Unreachable');
   }
