@@ -10,9 +10,9 @@ abstract class Object implements MonkeyEq {
   const Object();
 }
 
-mixin Hashable {}
+abstract class Hashable {}
 
-class Integer extends Object with Hashable {
+class Integer extends Object implements Hashable {
   Integer(this.value);
   int value;
 
@@ -26,7 +26,7 @@ class Integer extends Object with Hashable {
   }
 }
 
-class Boolean extends Object with Hashable {
+class Boolean extends Object implements Hashable {
   // ignore: avoid_positional_boolean_parameters
   const Boolean(this.value);
   final bool value;
@@ -41,7 +41,7 @@ class Boolean extends Object with Hashable {
   }
 }
 
-class StringLit extends Object with Hashable {
+class StringLit extends Object implements Hashable {
   StringLit(this.value);
   String value;
 
