@@ -342,3 +342,15 @@ bool _isUnquoteCall(ast.Node node) {
 
   return false;
 }
+
+ast.Node _convertObjectToAstNode(object.Object obj) {
+  if (obj is object.Integer) {
+    return ast.Int(obj.value);
+  } else if (obj is object.Boolean) {
+    return ast.Boolean(obj.value);
+  } else if (obj is object.Quote) {
+    return obj.node;
+  } else {
+    throw Exception('unimplements');
+  }
+}
