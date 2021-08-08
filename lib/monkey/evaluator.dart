@@ -272,7 +272,7 @@ object.Object _evalIndexExpr(object.Object left, object.Object index) {
   if (left is object.Array && index is object.Integer) {
     return _evalArrayIndexExpr(left, index);
   } else if (left is object.Hash && index is object.Hashable) {
-    throw Exception('unimplements');
+    return _evalHashIndexExpr(left, index as object.Hashable);
   } else {
     throw Exception('index operator not supported');
   }
