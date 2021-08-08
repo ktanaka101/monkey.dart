@@ -311,15 +311,14 @@ object.Object _evalHashIndexExpr(object.Hash hash, object.Hashable key) {
   return value;
 }
 
-ast.Node _evalUnquoteCalls(ast.Node quoted, Environment env) {
-  return ast.modify(quoted, (node) {
-    if (!_isUnquoteCall(node)) {
-      return node;
-    }
+ast.Node _evalUnquoteCalls(ast.Node quoted, Environment env) =>
+    ast.modify(quoted, (node) {
+      if (!_isUnquoteCall(node)) {
+        return node;
+      }
 
-    throw Exception('unimplements');
-  });
-}
+      throw Exception('unimplements');
+    });
 
 bool _isUnquoteCall(ast.Node node) {
   if (node is ast.Call) {
