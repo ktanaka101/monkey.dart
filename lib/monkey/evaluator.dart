@@ -329,7 +329,16 @@ ast.Node _evalUnquoteCalls(ast.Node quoted, Environment env) =>
         return node;
       }
 
-      throw Exception('unimplements');
+      if (node is ast.Call) {
+        if (node.args.length == 1) {
+          final arg = node.args[0];
+          return _convertObjectToAstNode(eval(arg, env));
+        } else {
+          throw Exception('unimplements');
+        }
+      } else {
+        throw Exception('unimplements');
+      }
     });
 
 bool _isUnquoteCall(ast.Node node) {
