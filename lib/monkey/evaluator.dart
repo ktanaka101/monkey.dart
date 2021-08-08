@@ -363,3 +363,6 @@ ast.Node _convertObjectToAstNode(object.Object obj) {
     throw Exception('unimplements');
   }
 }
+
+bool _isMacroDefinition(ast.Stmt stmt) =>
+    stmt is ast.Let && stmt.value is ast.MacroLit;
