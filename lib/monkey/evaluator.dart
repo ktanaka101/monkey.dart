@@ -366,3 +366,18 @@ ast.Node _convertObjectToAstNode(object.Object obj) {
 
 bool _isMacroDefinition(ast.Stmt stmt) =>
     stmt is ast.Let && stmt.value is ast.MacroLit;
+
+void _addMacro(ast.Stmt stmt, Environment env) {
+  if (stmt is! ast.Let) {
+    throw Exception('expect Let. receive $stmt');
+  }
+
+  final value = stmt.value;
+  if (value is! ast.MacroLit) {
+    throw Exception('expect Macro. received $value');
+  }
+
+  final macro = object.Macro(value.params, value.body, env);
+
+  env.insert(stmt.name.value, macro);
+}
