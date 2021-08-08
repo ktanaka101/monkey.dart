@@ -424,7 +424,7 @@ void _defineMacros(ast.Program program, Environment env) {
       program.statements.where((stmt) => !_isMacroDefinition(stmt)).toList();
 }
 
-ast.Node _extendMacros(ast.Node node, Environment env) =>
+ast.Node extendMacros(ast.Node node, Environment env) =>
     ast.modify(node, (node) {
       if (node is! ast.Call) {
         return node;
