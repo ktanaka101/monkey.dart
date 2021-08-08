@@ -302,11 +302,7 @@ object.Object _evalHashLiteral(ast.Hash hash, Environment env) {
   return object.Hash(pairs);
 }
 
-object.Object _evalHashIndexExpr(object.Hash hash, object.Object key) {
-  if (key is! object.Hashable) {
-    throw Exception('unusable as hash key: $key');
-  }
-
+object.Object _evalHashIndexExpr(object.Hash hash, object.Hashable key) {
   final value = hash.pairs[key];
   if (value == null) {
     return builtin.constNull;
