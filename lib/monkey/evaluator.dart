@@ -310,3 +310,14 @@ object.Object _evalHashIndexExpr(object.Hash hash, object.Hashable key) {
 
   return value;
 }
+
+bool _isUnquoteCall(ast.Node node) {
+  if (node is ast.Call) {
+    final func = node.func;
+    if (func is ast.Ident) {
+      return func.value == 'unquote';
+    }
+  }
+
+  return false;
+}
