@@ -71,7 +71,7 @@ object.Object _evalExpr(ast.Expr expr, Environment env) {
 
     final func = _evalExpr(expr.func, env);
     final args = _evalExpressions(expr.args, env);
-    return applyFunction(func, args);
+    return _applyFunction(func, args);
   } else {
     throw Exception('Unreachable');
   }
@@ -238,7 +238,7 @@ List<object.Object> _evalExpressions(
         List<ast.Expr> exprList, Environment env) =>
     exprList.map((expr) => _evalExpr(expr, env)).toList();
 
-object.Object applyFunction(object.Object func, List<object.Object> args) {
+object.Object _applyFunction(object.Object func, List<object.Object> args) {
   if (func is object.MFunction) {
     final extendedEnv = _extendFunctionEnv(func, args);
     final evaluated = _evalStmt(func.body, extendedEnv);
