@@ -382,7 +382,7 @@ void _addMacro(ast.Stmt stmt, Environment env) {
   env.insert(stmt.name.value, macro);
 }
 
-object.Macro? getMacroInEnv(ast.Call call, Environment env) {
+object.Macro? _getMacroInEnv(ast.Call call, Environment env) {
   final ident = call.func;
   if (ident is! ast.Ident) {
     return null;
