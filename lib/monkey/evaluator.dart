@@ -395,3 +395,19 @@ object.Macro? _getMacroInEnv(ast.Call call, Environment env) {
     return null;
   }
 }
+
+Environment _extendMacroEnv(object.Macro macro, List<object.Quote> args) {
+  final extended = Environment(outer: macro.env);
+
+  if (macro.params.length != args.length) {
+    throw Exception('''
+      The number of elements does not match. 
+      ${macro.params.length} != ${args.length}''');
+  }
+
+  for (var i = 0; i < args.length; i++) {
+    extended.insert(macro.params[i].value, args[i]);
+  }
+
+  return extended;
+}
