@@ -244,3 +244,55 @@ class StringLit extends Expr {
   @override
   String toString() => '"$value"';
 }
+
+Node modify(Node node, Node Function(Node) modifier) {
+  if (node is Program) {
+    node.statements =
+        node.statements.map((stmt) => modify(stmt, modifier) as Stmt).toList();
+  } else if (node is ExprStmt) {
+    node.expr = modify(node.expr, modifier) as Expr;
+  } else if (node is Block) {
+    node.statements =
+        node.statements.map((stmt) => modify(stmt, modifier) as Stmt).toList();
+  } else if (node is Return) {
+    node.value = modify(node.value, modifier) as Expr;
+  } else if (node is Let) {
+    node
+      ..name = modify(node.name, modifier) as Ident
+      ..value = modify(node.value, modifier) as Expr;
+  } else if (node is InfixExpr) {
+    node
+      ..left = modify(node.left, modifier) as Expr
+      ..right = modify(node.right, modifier) as Expr;
+  } else if (node is PrefixExpr) {
+    node.right = modify(node.right, modifier) as Expr;
+  } else if (node is Index) {
+    node
+      ..left = modify(node.left, modifier) as Expr
+      ..index = modify(node.index, modifier) as Expr;
+  } else if (node is If) {
+    node
+      ..cond = modify(node.cond, modifier) as Expr
+      ..consequence = modify(node.consequence, modifier) as Block;
+    final alt = node.alternative;
+    if (alt != null) {
+      node.alternative = modify(alt, modifier) as Block;
+    }
+  } else if (node is MFunction) {
+    node
+      ..params =
+          node.params.map((ident) => modify(ident, modifier) as Ident).toList()
+      ..body = modify(node.body, modifier) as Block;
+  } else if (node is Array) {
+    node.elements =
+        node.elements.map((expr) => modify(expr, modifier) as Expr).toList();
+  } else if (node is Hash) {
+    node.pairs = node.pairs
+        .map((pair) => pair
+          ..key = modify(pair.key, modifier) as Expr
+          ..value = modify(pair.value, modifier) as Expr)
+        .toList();
+  }
+
+  return modifier(node);
+}
