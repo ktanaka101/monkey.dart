@@ -411,3 +411,6 @@ Environment _extendMacroEnv(object.Macro macro, List<object.Quote> args) {
 
   return extended;
 }
+
+List<object.Quote> _quoteArgs(ast.Call call) =>
+    call.args.map((arg) => object.Quote(arg)).toList();
