@@ -423,3 +423,26 @@ void _defineMacros(ast.Program program, Environment env) {
   program.statements =
       program.statements.where((stmt) => !_isMacroDefinition(stmt)).toList();
 }
+
+ast.Node _extendMacros(ast.Node node, Environment env) =>
+    ast.modify(node, (node) {
+      if (node is! ast.Call) {
+        return node;
+      }
+
+      final macro = _getMacroInEnv(node, env);
+      if (macro == null) {
+        return node;
+      }
+
+      final args = _quoteArgs(node);
+      final evalEnv = _extendMacroEnv(macro, args);
+      final evaluated = _evalStmt(macro.body, evalEnv);
+
+      if (evaluated is! object.Quote) {
+        throw Exception(
+            'we only support returning AST-nodes from macros. $evaluated');
+      }
+
+      return evaluated.node;
+    });
