@@ -221,4 +221,34 @@ void main() {
     expect(StringLit('aaa').toString(), '"aaa"');
     expect(StringLit('bbbb').toString(), '"bbbb"');
   });
+
+  test('modify', () {
+    Node _turnOneIntoTwo(Node node) {
+      if (node is ExprStmt) {
+        node.expr = _turnOneIntoTwo(node.expr) as Expr;
+      } else if (node is Int) {
+        if (node.value != 1) {
+          return node;
+        }
+
+        node.value = 2;
+      }
+
+      return node;
+    }
+
+    final tests = [
+      [Int(1), Int(2)],
+      [
+        Program([ExprStmt(Int(1))]),
+        Program([ExprStmt(Int(2))]),
+      ]
+    ];
+    final expected =
+        tests.map((test) => [test[0], modify(test[0], _turnOneIntoTwo)]);
+    expect(
+      tests.map((t) => [t[0].toString(), t[1].toString()]),
+      expected.map((t) => [t[0].toString(), t[1].toString()]),
+    );
+  });
 }
