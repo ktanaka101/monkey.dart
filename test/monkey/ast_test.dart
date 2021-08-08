@@ -254,6 +254,28 @@ void main() {
       [
         PrefixExpr(Operator.plus, Int(1)),
         PrefixExpr(Operator.plus, Int(2)),
+      ],
+      [Index(Int(1), Int(1)), Index(Int(2), Int(2))],
+      [
+        If(Int(1), Block([ExprStmt(Int(1))]), Block([ExprStmt(Int(1))])),
+        If(Int(2), Block([ExprStmt(Int(2))]), Block([ExprStmt(Int(2))])),
+      ],
+      [Return(Int(1)), Return(Int(2))],
+      [
+        Let(Ident('x'), Int(1)),
+        Let(Ident('x'), Int(2)),
+      ],
+      [
+        MFunction([], Block([ExprStmt(Int(1))]), null),
+        MFunction([], Block([ExprStmt(Int(2))]), null),
+      ],
+      [
+        Array([Int(1)]),
+        Array([Int(2)])
+      ],
+      [
+        Hash([Pair(Int(1), Int(1))]),
+        Hash([Pair(Int(2), Int(2))]),
       ]
     ];
     final expected =
