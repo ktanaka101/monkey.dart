@@ -242,6 +242,18 @@ void main() {
       [
         Program([ExprStmt(Int(1))]),
         Program([ExprStmt(Int(2))]),
+      ],
+      [
+        InfixExpr(Int(1), Operator.plus, Int(2)),
+        InfixExpr(Int(2), Operator.plus, Int(2)),
+      ],
+      [
+        InfixExpr(Int(2), Operator.plus, Int(1)),
+        InfixExpr(Int(2), Operator.plus, Int(2)),
+      ],
+      [
+        PrefixExpr(Operator.plus, Int(1)),
+        PrefixExpr(Operator.plus, Int(2)),
       ]
     ];
     final expected =
