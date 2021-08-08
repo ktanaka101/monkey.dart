@@ -39,7 +39,7 @@ object.Object _evalExpr(ast.Expr expr, Environment env) {
   } else if (expr is ast.Boolean) {
     return expr.value.toBooleanObject();
   } else if (expr is ast.Int) {
-    throw Exception('unimplements');
+    return object.Integer(expr.value);
   } else if (expr is ast.StringLit) {
     return object.StringLit(expr.value);
   } else if (expr is ast.Hash) {
