@@ -415,7 +415,7 @@ Environment _extendMacroEnv(object.Macro macro, List<object.Quote> args) {
 List<object.Quote> _quoteArgs(ast.Call call) =>
     call.args.map((arg) => object.Quote(arg)).toList();
 
-void _defineMacros(ast.Program program, Environment env) {
+void defineMacros(ast.Program program, Environment env) {
   program.statements
       .where(_isMacroDefinition)
       .forEach((stmt) => _addMacro(stmt, env));
