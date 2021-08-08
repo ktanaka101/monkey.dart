@@ -9,7 +9,7 @@ object.Object eval(ast.Node node, Environment env) {
   } else if (node is ast.Stmt) {
     return _evalStmt(node, env);
   } else if (node is ast.Expr) {
-    throw Exception('unimplements');
+    return _evalExpr(node, env);
   } else {
     throw Exception('Unreachable');
   }
