@@ -94,6 +94,32 @@ void main() {
       expectObject(_testEval(test[0] as String), test[1] as object.Object);
     }
   });
+
+  test('return statement', () {
+    final tests = [
+      ['return 10;', 10],
+      ['return 10; 9;', 10],
+      ['return 2 * 5; 9;', 10],
+      ['9; return 2 * 5; 9;', 10],
+      [
+        '''
+          if (10 > 1) {
+              if (10 > 1) {
+                  return 10;
+              }
+          }
+
+          return 1;
+        ''',
+        10,
+      ],
+    ];
+
+    for (final test in tests) {
+      expectObject(
+          _testEval(test[0] as String), object.Integer(test[1] as int));
+    }
+  });
 }
 
 object.Object _testEval(String input) {
