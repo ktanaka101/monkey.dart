@@ -62,6 +62,22 @@ void main() {
       }
     });
   });
+
+  test('bang operator', () {
+    final tests = [
+      ['!true', false],
+      ['!false', true],
+      ['!5', false],
+      ['!!true', true],
+      ['!!false', false],
+      ['!!5', true],
+    ];
+
+    for (final test in tests) {
+      expectBooleanObject(
+          _testEval(test[0] as String), object.Boolean(test[1] as bool));
+    }
+  });
 }
 
 object.Object _testEval(String input) {
