@@ -78,6 +78,22 @@ void main() {
           _testEval(test[0] as String), object.Boolean(test[1] as bool));
     }
   });
+
+  test('if-else expression', () {
+    final tests = [
+      ['if (true) { 10 }', object.Integer(10)],
+      ['if (1) { 10 }', object.Integer(10)],
+      ['if ( 1 < 2 ) { 10 }', object.Integer(10)],
+      ['if ( 1 > 2 ) { 10 } else { 20 }', object.Integer(20)],
+      ['if ( 1 < 2 ) { 10 } else { 20 }', object.Integer(10)],
+      ['if (false) { 10 }', const object.Null()],
+      ['if ( 1 > 2 ) { 10 }', const object.Null()]
+    ];
+
+    for (final test in tests) {
+      expectObject(_testEval(test[0] as String), test[1] as object.Object);
+    }
+  });
 }
 
 object.Object _testEval(String input) {
@@ -87,6 +103,20 @@ object.Object _testEval(String input) {
   final e = env.Environment();
 
   return evaluator.eval(program, e);
+}
+
+void expectObject(object.Object actual, object.Object expected) {
+  expect(actual.runtimeType, expected.runtimeType);
+
+  if (expected is object.Integer) {
+    expectIntegerObject(actual, expected);
+  } else if (expected is object.Boolean) {
+    expectBooleanObject(actual, expected);
+  } else if (expected is object.Null) {
+    expectNullObject(actual);
+  } else {
+    throw Exception('unimplements');
+  }
 }
 
 void expectIntegerObject(object.Object actual, object.Integer expected) {
@@ -105,4 +135,8 @@ void expectBooleanObject(object.Object actual, object.Boolean expected) {
   }
 
   expect(actual.value, expected.value);
+}
+
+void expectNullObject(object.Object actual) {
+  expect(actual, isA<object.Null>());
 }
