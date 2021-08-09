@@ -32,6 +32,35 @@ void main() {
             _testEval(test[0] as String), object.Integer(test[1] as int));
       }
     });
+
+    test('boolean expression', () {
+      final tests = [
+        ['true', true],
+        ['false', false],
+        ['1 < 2', true],
+        ['1 > 2', false],
+        ['1 < 1', false],
+        ['1 > 1', false],
+        ['1 == 1', true],
+        ['1 != 1', false],
+        ['1 == 2', false],
+        ['1 != 2', true],
+        ['true == true', true],
+        ['false == false', true],
+        ['true == false', false],
+        ['true != false', true],
+        ['false != true', true],
+        ['(1 < 2) == true', true],
+        ['(1 < 2) == false', false],
+        ['(1 > 2) == true', false],
+        ['(1 > 2) == false', true],
+      ];
+
+      for (final test in tests) {
+        expectBooleanObject(
+            _testEval(test[0] as String), object.Boolean(test[1] as bool));
+      }
+    });
   });
 }
 
@@ -47,6 +76,15 @@ object.Object _testEval(String input) {
 void expectIntegerObject(object.Object actual, object.Integer expected) {
   expect(actual, isA<object.Integer>());
   if (actual is! object.Integer) {
+    return;
+  }
+
+  expect(actual.value, expected.value);
+}
+
+void expectBooleanObject(object.Object actual, object.Boolean expected) {
+  expect(actual, isA<object.Boolean>());
+  if (actual is! object.Boolean) {
     return;
   }
 
