@@ -77,19 +77,26 @@ object.Object _evalExpr(ast.Expr expr, Environment env) {
   }
 }
 
-object.Object _evalProgram(ast.Program program, Environment env) =>
-    _evalStatementsInScope(program.statements, env);
-
-object.Object _evalBlock(ast.Block block, Environment env) =>
-    _evalStatementsInScope(block.statements, env);
-
-object.Object _evalStatementsInScope(
-    List<ast.Stmt> statements, Environment env) {
+object.Object _evalProgram(ast.Program program, Environment env) {
   object.Object obj = builtin.constNull;
-  for (final stmt in statements) {
+  for (final stmt in program.statements) {
     final value = _evalStmt(stmt, env);
     if (value is object.Return) {
       return value.value;
+    } else {
+      obj = value;
+    }
+  }
+
+  return obj;
+}
+
+object.Object _evalBlock(ast.Block block, Environment env) {
+  object.Object obj = builtin.constNull;
+  for (final stmt in block.statements) {
+    final value = _evalStmt(stmt, env);
+    if (value is object.Return) {
+      return value;
     } else {
       obj = value;
     }
