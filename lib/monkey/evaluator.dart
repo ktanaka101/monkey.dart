@@ -289,7 +289,7 @@ object.Object _unwrapReturnValue(object.Object obj) {
 }
 
 object.Object _evalIndexExpr(object.Object left, object.Object index) {
-  if (left is object.Array && index is object.Integer) {
+  if (left is object.Array) {
     return _evalArrayIndexExpr(left, index);
   } else if (left is object.Hash) {
     return _evalHashIndexExpr(left, index);
@@ -298,7 +298,11 @@ object.Object _evalIndexExpr(object.Object left, object.Object index) {
   }
 }
 
-object.Object _evalArrayIndexExpr(object.Array array, object.Integer index) {
+object.Object _evalArrayIndexExpr(object.Array array, object.Object index) {
+  if (index is! object.Integer) {
+    throw MonkeyException('unusable as array key: ${index.runtimeType}');
+  }
+
   if (index.value < 0 || index.value >= array.elements.length) {
     return builtin.constNull;
   }

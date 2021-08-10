@@ -147,6 +147,10 @@ void main() {
       ['foobar', 'identifier not found: foobar'],
       ['"Hello" - "World"', 'unknown operator: String - String'],
       [
+        '[1, 2, 3][fn(x) { x }];',
+        'unusable as array key: MFunction',
+      ],
+      [
         '{"name": "Monkey"}[fn(x) { x }];',
         'unusable as hash key: MFunction',
       ],
