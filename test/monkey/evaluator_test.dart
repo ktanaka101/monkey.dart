@@ -1,3 +1,4 @@
+import 'package:monkey/monkey/error.dart';
 import 'package:monkey/monkey/evaluator/env.dart' as env;
 import 'package:monkey/monkey/evaluator/object.dart' as object;
 import 'package:monkey/monkey/lexer.dart' as lexer;
@@ -118,6 +119,45 @@ void main() {
     for (final test in tests) {
       expectObject(
           _testEval(test[0] as String), object.Integer(test[1] as int));
+    }
+  });
+
+  test('error handling', () {
+    final tests = [
+      ['5 + true;', 'type mismatch: Integer + Boolean'],
+      ['5 + true; 5;', 'type mismatch: Integer + Boolean'],
+      ['-true', 'unknown operator: -Boolean'],
+      ['true + false;', 'unknown operator: Boolean + Boolean'],
+      ['5; true + false; 5', 'unknown operator: Boolean + Boolean'],
+      [
+        'if (10 > 1 ) { true + false; }',
+        'unknown operator: Boolean + Boolean',
+      ],
+      [
+        '''
+          if (10 > 1) {
+            if (10 > 1) {
+                return true + false;
+            }
+            return 1;
+          }
+        ''',
+        'unknown operator: Boolean + Boolean',
+      ],
+      ['foobar', 'identifier not found: foobar'],
+      ['"Hello" - "World"', 'unknown operator: String - String'],
+      [
+        '{"name": "Monkey"}[fn(x) { x }];',
+        'unusable as hash key: Function',
+      ],
+    ];
+    for (final test in tests) {
+      try {
+        _testEval(test[0]);
+        expect('', test[1]);
+      } on MonkeyException catch (e) {
+        expect(e.msg, test[1]);
+      }
     }
   });
 }
