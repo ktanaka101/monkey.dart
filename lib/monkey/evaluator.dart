@@ -160,10 +160,12 @@ object.Object _evalInfixExpr(
   } else {
     if (left.runtimeType == right.runtimeType) {
       throw MonkeyException(
-          'unknown operator: ${left.runtimeType} $ope ${right.runtimeType}');
+        '''unknown operator: ${left.runtimeType} ${ope.toCode()} ${right.runtimeType}''',
+      );
     } else {
       throw MonkeyException(
-          'type: ${left.runtimeType} $ope ${right.runtimeType}');
+        '''type mismatch: ${left.runtimeType} ${ope.toCode()} ${right.runtimeType}''',
+      );
     }
   }
 }
@@ -187,7 +189,7 @@ object.Object _evalIntegerInfixExpr(
   } else if (ope == ast.Operator.notEqual) {
     return (!left.monkeyEqual(right)).toBooleanObject();
   } else {
-    throw MonkeyException('unknown oeperator: $ope');
+    throw MonkeyException('unknown oeperator: ${ope.toCode()}');
   }
 }
 
@@ -200,7 +202,7 @@ object.Object _evalStringInfixExpr(
   } else if (ope == ast.Operator.notEqual) {
     return (!left.monkeyEqual(right)).toBooleanObject();
   } else {
-    throw MonkeyException('unknown operator: String $ope String');
+    throw MonkeyException('unknown operator: String ${ope.toCode()} String');
   }
 }
 
@@ -240,7 +242,7 @@ object.Object _evalIdentifier(ast.Ident ident, Environment env) {
     return builtinFunc;
   }
 
-  throw MonkeyException('ientifier not found: ${ident.value}');
+  throw MonkeyException('identifier not found: ${ident.value}');
 }
 
 List<object.Object> _evalExpressions(
