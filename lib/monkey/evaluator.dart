@@ -291,8 +291,8 @@ object.Object _unwrapReturnValue(object.Object obj) {
 object.Object _evalIndexExpr(object.Object left, object.Object index) {
   if (left is object.Array && index is object.Integer) {
     return _evalArrayIndexExpr(left, index);
-  } else if (left is object.Hash && index is object.Hashable) {
-    return _evalHashIndexExpr(left, index as object.Hashable);
+  } else if (left is object.Hash) {
+    return _evalHashIndexExpr(left, index);
   } else {
     throw MonkeyException('index operator not supported');
   }
@@ -322,7 +322,11 @@ object.Object _evalHashLiteral(ast.Hash hash, Environment env) {
   return object.Hash(pairs);
 }
 
-object.Object _evalHashIndexExpr(object.Hash hash, object.Hashable key) {
+object.Object _evalHashIndexExpr(object.Hash hash, object.Object key) {
+  if (key is! object.Hashable) {
+    throw MonkeyException('unusable as hash key: ${key.runtimeType}');
+  }
+
   final value = hash.pairs[key];
   if (value == null) {
     return builtin.constNull;
