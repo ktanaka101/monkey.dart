@@ -1,3 +1,4 @@
+import 'package:monkey/monkey/error.dart';
 import 'package:monkey/monkey/evaluator/builtin.dart' as builtin;
 import 'package:monkey/monkey/evaluator/env.dart';
 import 'package:monkey/monkey/evaluator/object.dart' as object;
@@ -11,7 +12,7 @@ object.Object eval(ast.Node node, Environment env) {
   } else if (node is ast.Expr) {
     return _evalExpr(node, env);
   } else {
-    throw Exception('Unreachable');
+    throw MonkeyException('Unreachable');
   }
 }
 
@@ -28,7 +29,7 @@ object.Object _evalStmt(ast.Stmt stmt, Environment env) {
     final val = _evalExpr(stmt.value, env);
     return object.Return(val);
   } else {
-    throw Exception('Unreachable');
+    throw MonkeyException('Unreachable');
   }
 }
 
@@ -73,7 +74,7 @@ object.Object _evalExpr(ast.Expr expr, Environment env) {
     final args = _evalExpressions(expr.args, env);
     return _applyFunction(func, args);
   } else {
-    throw Exception('Unreachable');
+    throw MonkeyException('Unreachable');
   }
 }
 
@@ -119,7 +120,7 @@ object.Object _evalPrefixExpr(ast.Operator ope, object.Object right) {
     case ast.Operator.notEqual:
     case ast.Operator.plus:
     case ast.Operator.slash:
-      throw Exception('unknown operator: $ope$right');
+      throw MonkeyException('unknown operator: $ope$right');
   }
 }
 
@@ -142,7 +143,7 @@ object.Object _evalMinusPrefixOpeExpr(object.Object right) {
   if (right is object.Integer) {
     return object.Integer(-right.value);
   } else {
-    throw Exception('unknown operator: -${right.runtimeType}');
+    throw MonkeyException('unknown operator: -${right.runtimeType}');
   }
 }
 
@@ -158,10 +159,11 @@ object.Object _evalInfixExpr(
     return (!left.monkeyEqual(right)).toBooleanObject();
   } else {
     if (left.runtimeType == right.runtimeType) {
-      throw Exception(
+      throw MonkeyException(
           'unknown operator: ${left.runtimeType} $ope ${right.runtimeType}');
     } else {
-      throw Exception('type: ${left.runtimeType} $ope ${right.runtimeType}');
+      throw MonkeyException(
+          'type: ${left.runtimeType} $ope ${right.runtimeType}');
     }
   }
 }
@@ -185,7 +187,7 @@ object.Object _evalIntegerInfixExpr(
   } else if (ope == ast.Operator.notEqual) {
     return (!left.monkeyEqual(right)).toBooleanObject();
   } else {
-    throw Exception('unknown oeperator: $ope');
+    throw MonkeyException('unknown oeperator: $ope');
   }
 }
 
@@ -198,7 +200,7 @@ object.Object _evalStringInfixExpr(
   } else if (ope == ast.Operator.notEqual) {
     return (!left.monkeyEqual(right)).toBooleanObject();
   } else {
-    throw Exception('unknown operator: String $ope String');
+    throw MonkeyException('unknown operator: String $ope String');
   }
 }
 
@@ -238,7 +240,7 @@ object.Object _evalIdentifier(ast.Ident ident, Environment env) {
     return builtinFunc;
   }
 
-  throw Exception('ientifier not found: ${ident.value}');
+  throw MonkeyException('ientifier not found: ${ident.value}');
 }
 
 List<object.Object> _evalExpressions(
@@ -258,14 +260,14 @@ object.Object _applyFunction(object.Object func, List<object.Object> args) {
 
     return res;
   } else {
-    throw Exception('not a function: ${func.runtimeType}');
+    throw MonkeyException('not a function: ${func.runtimeType}');
   }
 }
 
 Environment _extendFunctionEnv(
     object.MFunction func, List<object.Object> args) {
   if (func.params.length != args.length) {
-    throw Exception('not match args.');
+    throw MonkeyException('not match args.');
   }
 
   final env = Environment.newEnclose(func.env);
@@ -290,7 +292,7 @@ object.Object _evalIndexExpr(object.Object left, object.Object index) {
   } else if (left is object.Hash && index is object.Hashable) {
     return _evalHashIndexExpr(left, index as object.Hashable);
   } else {
-    throw Exception('index operator not supported');
+    throw MonkeyException('index operator not supported');
   }
 }
 
@@ -311,7 +313,7 @@ object.Object _evalHashLiteral(ast.Hash hash, Environment env) {
     if (key is object.Hashable) {
       pairs[key as object.Hashable] = value;
     } else {
-      throw Exception('unusable as hash key: $key');
+      throw MonkeyException('unusable as hash key: $key');
     }
   }
 
@@ -341,10 +343,10 @@ ast.Node _evalUnquoteCalls(ast.Node quoted, Environment env) =>
           final arg = node.args[0];
           return _convertObjectToAstNode(eval(arg, env));
         } else {
-          throw Exception('unimplements');
+          throw MonkeyException('unimplements');
         }
       } else {
-        throw Exception('unimplements');
+        throw MonkeyException('unimplements');
       }
     });
 
@@ -367,7 +369,7 @@ ast.Node _convertObjectToAstNode(object.Object obj) {
   } else if (obj is object.Quote) {
     return obj.node;
   } else {
-    throw Exception('unimplements');
+    throw MonkeyException('unimplements');
   }
 }
 
@@ -376,12 +378,12 @@ bool _isMacroDefinition(ast.Stmt stmt) =>
 
 void _addMacro(ast.Stmt stmt, Environment env) {
   if (stmt is! ast.Let) {
-    throw Exception('expect Let. receive $stmt');
+    throw MonkeyException('expect Let. receive $stmt');
   }
 
   final value = stmt.value;
   if (value is! ast.MacroLit) {
-    throw Exception('expect Macro. received $value');
+    throw MonkeyException('expect Macro. received $value');
   }
 
   final macro = object.Macro(value.params, value.body, env);
@@ -407,7 +409,7 @@ Environment _extendMacroEnv(object.Macro macro, List<object.Quote> args) {
   final extended = Environment(outer: macro.env);
 
   if (macro.params.length != args.length) {
-    throw Exception('''
+    throw MonkeyException('''
       The number of elements does not match. 
       ${macro.params.length} != ${args.length}''');
   }
@@ -447,7 +449,7 @@ ast.Node extendMacros(ast.Node node, Environment env) =>
       final evaluated = _evalStmt(macro.body, evalEnv);
 
       if (evaluated is! object.Quote) {
-        throw Exception(
+        throw MonkeyException(
             'we only support returning AST-nodes from macros. $evaluated');
       }
 
