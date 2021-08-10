@@ -148,7 +148,7 @@ void main() {
       ['"Hello" - "World"', 'unknown operator: String - String'],
       [
         '{"name": "Monkey"}[fn(x) { x }];',
-        'unusable as hash key: Function',
+        'unusable as hash key: MFunction',
       ],
     ];
     for (final test in tests) {
