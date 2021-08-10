@@ -319,7 +319,7 @@ object.Object _evalHashLiteral(ast.Hash hash, Environment env) {
     if (key is object.Hashable) {
       pairs[key as object.Hashable] = value;
     } else {
-      throw MonkeyException('unusable as hash key: $key');
+      throw MonkeyException('unusable as hash key: ${key.runtimeType}');
     }
   }
 

@@ -154,6 +154,10 @@ void main() {
         '{"name": "Monkey"}[fn(x) { x }];',
         'unusable as hash key: MFunction',
       ],
+      [
+        '{fn(x) { x }: "Monkey"}[0];',
+        'unusable as hash key: MFunction',
+      ],
     ];
     for (final test in tests) {
       try {
