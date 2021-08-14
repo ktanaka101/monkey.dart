@@ -267,6 +267,16 @@ void main() {
           _testEval(test[0] as String), object.Integer(test[1] as int));
     }
   });
+
+  test('string literal', () {
+    final tests = [
+      ['"Hello World!"', 'Hello World!'],
+    ];
+
+    for (final test in tests) {
+      expectObject(_testEval(test[0]), object.StringLit(test[1]));
+    }
+  });
 }
 
 object.Object _testEval(String input) {
@@ -289,6 +299,8 @@ void expectObject(object.Object actual, object.Object expected) {
     expectNullObject(actual);
   } else if (expected is object.MFunction) {
     expectFunctionObject(actual, expected);
+  } else if (expected is object.StringLit) {
+    expectStringObject(actual, expected);
   } else {
     throw Exception('unimplements');
   }
@@ -324,4 +336,12 @@ void expectFunctionObject(object.Object actual, object.MFunction expected) {
   parser_test.testList(actual.params, expected.params, parser_test.testIdent);
   parser_test.testBlock(actual.body, expected.body);
   // no environmnt test
+}
+
+void expectStringObject(object.Object actual, object.StringLit expected) {
+  expect(actual, isA<object.StringLit>());
+  if (actual is! object.StringLit) {
+    return;
+  }
+  expect(actual.value, expected.value);
 }
