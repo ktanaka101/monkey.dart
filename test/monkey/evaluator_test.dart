@@ -209,6 +209,43 @@ void main() {
       expectObject(_testEval(test[0] as String), test[1] as object.Object);
     }
   });
+
+  test('function application', () {
+    final tests = [
+      ['let identity = fn(x) { x; }; identity(5);', 5],
+      ['let identity = fn(x) { return x; }; identity(5);', 5],
+      ['let double = fn(x) { x * 2; }; double(5);', 10],
+      ['let add = fn(x, y) { x + y; }; add(5, 5);', 10],
+      [
+        'let add = fn(x, y) { x + y; }; add(5 + 5, add(5, 5));',
+        20,
+      ],
+      ['fn(x) { x; }(5)', 5],
+      [
+        '''
+            let add = fn(a, b) { a + b };
+            let sub = fn(a, b) { a - b };
+            let apply_func = fn(a, b, func) { func(a, b) };
+            apply_func(2, 2, add);
+        ''',
+        4,
+      ],
+      [
+        '''
+            let add = fn(a, b) { a + b };
+            let sub = fn(a, b) { a - b };
+            let apply_func = fn(a, b, func) { func(a, b) };
+            apply_func(10, 2, sub);
+        ''',
+        8,
+      ],
+    ];
+
+    for (final test in tests) {
+      expectObject(
+          _testEval(test[0] as String), object.Integer(test[1] as int));
+    }
+  });
 }
 
 object.Object _testEval(String input) {
