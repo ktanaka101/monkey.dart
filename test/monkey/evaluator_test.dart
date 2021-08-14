@@ -277,6 +277,16 @@ void main() {
       expectObject(_testEval(test[0]), object.StringLit(test[1]));
     }
   });
+
+  test('string concatenation', () {
+    final tests = [
+      ['"Hello " + "World!"', 'Hello World!'],
+    ];
+
+    for (final test in tests) {
+      expectObject(_testEval(test[0]), object.StringLit(test[1]));
+    }
+  });
 }
 
 object.Object _testEval(String input) {
