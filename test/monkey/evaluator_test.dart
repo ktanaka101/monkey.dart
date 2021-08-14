@@ -5,6 +5,8 @@ import 'package:monkey/monkey/lexer.dart' as lexer;
 import 'package:monkey/monkey/parser.dart' as parser;
 import 'package:test/test.dart';
 import 'package:monkey/monkey/evaluator.dart' as evaluator;
+import 'package:monkey/monkey/ast.dart' as ast;
+import './parser_test.dart' as parser_test;
 
 void main() {
   group('eval', () {
@@ -182,6 +184,31 @@ void main() {
           _testEval(test[0] as String), object.Integer(test[1] as int));
     }
   });
+
+  test('function object', () {
+    final tests = [
+      [
+        'fn(x) { x + 2; };',
+        object.MFunction(
+          [ast.Ident('x')],
+          ast.Block([
+            ast.ExprStmt(
+              ast.InfixExpr(
+                ast.Ident('x'),
+                ast.Operator.plus,
+                ast.Int(2),
+              ),
+            )
+          ]),
+          env.Environment(),
+        )
+      ]
+    ];
+
+    for (final test in tests) {
+      expectObject(_testEval(test[0] as String), test[1] as object.Object);
+    }
+  });
 }
 
 object.Object _testEval(String input) {
@@ -202,6 +229,8 @@ void expectObject(object.Object actual, object.Object expected) {
     expectBooleanObject(actual, expected);
   } else if (expected is object.Null) {
     expectNullObject(actual);
+  } else if (expected is object.MFunction) {
+    expectFunctionObject(actual, expected);
   } else {
     throw Exception('unimplements');
   }
@@ -227,4 +256,14 @@ void expectBooleanObject(object.Object actual, object.Boolean expected) {
 
 void expectNullObject(object.Object actual) {
   expect(actual, isA<object.Null>());
+}
+
+void expectFunctionObject(object.Object actual, object.MFunction expected) {
+  expect(actual, isA<object.MFunction>());
+  if (actual is! object.MFunction) {
+    return;
+  }
+  parser_test.testList(actual.params, expected.params, parser_test.testIdent);
+  parser_test.testBlock(actual.body, expected.body);
+  // no environmnt test
 }
