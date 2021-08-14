@@ -168,6 +168,20 @@ void main() {
       }
     }
   });
+
+  test('let statement', () {
+    final tests = [
+      ['let a = 5; a;', 5],
+      ['let a = 5 * 5; a;', 25],
+      ['let a = 5; let b = a; b;', 5],
+      ['let a = 5; let b = a; let c = a + b + 5; c;', 15],
+    ];
+
+    for (final test in tests) {
+      expectObject(
+          _testEval(test[0] as String), object.Integer(test[1] as int));
+    }
+  });
 }
 
 object.Object _testEval(String input) {
