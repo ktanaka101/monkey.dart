@@ -1,7 +1,21 @@
+import 'package:monkey/monkey/error.dart';
 import 'package:monkey/monkey/evaluator/object.dart' as object;
 
 object.Object? len(List<object.Object> args) {
-  throw 'unimplements';
+  if (args.length != 1) {
+    throw MonkeyException(
+        'wrong number of arguments. got=${args.length}, want=1');
+  }
+
+  final arg = args[0];
+  if (arg is object.StringLit) {
+    return object.Integer(arg.value.length);
+  } else if (arg is object.Array) {
+    return object.Integer(arg.elements.length);
+  } else {
+    throw MonkeyException(
+        'argument to `len` not supported, got ${arg.runtimeType}');
+  }
 }
 
 object.Object? first(List<object.Object> args) {
