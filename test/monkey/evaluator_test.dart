@@ -246,6 +246,27 @@ void main() {
           _testEval(test[0] as String), object.Integer(test[1] as int));
     }
   });
+
+  test('closures', () {
+    final tests = [
+      [
+        '''
+          let new_addr = fn(x) {
+            fn(y) { x + y};
+          }
+
+          let addTwo = new_addr(2);
+          addTwo(2);
+        ''',
+        4
+      ]
+    ];
+
+    for (final test in tests) {
+      expectObject(
+          _testEval(test[0] as String), object.Integer(test[1] as int));
+    }
+  });
 }
 
 object.Object _testEval(String input) {
