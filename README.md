@@ -1,7 +1,5 @@
 # monkey.rs
 
-WIP
-
 ## Summury
 
 We can learn how to make an interpreter in this book.  
