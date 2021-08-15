@@ -743,6 +743,29 @@ void main() {
           ),
         ])
       ],
+      [
+        '''
+          let reverse = macro(a, b) { quote(unquote(b) - unquote(a)); };
+          reverse(2 + 2, 10 - 5);
+        ''',
+        ast.Program([
+          ast.ExprStmt(
+            ast.InfixExpr(
+              ast.InfixExpr(
+                ast.Int(10),
+                ast.Operator.minus,
+                ast.Int(5),
+              ),
+              ast.Operator.minus,
+              ast.InfixExpr(
+                ast.Int(2),
+                ast.Operator.plus,
+                ast.Int(2),
+              ),
+            ),
+          ),
+        ])
+      ]
     ];
 
     for (final test in tests) {
