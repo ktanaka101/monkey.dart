@@ -51,7 +51,7 @@ let fibonacci = fn(x) {
 fibonacci(15); #=> 610
 ```
 
-```
+``` sh
 $ dart run
 >> let fibonacci = fn(x) { if (x == 0) { return 0; } else { if (x == 1) { return 1; } else { fibonacci(x - 1) + fibonacci(x - 2); } } };
 >> fibonacci(15)
