@@ -685,6 +685,46 @@ void main() {
       expectObject(_testEval(test[0] as String), test[1] as object.Object);
     }
   });
+
+  test('define macro', () {
+    const input = '''
+          let number = 1;
+          let function = fn(x, y) { x + y; };
+          let myMacro = macro(x, y) { x + y; };
+        ''';
+
+    final l = lexer.Lexer(input);
+    final p = parser.Parser(l);
+    final program = p.parseProgram();
+    final e = env.Environment();
+
+    evaluator.defineMacros(program, e);
+
+    expect(program.statements.length, 2);
+
+    expect(e.resolve('number'), isNull);
+    expect(e.resolve('function'), isNull);
+
+    final macro = e.resolve('myMacro');
+    expectObject(
+      macro!,
+      object.Macro(
+        [ast.Ident('x'), ast.Ident('y')],
+        ast.Block(
+          [
+            ast.ExprStmt(
+              ast.InfixExpr(
+                ast.Ident('x'),
+                ast.Operator.plus,
+                ast.Ident('y'),
+              ),
+            ),
+          ],
+        ),
+        env.Environment(),
+      ),
+    );
+  });
 }
 
 object.Object _testEval(String input) {
@@ -715,6 +755,8 @@ void expectObject(object.Object actual, object.Object expected) {
     expectHashObject(actual, expected);
   } else if (expected is object.Quote) {
     expectQuoteObject(actual, expected);
+  } else if (expected is object.Macro) {
+    expectMacroObject(actual, expected);
   } else {
     throw Exception('unimplements');
   }
@@ -794,4 +836,15 @@ void expectQuoteObject(object.Object actual, object.Quote expected) {
   }
 
   parser_test.testNode(actual.node, expected.node);
+}
+
+void expectMacroObject(object.Object actual, object.Macro expected) {
+  expect(actual, isA<object.Macro>());
+  if (actual is! object.Macro) {
+    return;
+  }
+
+  parser_test.testList(actual.params, expected.params, parser_test.testIdent);
+  parser_test.testBlock(actual.body, expected.body);
+  // no environment test
 }
