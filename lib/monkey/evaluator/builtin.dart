@@ -70,7 +70,18 @@ object.Object? rest(List<object.Object> args) {
 }
 
 object.Object? push(List<object.Object> args) {
-  throw 'unimplements';
+  if (args.length != 2) {
+    throw MonkeyException(
+        'wrong number of arguments. got=${args.length}, want=2');
+  }
+
+  final arg = args[0];
+  if (arg is object.Array) {
+    return object.Array([...arg.elements, args[1]]);
+  } else {
+    throw MonkeyException(
+        'argument to `push` must be Array, got ${arg.runtimeType}');
+  }
 }
 
 object.Object? puts(List<object.Object> args) {
