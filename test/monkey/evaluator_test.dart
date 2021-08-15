@@ -414,6 +414,8 @@ void expectObject(object.Object actual, object.Object expected) {
     expectFunctionObject(actual, expected);
   } else if (expected is object.StringLit) {
     expectStringObject(actual, expected);
+  } else if (expected is object.Array) {
+    expectArrayObject(actual, expected);
   } else {
     throw Exception('unimplements');
   }
@@ -457,4 +459,14 @@ void expectStringObject(object.Object actual, object.StringLit expected) {
     return;
   }
   expect(actual.value, expected.value);
+}
+
+void expectArrayObject(object.Object actual, object.Array expected) {
+  expect(actual, isA<object.Array>());
+  if (actual is! object.Array) {
+    return;
+  }
+  for (var i = 0; i < expected.elements.length; i++) {
+    expectObject(actual.elements[i], expected.elements[i]);
+  }
 }
