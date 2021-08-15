@@ -435,6 +435,47 @@ void main() {
         }
       }
     });
+
+    test('push()', () {
+      final tests = [
+        [
+          'push([1, 2, 3], 4)',
+          object.Array([
+            object.Integer(1),
+            object.Integer(2),
+            object.Integer(3),
+            object.Integer(4)
+          ]),
+        ],
+        [
+          'push([1, 2, 3], [4, 5, 6])',
+          object.Array([
+            object.Integer(1),
+            object.Integer(2),
+            object.Integer(3),
+            object.Array(
+                [object.Integer(4), object.Integer(5), object.Integer(6)])
+          ]),
+        ],
+        [
+          'push([], 1)',
+          object.Array([object.Integer(1)]),
+        ],
+        [
+          'let a = [1, 2]; push(push(a, 3), 4);',
+          object.Array([
+            object.Integer(1),
+            object.Integer(2),
+            object.Integer(3),
+            object.Integer(4)
+          ]),
+        ]
+      ];
+
+      for (final test in tests) {
+        expectObject(_testEval(test[0] as String), test[1] as object.Object);
+      }
+    });
   });
 }
 
