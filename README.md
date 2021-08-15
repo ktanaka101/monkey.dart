@@ -13,11 +13,11 @@ But in this repository it is written in Dart.
 - [x] Lexer
 - [x] Parser
 - [x] Evaluator
-- [] Compiler
-- [] VM
+- [ ] Compiler
+- [ ] VM
 - [x] REPL
 - [x] Test case
-- [] Evaluator and VM benchmarks
+- [ ] Evaluator and VM benchmarks
 
 ## Contributors
 
