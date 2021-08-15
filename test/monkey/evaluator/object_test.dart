@@ -43,10 +43,11 @@ void main() {
     });
 
     test('Hash', () {
-      expect(Hash({Integer(1): Integer(2)}).toString(), '{ 1: 2 }');
+      expect(Hash({}).toString(), '{}');
+      expect(Hash({Integer(1): Integer(2)}).toString(), '{1: 2}');
       expect(
         Hash({StringLit('foo'): StringLit('bar')}).toString(),
-        '{ "foo": "bar" }',
+        '{"foo": "bar"}',
       );
       expect(
         Hash({
@@ -56,7 +57,7 @@ void main() {
             }),
           }),
         }).toString(),
-        '{ 1: { 2: { 3: 4 } } }',
+        '{1: {2: {3: 4}}}',
       );
     });
 

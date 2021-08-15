@@ -128,7 +128,7 @@ class Hash extends Object {
   String toString() {
     final pairsString =
         pairs.entries.map((pair) => '${pair.key}: ${pair.value}').join(', ');
-    return '{ $pairsString }';
+    return '{$pairsString}';
   }
 }
 
