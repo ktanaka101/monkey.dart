@@ -8,6 +8,14 @@ That interpreter is called Monkey in the book.
 The Monkey is written in Go in the book.  
 But in this repository it is written in Dart.
 
+## Supports
+
+- [x] Lexer
+- [x] Parser
+- [x] Evaluator
+- [x] REPL
+- [x] Test case
+
 ## Contributors
 
 - [ktanaka101](https://github.com/ktanaka101) - creator, maintainer
