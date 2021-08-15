@@ -85,7 +85,12 @@ object.Object? push(List<object.Object> args) {
 }
 
 object.Object? puts(List<object.Object> args) {
-  throw 'unimplements';
+  for (final arg in args) {
+    // ignore: avoid_print
+    print(arg.toString());
+  }
+
+  return constNull;
 }
 
 const _builtinLen = object.Builtin(len);
