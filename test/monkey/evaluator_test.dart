@@ -476,6 +476,27 @@ void main() {
         expectObject(_testEval(test[0] as String), test[1] as object.Object);
       }
     });
+
+    test('push() error', () {
+      final tests = [
+        [
+          'push([1, 2, 3], 1, 2)',
+          'wrong number of arguments. got=3, want=2',
+        ],
+        [
+          'push(1, 2)',
+          'argument to `push` must be Array, got Integer',
+        ]
+      ];
+
+      for (final test in tests) {
+        try {
+          _testEval(test[0]);
+        } on MonkeyException catch (e) {
+          expect(e.msg, test[1]);
+        }
+      }
+    });
   });
 }
 
