@@ -449,8 +449,17 @@ void testNode(ast.Node actual, ast.Node expected) {
     testStmt(actual as ast.Stmt, expected);
   } else if (expected is ast.Expr) {
     testExpr(actual as ast.Expr, expected);
+  } else if (expected is ast.Program) {
+    testProgram(actual as ast.Program, expected);
   } else {
     throw Exception('unimplements');
+  }
+}
+
+void testProgram(ast.Program actual, ast.Program expected) {
+  expect(actual.statements.length, expected.statements.length);
+  for (var i = 0; i < expected.statements.length; i++) {
+    testStmt(actual.statements[i], expected.statements[i]);
   }
 }
 
