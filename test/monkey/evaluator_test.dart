@@ -304,6 +304,24 @@ void main() {
       }
     });
 
+    test('len() error', () {
+      final tests = [
+        ['len(1)', 'argument to `len` not supported, got Integer'],
+        [
+          'len("one", "two")',
+          'wrong number of arguments. got=2, want=1',
+        ],
+      ];
+
+      for (final test in tests) {
+        try {
+          _testEval(test[0]);
+        } on MonkeyException catch (e) {
+          expect(e.msg, test[1]);
+        }
+      }
+    });
+
     test('first()', () {
       final tests = [
         ['first([1, 2, 3])', object.Integer(1)],
