@@ -389,6 +389,34 @@ void main() {
         }
       }
     });
+
+    test('rest()', () {
+      final tests = [
+        [
+          'rest([1, 2, 3])',
+          object.Array([object.Integer(2), object.Integer(3)]),
+        ],
+        [
+          'rest(["one", "two"])',
+          object.Array([object.StringLit('two')])
+        ],
+        ['rest([])', const object.Null()],
+        [
+          'let a = [1, 2, 3, 4]; rest(rest(a));',
+          object.Array([object.Integer(3), object.Integer(4)])
+        ],
+        [
+          '''
+            let a = [1, 2, 3, 4]; rest(rest(a));
+            rest(rest(rest(rest(rest(a)))));
+          ''',
+          const object.Null()
+        ]
+      ];
+      for (final test in tests) {
+        expectObject(_testEval(test[0] as String), test[1] as object.Object);
+      }
+    });
   });
 }
 
