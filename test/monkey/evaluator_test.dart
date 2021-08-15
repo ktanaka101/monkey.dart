@@ -536,6 +536,29 @@ void main() {
       expectObject(_testEval(test[0] as String), test[1] as object.Object);
     }
   });
+
+  test('array index expression', () {
+    final tests = [
+      ['[1, 2, 3][0]', object.Integer(1)],
+      ['[1, 2, 3][1]', object.Integer(2)],
+      ['[1, 2, 3][2]', object.Integer(3)],
+      ['let i = 0; [1][i];', object.Integer(1)],
+      ['[1, 2, 3][1 + 1];', object.Integer(3)],
+      ['let myArray = [1, 2, 3]; myArray[2];', object.Integer(3)],
+      [
+        'let myArray = [1, 2, 3]; myArray[0] + myArray[1] + myArray[2];',
+        object.Integer(6)
+      ],
+      [
+        'let myArray = [1, 2, 3]; let i = myArray[0]; myArray[i]',
+        object.Integer(2)
+      ]
+    ];
+
+    for (final test in tests) {
+      expectObject(_testEval(test[0] as String), test[1] as object.Object);
+    }
+  });
 }
 
 object.Object _testEval(String input) {
