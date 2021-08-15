@@ -642,6 +642,8 @@ void expectObject(object.Object actual, object.Object expected) {
     expectArrayObject(actual, expected);
   } else if (expected is object.Hash) {
     expectHashObject(actual, expected);
+  } else if (expected is object.Quote) {
+    expectQuoteObject(actual, expected);
   } else {
     throw Exception('unimplements');
   }
@@ -712,4 +714,13 @@ void expectHashObject(object.Object actual, object.Hash expected) {
         actualKeys[i] as object.Object, expectedKeys[i] as object.Object);
     expectObject(actualValues[i], expectedValues[i]);
   }
+}
+
+void expectQuoteObject(object.Object actual, object.Quote expected) {
+  expect(actual, isA<object.Quote>());
+  if (actual is! object.Quote) {
+    return;
+  }
+
+  parser_test.testNode(actual.node, expected.node);
 }
