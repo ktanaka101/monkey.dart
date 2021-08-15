@@ -303,6 +303,22 @@ void main() {
             _testEval(test[0] as String), object.Integer(test[1] as int));
       }
     });
+
+    test('first()', () {
+      final tests = [
+        ['first([1, 2, 3])', object.Integer(1)],
+        ['first(["one", "two"])', object.StringLit('one')],
+        ['first([])', const object.Null()],
+        [
+          'let a = [1, 2, 3]; first(a); first(a) == first(a)',
+          const object.Boolean(true)
+        ],
+      ];
+
+      for (final test in tests) {
+        expectObject(_testEval(test[0] as String), test[1] as object.Object);
+      }
+    });
   });
 }
 

@@ -19,7 +19,18 @@ object.Object? len(List<object.Object> args) {
 }
 
 object.Object? first(List<object.Object> args) {
-  throw 'unimplements';
+  if (args.length != 1) {
+    throw MonkeyException(
+        'wrong number of arguments. got=${args.length}, want=1');
+  }
+
+  final arg = args[0];
+  if (arg is object.Array) {
+    return arg.elements.isNotEmpty ? arg.elements[0] : null;
+  } else {
+    throw MonkeyException(
+        'argument to `first` must be Array, got ${arg.runtimeType}');
+  }
 }
 
 object.Object? last(List<object.Object> args) {
