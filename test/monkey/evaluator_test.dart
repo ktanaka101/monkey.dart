@@ -561,6 +561,44 @@ void main() {
       expectObject(_testEval(test[0] as String), test[1] as object.Object);
     }
   });
+
+  test('hash literal', () {
+    final tests = [
+      ['{}', object.Hash({})],
+      [
+        '{"a": 1, "b": 2}',
+        object.Hash({
+          object.StringLit('a'): object.Integer(1),
+          object.StringLit('b'): object.Integer(2)
+        })
+      ],
+      [
+        '''
+          let two = "two";
+          {
+              "one": 10 - 9,
+              two: 1 + 1,
+              "thr" + "ee": 6 / 2,
+              4: 4,
+              true: 5,
+              false: 6
+          }
+        ''',
+        object.Hash({
+          object.StringLit('one'): object.Integer(1),
+          object.StringLit('two'): object.Integer(2),
+          object.StringLit('three'): object.Integer(3),
+          object.Integer(4): object.Integer(4),
+          const object.Boolean(true): object.Integer(5),
+          const object.Boolean(false): object.Integer(6)
+        })
+      ]
+    ];
+
+    for (final test in tests) {
+      expectObject(_testEval(test[0] as String), test[1] as object.Object);
+    }
+  });
 }
 
 object.Object _testEval(String input) {
