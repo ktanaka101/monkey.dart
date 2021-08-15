@@ -552,7 +552,9 @@ void main() {
       [
         'let myArray = [1, 2, 3]; let i = myArray[0]; myArray[i]',
         object.Integer(2)
-      ]
+      ],
+      ['[1, 2, 3][3]', const object.Null()],
+      ['[1, 2, 3][-1]', const object.Null()]
     ];
 
     for (final test in tests) {
