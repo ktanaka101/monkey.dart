@@ -478,6 +478,13 @@ void main() {
             object.Integer(3),
             object.Integer(4)
           ]),
+        ],
+        [
+          'let a = [1, 2]; push(a, 3); a;',
+          object.Array([
+            object.Integer(1),
+            object.Integer(2),
+          ]),
         ]
       ];
 
