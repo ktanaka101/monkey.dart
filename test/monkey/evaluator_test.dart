@@ -824,6 +824,32 @@ void main() {
       parser_test.testNode(expanded, test[1] as ast.Node);
     }
   });
+
+  test('fibonacci', () {
+    final tests = [
+      [
+        '''
+          let fibonacci = fn(x) {
+            if (x == 0) {
+              return 0;
+            } else {
+              if (x == 1) {
+                return 1;
+              } else {
+                fibonacci(x - 1) + fibonacci(x - 2);
+              }
+            }
+          };
+          fibonacci(15);
+        ''',
+        object.Integer(610),
+      ]
+    ];
+
+    for (final test in tests) {
+      expectObject(_testEval(test[0] as String), test[1] as object.Object);
+    }
+  });
 }
 
 object.Object _testEval(String input) {
