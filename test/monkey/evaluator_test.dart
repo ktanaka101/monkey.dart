@@ -288,19 +288,21 @@ void main() {
     }
   });
 
-  test('builtin function length', () {
-    final tests = [
-      ['len("")', 0],
-      ['len("four")', 4],
-      ['len("hello world")', 11],
-      ['len([])', 0],
-      ['len([1, "hello", 33])', 3],
-    ];
+  group('builtin function', () {
+    test('len()', () {
+      final tests = [
+        ['len("")', 0],
+        ['len("four")', 4],
+        ['len("hello world")', 11],
+        ['len([])', 0],
+        ['len([1, "hello", 33])', 3],
+      ];
 
-    for (final test in tests) {
-      expectObject(
-          _testEval(test[0] as String), object.Integer(test[1] as int));
-    }
+      for (final test in tests) {
+        expectObject(
+            _testEval(test[0] as String), object.Integer(test[1] as int));
+      }
+    });
   });
 }
 
