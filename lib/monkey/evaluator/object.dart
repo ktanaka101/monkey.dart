@@ -24,6 +24,9 @@ class Integer extends Object implements Hashable {
       return false;
     }
   }
+
+  @override
+  String toString() => value.toString();
 }
 
 class Boolean extends Object implements Hashable {
@@ -39,6 +42,9 @@ class Boolean extends Object implements Hashable {
       return false;
     }
   }
+
+  @override
+  String toString() => value.toString();
 }
 
 class StringLit extends Object implements Hashable {
@@ -53,6 +59,9 @@ class StringLit extends Object implements Hashable {
       return false;
     }
   }
+
+  @override
+  String toString() => '"$value"';
 }
 
 class Array extends Object {
@@ -77,6 +86,9 @@ class Array extends Object {
       return false;
     }
   }
+
+  @override
+  String toString() => '[${elements.map((e) => e.toString()).join(', ')}]';
 }
 
 typedef HashPairs = Map<Hashable, Object>;
@@ -111,6 +123,13 @@ class Hash extends Object {
 
     return true;
   }
+
+  @override
+  String toString() {
+    final pairsString =
+        pairs.entries.map((pair) => '${pair.key}: ${pair.value}').join(', ');
+    return '{ $pairsString }';
+  }
 }
 
 class MFunction extends Object {
@@ -121,6 +140,9 @@ class MFunction extends Object {
 
   @override
   bool monkeyEqual(Object other) => this == other;
+
+  @override
+  String toString() => 'Function';
 }
 
 class Builtin extends Object {
@@ -131,6 +153,9 @@ class Builtin extends Object {
   bool monkeyEqual(Object other) => this == other;
 
   Object? call(List<Object> args) => func(args);
+
+  @override
+  String toString() => 'Function';
 }
 
 class Return extends Object {
@@ -139,6 +164,9 @@ class Return extends Object {
 
   @override
   bool monkeyEqual(Object other) => this == other;
+
+  @override
+  String toString() => 'Return';
 }
 
 class Null extends Object {
@@ -146,6 +174,9 @@ class Null extends Object {
 
   @override
   bool monkeyEqual(Object other) => this == other;
+
+  @override
+  String toString() => 'null';
 }
 
 class Macro extends Object {
@@ -156,6 +187,9 @@ class Macro extends Object {
 
   @override
   bool monkeyEqual(Object other) => this == other;
+
+  @override
+  String toString() => 'Macro';
 }
 
 class Quote extends Object {
@@ -164,4 +198,7 @@ class Quote extends Object {
 
   @override
   bool monkeyEqual(Object other) => this == other;
+
+  @override
+  String toString() => 'Quote';
 }
