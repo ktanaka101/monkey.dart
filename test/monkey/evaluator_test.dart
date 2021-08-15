@@ -614,6 +614,28 @@ void main() {
       expectObject(_testEval(test[0] as String), test[1] as object.Object);
     }
   });
+
+  test('quote', () {
+    final tests = [
+      ['quote(5)', object.Quote(ast.Int(5))],
+      ['quote(true)', object.Quote(ast.Boolean(true))],
+      ['quote(false)', object.Quote(ast.Boolean(false))],
+      [
+        'quote(5 + 8)',
+        object.Quote(ast.InfixExpr(ast.Int(5), ast.Operator.plus, ast.Int(8)))
+      ],
+      ['quote(foobar)', object.Quote(ast.Ident('foobar'))],
+      [
+        'quote(foobar + barfoo)',
+        object.Quote(ast.InfixExpr(
+            ast.Ident('foobar'), ast.Operator.plus, ast.Ident('barfoo')))
+      ]
+    ];
+
+    for (final test in tests) {
+      expectObject(_testEval(test[0] as String), test[1] as object.Object);
+    }
+  });
 }
 
 object.Object _testEval(String input) {
