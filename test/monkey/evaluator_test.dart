@@ -765,6 +765,50 @@ void main() {
             ),
           ),
         ])
+      ],
+      [
+        '''
+          let unless = macro(condition, consequence, alternative) {
+            quote(
+              if (!(unquote(condition))) {
+                unquote(consequence);
+              } else {
+                unquote(alternative);
+              }
+            );
+          };
+          unless(10 > 5, puts("not greater"), puts("greater"));
+        ''',
+        ast.Program([
+          ast.ExprStmt(
+            ast.If(
+              ast.PrefixExpr(
+                ast.Operator.bang,
+                ast.InfixExpr(
+                  ast.Int(10),
+                  ast.Operator.gt,
+                  ast.Int(5),
+                ),
+              ),
+              ast.Block([
+                ast.ExprStmt(
+                  ast.Call(
+                    ast.Ident('puts'),
+                    [ast.StringLit('not greater')],
+                  ),
+                ),
+              ]),
+              ast.Block([
+                ast.ExprStmt(
+                  ast.Call(
+                    ast.Ident('puts'),
+                    [ast.StringLit('greater')],
+                  ),
+                ),
+              ]),
+            ),
+          )
+        ]),
       ]
     ];
 
