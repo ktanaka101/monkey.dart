@@ -636,6 +636,55 @@ void main() {
       expectObject(_testEval(test[0] as String), test[1] as object.Object);
     }
   });
+
+  test('unquote', () {
+    final tests = [
+      ['quote(unquote(4))', object.Quote(ast.Int(4))],
+      ['quote(unquote(4 + 4))', object.Quote(ast.Int(8))],
+      [
+        'quote(8 + unquote(4 + 4))',
+        object.Quote(ast.InfixExpr(ast.Int(8), ast.Operator.plus, ast.Int(8)))
+      ],
+      [
+        'quote(unquote(4 + 4) + 8)',
+        object.Quote(ast.InfixExpr(ast.Int(8), ast.Operator.plus, ast.Int(8)))
+      ],
+      [
+        '''
+            let foobar = 8;
+            quote(foobar)
+        ''',
+        object.Quote(ast.Ident('foobar')),
+      ],
+      [
+        '''
+            let foobar = 8;
+            quote(unquote(foobar))
+        ''',
+        object.Quote(ast.Int(8)),
+      ],
+      ['quote(unquote(true))', object.Quote(ast.Boolean(true))],
+      ['quote(unquote(true == false))', object.Quote(ast.Boolean(false))],
+      [
+        'quote(unquote(quote(4 + 4)))',
+        object.Quote(
+          ast.InfixExpr(ast.Int(4), ast.Operator.plus, ast.Int(4)),
+        )
+      ],
+      [
+        '''
+            let quotedInfixExpression = quote(4 + 4);
+            quote(unquote(4 + 4) + unquote(quotedInfixExpression))
+        ''',
+        object.Quote(ast.InfixExpr(ast.Int(8), ast.Operator.plus,
+            ast.InfixExpr(ast.Int(4), ast.Operator.plus, ast.Int(4)))),
+      ],
+    ];
+
+    for (final test in tests) {
+      expectObject(_testEval(test[0] as String), test[1] as object.Object);
+    }
+  });
 }
 
 object.Object _testEval(String input) {
