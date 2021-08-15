@@ -587,6 +587,8 @@ void expectObject(object.Object actual, object.Object expected) {
     expectStringObject(actual, expected);
   } else if (expected is object.Array) {
     expectArrayObject(actual, expected);
+  } else if (expected is object.Hash) {
+    expectHashObject(actual, expected);
   } else {
     throw Exception('unimplements');
   }
@@ -639,5 +641,22 @@ void expectArrayObject(object.Object actual, object.Array expected) {
   }
   for (var i = 0; i < expected.elements.length; i++) {
     expectObject(actual.elements[i], expected.elements[i]);
+  }
+}
+
+void expectHashObject(object.Object actual, object.Hash expected) {
+  expect(actual, isA<object.Hash>());
+  if (actual is! object.Hash) {
+    return;
+  }
+
+  final actualKeys = actual.pairs.keys.toList();
+  final actualValues = actual.pairs.values.toList();
+  final expectedKeys = expected.pairs.keys.toList();
+  final expectedValues = expected.pairs.values.toList();
+  for (var i = 0; i < expected.pairs.length; i++) {
+    expectObject(
+        actualKeys[i] as object.Object, expectedKeys[i] as object.Object);
+    expectObject(actualValues[i], expectedValues[i]);
   }
 }
