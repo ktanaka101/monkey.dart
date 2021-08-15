@@ -51,7 +51,22 @@ object.Object? last(List<object.Object> args) {
 }
 
 object.Object? rest(List<object.Object> args) {
-  throw 'unimplements';
+  if (args.length != 1) {
+    throw MonkeyException(
+        'wrong number of arguments. got=${args.length}, want=1');
+  }
+
+  final arg = args[0];
+  if (arg is object.Array) {
+    if (arg.elements.isEmpty) {
+      return constNull;
+    }
+
+    return object.Array(arg.elements.sublist(1));
+  } else {
+    throw MonkeyException(
+        'argument to `rest` must be Array, got ${arg.runtimeType}');
+  }
 }
 
 object.Object? push(List<object.Object> args) {
