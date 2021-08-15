@@ -442,6 +442,18 @@ void testList<T>(List<T> actual, List<T> expected, void Function(T, T) test) {
   }
 }
 
+void testNode(ast.Node actual, ast.Node expected) {
+  expect(actual.runtimeType, expected.runtimeType);
+
+  if (expected is ast.Stmt) {
+    testStmt(actual as ast.Stmt, expected);
+  } else if (expected is ast.Expr) {
+    testExpr(actual as ast.Expr, expected);
+  } else {
+    throw Exception('unimplements');
+  }
+}
+
 void testBlock(ast.Block actual, ast.Block expected) {
   testList(actual.statements, expected.statements, testStmt);
 }
