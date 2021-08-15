@@ -355,6 +355,40 @@ void main() {
         }
       }
     });
+
+    test('last()', () {
+      final tests = [
+        ['last([1, 2, 3])', object.Integer(3)],
+        ['last(["one", "two"])', object.StringLit('two')],
+        ['last([])', const object.Null()],
+        [
+          'let a = [1, 2, 3]; last(a); last(a) == last(a)',
+          const object.Boolean(true)
+        ],
+      ];
+
+      for (final test in tests) {
+        expectObject(_testEval(test[0] as String), test[1] as object.Object);
+      }
+    });
+
+    test('last() error', () {
+      final tests = [
+        [
+          'last([1, 2, 3], [1, 2, 3])',
+          'wrong number of arguments. got=2, want=1',
+        ],
+        ['last(1)', 'argument to `last` must be Array, got Integer'],
+      ];
+
+      for (final test in tests) {
+        try {
+          _testEval(test[0]);
+        } on MonkeyException catch (e) {
+          expect(e.msg, test[1]);
+        }
+      }
+    });
   });
 }
 
