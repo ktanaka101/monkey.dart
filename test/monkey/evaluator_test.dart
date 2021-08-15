@@ -417,6 +417,24 @@ void main() {
         expectObject(_testEval(test[0] as String), test[1] as object.Object);
       }
     });
+
+    test('rest() error', () {
+      final tests = [
+        [
+          'rest([1, 2, 3], [1, 2, 3])',
+          'wrong number of arguments. got=2, want=1',
+        ],
+        ['rest(1)', 'argument to `rest` must be Array, got Integer'],
+      ];
+
+      for (final test in tests) {
+        try {
+          _testEval(test[0]);
+        } on MonkeyException catch (e) {
+          expect(e.msg, test[1]);
+        }
+      }
+    });
   });
 }
 
