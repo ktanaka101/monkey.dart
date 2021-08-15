@@ -725,6 +725,38 @@ void main() {
       ),
     );
   });
+
+  test('expand macros', () {
+    final tests = [
+      [
+        '''
+          let infix_expr = macro() { quote(1 + 2) };
+          infix_expr();
+        ''',
+        ast.Program([
+          ast.ExprStmt(
+            ast.InfixExpr(
+              ast.Int(1),
+              ast.Operator.plus,
+              ast.Int(2),
+            ),
+          ),
+        ])
+      ],
+    ];
+
+    for (final test in tests) {
+      final l = lexer.Lexer(test[0] as String);
+      final p = parser.Parser(l);
+      final program = p.parseProgram();
+      final e = env.Environment();
+      evaluator.defineMacros(program, e);
+
+      final expanded = evaluator.extendMacros(program, e);
+
+      parser_test.testNode(expanded, test[1] as ast.Node);
+    }
+  });
 }
 
 object.Object _testEval(String input) {
