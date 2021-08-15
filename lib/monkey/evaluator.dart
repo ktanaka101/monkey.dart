@@ -331,7 +331,14 @@ object.Object _evalHashIndexExpr(object.Hash hash, object.Object key) {
     throw MonkeyException('unusable as hash key: ${key.runtimeType}');
   }
 
-  final value = hash.pairs[key];
+  object.Object? value;
+  for (final pair in hash.pairs.entries) {
+    final k = pair.key as object.Object;
+    if (k.monkeyEqual(key)) {
+      value = pair.value;
+    }
+  }
+
   if (value == null) {
     return builtin.constNull;
   }

@@ -599,6 +599,21 @@ void main() {
       expectObject(_testEval(test[0] as String), test[1] as object.Object);
     }
   });
+
+  test('hash index expression', () {
+    final tests = [
+      ['{}["a"]', const object.Null()],
+      ['{"foo": 5}["foo"]', object.Integer(5)],
+      ['let key = "foo"; {"foo": 5}[key]', object.Integer(5)],
+      ['{5: 5}[5]', object.Integer(5)],
+      ['{true: 5}[true]', object.Integer(5)],
+      ['{false: 5}[false]', object.Integer(5)],
+    ];
+
+    for (final test in tests) {
+      expectObject(_testEval(test[0] as String), test[1] as object.Object);
+    }
+  });
 }
 
 object.Object _testEval(String input) {
