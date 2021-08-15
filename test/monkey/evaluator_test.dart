@@ -448,6 +448,15 @@ void main() {
           ]),
         ],
         [
+          'push([1, 2, 3], 3)',
+          object.Array([
+            object.Integer(1),
+            object.Integer(2),
+            object.Integer(3),
+            object.Integer(3)
+          ]),
+        ],
+        [
           'push([1, 2, 3], [4, 5, 6])',
           object.Array([
             object.Integer(1),
