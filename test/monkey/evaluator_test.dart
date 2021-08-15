@@ -514,6 +514,28 @@ void main() {
       }
     });
   });
+
+  test('array literal', () {
+    final tests = [
+      [
+        '[1, 2 * 2, 3 + 3]',
+        object.Array([object.Integer(1), object.Integer(4), object.Integer(6)])
+      ],
+      ['[]', object.Array([])],
+      [
+        '["aaa", "bbb", 1]',
+        object.Array([
+          object.StringLit('aaa'),
+          object.StringLit('bbb'),
+          object.Integer(1)
+        ])
+      ]
+    ];
+
+    for (final test in tests) {
+      expectObject(_testEval(test[0] as String), test[1] as object.Object);
+    }
+  });
 }
 
 object.Object _testEval(String input) {
