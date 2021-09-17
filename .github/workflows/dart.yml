@@ -1,0 +1,28 @@
+name: Dart
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+  push:
+    branches: [master]
+
+jobs:
+  format-and-analyze-and-test:
+    runs-on: ubuntu-latest
+    container:
+      image: google/dart:latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: install dependencies
+        run: pub get
+
+      - name: dartfmt
+        run: dart format ./ -n -l 120 --set-exit-if-changed
+
+      - name: analyzer
+        run: dartanalyzer --fatal-warnings --fatal-infos .
+
+      - name: test
+        run: pub run test ./
