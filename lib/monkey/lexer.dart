@@ -128,9 +128,7 @@ class Lexer {
     return _readRange(pos, _pos);
   }
 
-  String _readRange(int s, int e) {
-    return _input.substring(s, e);
-  }
+  String _readRange(int s, int e) => _input.substring(s, e);
 
   String _readNumber() {
     final pos = _pos;
