@@ -19,7 +19,7 @@ jobs:
         run: pub get
 
       - name: dartfmt
-        run: dart format ./ -n -l 120 --set-exit-if-changed
+        run: dart format . --set-exit-if-changed
 
       - name: analyzer
         run: dartanalyzer --fatal-warnings --fatal-infos .
