@@ -1,11 +1,12 @@
+import 'package:monkey/monkey/ast.dart' as ast;
 import 'package:monkey/monkey/error.dart';
+import 'package:monkey/monkey/evaluator.dart' as evaluator;
 import 'package:monkey/monkey/evaluator/env.dart' as env;
 import 'package:monkey/monkey/evaluator/object.dart' as object;
 import 'package:monkey/monkey/lexer.dart' as lexer;
 import 'package:monkey/monkey/parser.dart' as parser;
 import 'package:test/test.dart';
-import 'package:monkey/monkey/evaluator.dart' as evaluator;
-import 'package:monkey/monkey/ast.dart' as ast;
+
 import './parser_test.dart' as parser_test;
 
 void main() {

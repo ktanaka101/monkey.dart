@@ -1,8 +1,8 @@
+import 'package:monkey/monkey/ast.dart' as ast;
 import 'package:monkey/monkey/error.dart';
 import 'package:monkey/monkey/evaluator/builtin.dart' as builtin;
 import 'package:monkey/monkey/evaluator/env.dart';
 import 'package:monkey/monkey/evaluator/object.dart' as object;
-import 'package:monkey/monkey/ast.dart' as ast;
 
 object.Object eval(ast.Node node, Environment env) {
   if (node is ast.Program) {

@@ -1,5 +1,5 @@
-import 'package:monkey/monkey/evaluator/env.dart';
 import 'package:monkey/monkey/ast.dart' as ast;
+import 'package:monkey/monkey/evaluator/env.dart';
 
 // ignore: one_member_abstracts
 abstract class MonkeyEq {

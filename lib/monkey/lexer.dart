@@ -1,5 +1,5 @@
-import 'package:monkey/monkey/token.dart';
 import 'package:monkey/monkey/error.dart';
+import 'package:monkey/monkey/token.dart';
 
 /// Lexer parse to tokens from inputed string
 class Lexer {

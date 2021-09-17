@@ -1,7 +1,7 @@
 import 'package:monkey/monkey/ast.dart' as ast;
+import 'package:monkey/monkey/error.dart';
 import 'package:monkey/monkey/lexer.dart';
 import 'package:monkey/monkey/token.dart' as token;
-import 'package:monkey/monkey/error.dart';
 
 /// An expr priority of operator
 enum Priority {

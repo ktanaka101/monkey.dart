@@ -1,9 +1,8 @@
-import 'package:test/test.dart';
-import 'package:tuple/tuple.dart';
-
+import 'package:monkey/monkey/ast.dart' as ast;
 import 'package:monkey/monkey/lexer.dart';
 import 'package:monkey/monkey/parser.dart';
-import 'package:monkey/monkey/ast.dart' as ast;
+import 'package:test/test.dart';
+import 'package:tuple/tuple.dart';
 
 void main() {
   test('let statements', () {
