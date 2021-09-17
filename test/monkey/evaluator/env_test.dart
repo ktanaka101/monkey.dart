@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 void main() {
   test('get object by env', () {
     final env = Environment();
-    final obj = object.Boolean(true);
+    const obj = object.Boolean(true);
     env.insert('key_a', obj);
     final getObj = env.resolve('key_a');
     expect(obj, equals(getObj));
@@ -13,11 +13,11 @@ void main() {
 
   test('get object by outer env', () {
     final outerEnv = Environment();
-    final obj1 = object.Boolean(true);
+    const obj1 = object.Boolean(true);
     outerEnv.insert('key_a', obj1);
 
     final env = Environment(outer: outerEnv);
-    final obj2 = object.Boolean(false);
+    const obj2 = object.Boolean(false);
     env.insert('key_b', obj2);
 
     final getObj = env.resolve('key_a');
@@ -26,11 +26,11 @@ void main() {
 
   test('get by giving priority to scope', () {
     final outerEnv = Environment();
-    final obj1 = object.Boolean(true);
+    const obj1 = object.Boolean(true);
     outerEnv.insert('key_a', obj1);
 
     final env = Environment(outer: outerEnv);
-    final obj2 = object.Boolean(false);
+    const obj2 = object.Boolean(false);
     env.insert('key_a', obj2);
 
     final getObj = env.resolve('key_a');

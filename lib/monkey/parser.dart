@@ -240,9 +240,8 @@ class Parser {
     return ast.InfixExpr(left, ope, right);
   }
 
-  ast.Call _parseCallExpr(ast.Expr func) {
-    return ast.Call(func, _parseExprList(token.Rparen));
-  }
+  ast.Call _parseCallExpr(ast.Expr func) =>
+      ast.Call(func, _parseExprList(token.Rparen));
 
   ast.Index _parseIndexExpr(ast.Expr left) {
     _nextToken();
@@ -504,13 +503,9 @@ class Parser {
     return ast.MacroLit(params, body);
   }
 
-  bool _curTokenIs(Type tokenType) {
-    return curToken.runtimeType == tokenType;
-  }
+  bool _curTokenIs(Type tokenType) => curToken.runtimeType == tokenType;
 
-  bool _peekTokenIs(Type tokenType) {
-    return peekToken.runtimeType == tokenType;
-  }
+  bool _peekTokenIs(Type tokenType) => peekToken.runtimeType == tokenType;
 
   void _expectPeek(Type tokenType) {
     if (peekToken.runtimeType == tokenType) {
