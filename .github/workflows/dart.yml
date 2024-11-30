@@ -10,19 +10,19 @@ jobs:
   format-and-analyze-and-test:
     runs-on: ubuntu-latest
     container:
-      image: google/dart:latest
+      image: dart:3.5.4
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: install dependencies
-        run: pub get
+        run: dart pub get
 
       - name: dartfmt
         run: dart format . --output=none --set-exit-if-changed
 
       - name: analyzer
-        run: dartanalyzer --fatal-warnings --fatal-infos .
+        run: dart analyze --fatal-warnings --fatal-infos .
 
       - name: test
-        run: pub run test ./
+        run: dart test ./

@@ -114,10 +114,8 @@ class Hash extends Object {
         return false;
       }
 
-      if (pair.value is MonkeyEq && otherValue is MonkeyEq) {
-        if (!pair.value.monkeyEqual(otherValue)) {
-          return false;
-        }
+      if (!pair.value.monkeyEqual(otherValue)) {
+        return false;
       }
     }
 
