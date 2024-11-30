@@ -10,10 +10,10 @@ jobs:
   format-and-analyze-and-test:
     runs-on: ubuntu-latest
     container:
-      image: google/dart:latest
+      image: dart:3.5.4
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: install dependencies
         run: pub get
