@@ -185,7 +185,7 @@ object.Object _evalIntegerInfixExpr(
   } else if (ope == ast.Operator.gt) {
     return (left.value > right.value).toBooleanObject();
   } else if (ope == ast.Operator.equal) {
-    return (left.monkeyEqual(right)).toBooleanObject();
+    return left.monkeyEqual(right).toBooleanObject();
   } else if (ope == ast.Operator.notEqual) {
     return (!left.monkeyEqual(right)).toBooleanObject();
   } else {
@@ -439,7 +439,7 @@ Environment _extendMacroEnv(object.Macro macro, List<object.Quote> args) {
 }
 
 List<object.Quote> _quoteArgs(ast.Call call) =>
-    call.args.map((arg) => object.Quote(arg)).toList();
+    call.args.map(object.Quote.new).toList();
 
 void defineMacros(ast.Program program, Environment env) {
   program.statements

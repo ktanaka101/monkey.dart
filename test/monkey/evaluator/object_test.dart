@@ -1,6 +1,5 @@
 import 'package:monkey/monkey.dart';
 import 'package:monkey/monkey/ast.dart' as ast;
-import 'package:monkey/monkey/evaluator/object.dart';
 import 'package:test/test.dart';
 
 void main() {

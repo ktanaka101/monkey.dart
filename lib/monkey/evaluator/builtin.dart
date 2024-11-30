@@ -115,6 +115,8 @@ extension BuiltinFunction on object.Builtin {
         return _builtinPush;
       case 'puts':
         return _builtinPuts;
+      default:
+        return null;
     }
   }
 }
